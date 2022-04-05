@@ -22,11 +22,6 @@ public class CreateTable implements BDInterface {
     private DB connection = new DB();
 
 
-    public static void main(String[] args) {
-        CreateTable createTable = new CreateTable();
-        createTable.createTableMethod();
-    }
-
 
     public void createTableMethod() {
         CreateTable createTable = new CreateTable();
