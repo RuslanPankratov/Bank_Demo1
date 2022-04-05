@@ -1,8 +1,5 @@
 package bank.demo.dto.dto;
 
-import org.springframework.stereotype.Component;
-
-
 public class CreditCard {
     private boolean blocked;
     private String login;

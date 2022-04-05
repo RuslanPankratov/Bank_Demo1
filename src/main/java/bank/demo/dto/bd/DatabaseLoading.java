@@ -2,12 +2,6 @@ package bank.demo.dto.bd;
 
 import bank.demo.dto.dto.*;
 import bank.demo.dto.enum_class.TypeOfBenefits;
-import bank.demo.dto.helper.rule.MoreThanOneCharacter;
-import bank.demo.dto.helper.rule.RuleFirstNameAndLastName;
-import bank.demo.dto.helper.rule.RuleMustContainOnlyLatinCharacters;
-import bank.demo.dto.services.BankAccountCreation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -18,9 +12,6 @@ import java.util.List;
 @Component
 public class DatabaseLoading implements BDInterface {
 
-
-    //здесь надо создать лист банков через класс, и нести этот список дальше
-
     private DB connection = new DB();
 
     private ListBankAccount listBankAccount = new ListBankAccount();
@@ -28,19 +19,10 @@ public class DatabaseLoading implements BDInterface {
     private List<CreditCard> creditCardList = new ArrayList<>();
     private List<Credit> creditList = new ArrayList<>();
     private List<Insurance> insuranceList = new ArrayList<>();
-    //    private String userName = "root";
-//    private String password = "root";
-//    private String connectionUrl = "jdbc:mysql://localhost:3306/bank";
-
-//    public DatabaseLoading(List<BankAccount> bankAccountList) {
-//        this.bankAccountList = bankAccountList;
-//    }
-
 
     @Override
     public void action() {
-
-       updateBD();
+        updateBD();
     }
 
     public void updateBD() {
@@ -56,8 +38,6 @@ public class DatabaseLoading implements BDInterface {
     }
 
     void updateUser() {
-
-
         try (Statement statement = connection.getConnection().createStatement()) {//здесь он подключается к базк данных
 
             ResultSet resultSet = statement.executeQuery("SELECT * FROM bank.user;");
@@ -65,12 +45,10 @@ public class DatabaseLoading implements BDInterface {
                 TypeOfBenefits typeOfBenefits = choiceOfStatus(resultSet.getString("typeOfBenefits"));// так же можно по имени колонки обращаться
 //               User user = new User(resultSet.getString(2), resultSet.getString(3),//эти цифры
 //                       // говорят о том, с какого столбца мы что берём, отсчёт идёт с 1
-
                 User user = new User(resultSet.getString("firstName"), resultSet.getString("lastName"),//эти цифры
                         // говорят о том, с какого столбца мы что берём, отсчёт идёт с 1
                         resultSet.getInt("age"), typeOfBenefits);
                 user.setIdUser(resultSet.getInt("iduser"));
-
                 userList.add(user);
             }
         } catch (SQLException e) {
@@ -81,7 +59,6 @@ public class DatabaseLoading implements BDInterface {
 
     void updateCreditCard() {
         try (Statement statement = connection.getConnection().createStatement()) {//здесь он подключается к базк данных
-
             ResultSet resultSet = statement.executeQuery("SELECT * FROM bank.creditcard;");
             while (resultSet.next()) { //этот некст будет проходиться по всей таблице
                 CreditCard creditCard = new CreditCard(resultSet.getBoolean("blocked"), resultSet.getString("login")
@@ -118,16 +95,12 @@ public class DatabaseLoading implements BDInterface {
             e.printStackTrace();
         }
     }
-
-
     void updateInsurance() {
         try (
                 Statement statement = connection.getConnection().createStatement()) {//здесь он подключается к базк данных
             ResultSet resultSet = statement.executeQuery("SELECT * FROM bank.insurance;");
 
-            while (resultSet.next()) { //этот некст будет проходиться по всей таблице
-
-
+            while (resultSet.next()) {
                 Insurance insurance = new Insurance(resultSet.getDouble("sumInsured"));
                 insurance.setInsurancePaid(resultSet.getDouble("insurancePaid"));
                 insurance.setIdInsurance(resultSet.getInt("idInsurance"));
@@ -138,11 +111,9 @@ public class DatabaseLoading implements BDInterface {
             e.printStackTrace();
         }
     }
+    void addingBankAccountsToList() {
 
-
-    void addingBankAccountsToList(){
-
-        if (userList.size() > 0){
+        if (userList.size() > 0) {
             for (int i = 0; i < userList.size(); i++) {
                 BankAccount bankAccount = new BankAccount(userList.get(i), creditCardList.get(i));
                 bankAccount.setClientId(userList.get(i).getIdUser());
@@ -151,8 +122,6 @@ public class DatabaseLoading implements BDInterface {
                 listBankAccount.getBankAccountList().add(bankAccount);
             }
         }
-
-
     }
 
     private TypeOfBenefits choiceOfStatus(String type) {

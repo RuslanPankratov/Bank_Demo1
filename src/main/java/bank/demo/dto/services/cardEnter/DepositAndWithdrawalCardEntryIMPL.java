@@ -22,7 +22,6 @@ public class DepositAndWithdrawalCardEntryIMPL implements CardEntryIMPL {
                 new DepositOrWithdrawalCalculator();
 
         if (resultWithdrawalOrDeposit.equalsIgnoreCase("1")) {
-            //тут будет снятие денег
             double summa = scannerCardEntry.enterAmount(listBankAccount, i);
             Scanner scanner = new Scanner(System.in);
             System.out.println("Enter your password");
@@ -32,25 +31,21 @@ public class DepositAndWithdrawalCardEntryIMPL implements CardEntryIMPL {
                     withdrawal(listBankAccount, summa, i, depositOrWithdrawalCalculator);
                 } else {
                     System.out.println("you cannot withdraw that amount per day");
-                    //когда превышен дневной лимит
                 }
             }
 
         } else if (resultWithdrawalOrDeposit.equalsIgnoreCase("2")) {
-            // а тут ложим деньги
             deposit(listBankAccount, depositOrWithdrawalCalculator, i);
         }
     }
 
-
     private void withdrawal(ListBankAccount listBankAccount, double summa, int i, DepositOrWithdrawalCalculator depositOrWithdrawalCalculator) {
-        if (summa < listBankAccount.getBankAccountList().get(i).getCreditCard().getInvoiceAmount()) {//сумма снятия денег не должна быть больше чем счёт
+        if (summa < listBankAccount.getBankAccountList().get(i).getCreditCard().getInvoiceAmount()) {
             Transaction transaction = new Transaction(summa, TransactionType.WITHDRAWAL);
             depositOrWithdrawalCalculator.calculator(listBankAccount.getBankAccountList().get(i), transaction);
             System.out.println("on account" + listBankAccount.getBankAccountList().get(i).getCreditCard().getInvoiceAmount());
         } else {
             System.out.println("you want to withdraw more than you have on your account");
-            //если попытка снятия денег больше, чем сама сума на карте
         }
     }
 

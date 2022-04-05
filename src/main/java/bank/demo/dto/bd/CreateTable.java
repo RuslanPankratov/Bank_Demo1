@@ -1,12 +1,7 @@
 package bank.demo.dto.bd;
 
-import bank.demo.dto.dto.ListBankAccount;
-import org.apache.commons.dbcp2.DelegatingStatement;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -20,7 +15,6 @@ public class CreateTable implements BDInterface {
     }
 
     private DB connection = new DB();
-
 
 
     public void createTableMethod() {
@@ -47,7 +41,6 @@ public class CreateTable implements BDInterface {
         }
 
     }
-    //CreditCard
 
     void createCreditCard() {
         try {
@@ -61,15 +54,6 @@ public class CreateTable implements BDInterface {
                     " `invoiceAmount` DECIMAL(19,4) NOT NULL, " +
                     " `withdrawalLimit` DECIMAL(19,4) NOT NULL," +
                     " PRIMARY KEY (`idCreditCard`));");
-
-            //    private boolean blocked;
-            //    private String login;
-            //    private String password;
-            //    private double invoiceAmount; //сума не счету
-            //    private double withdrawalLimit;//ограничение на снятие суммы денег за день,
-
-//INSERT INTO `bank`.`creditcard` (`blocked`, `login`, `password`, `invoiceAmount`, `withdrawalLimit`)
-// VALUES ('0', 'rus', 'pan', '0', '10000');
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -99,14 +83,6 @@ public class CreateTable implements BDInterface {
             e.printStackTrace();
         }
     }
-    //    private double howMuchToPay; //надо выплатить ещё
-    //    private double percentRate; // процентная ставка
-    //    private double paid;//выплачено
-    //    private double theTotalAmountYouPay;//сколько в общем надо выплатить
-    //    private double countMonthsToPay; //количество месяцев ещё платить
-    //    private double bankProfit; //прибыль банка
-    //    private double howMuchIsTheLoan;// сколько берёт кредита человек
-    //    private double paymentPerMonth;//сколько в месяц платить
 
     void createInsurance() {
         try {
@@ -121,11 +97,7 @@ public class CreateTable implements BDInterface {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-//    private double sumInsured;
-//    private double insurancePaid;
-
     }
-    //transactions
 
     void createTransactions() {
         try {
@@ -142,8 +114,6 @@ public class CreateTable implements BDInterface {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-//    private double amount;
-//    private TransactionType transactionType;
 
     }
 

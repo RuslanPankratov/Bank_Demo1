@@ -18,7 +18,6 @@ import java.sql.Statement;
 public class CreditIMPL implements CardEntryIMPL {
     private DB connection = new DB();
 
-
     @Override
     public void menu(ListBankAccount listBankAccount, int i) {
         methodCredit(listBankAccount.getBankAccountList().get(i));
@@ -32,7 +31,6 @@ public class CreditIMPL implements CardEntryIMPL {
 
     void methodCredit(BankAccount bankAccount) {
         String result = new ScannerCardEntry().scannerMethodCredit();
-
 
         if (result.equals("1")) {
             if (bankAccount.getCredit() == null) {
@@ -50,8 +48,6 @@ public class CreditIMPL implements CardEntryIMPL {
                 LoanCalculation loanCalculation = new LoanCalculation(bankAccount, 5);
                 loanCalculation.interestRateMethod();
             }
-
-
         } else if (result.equals("2")) {
             String resultTwo = new ScannerCardEntry().resultTwo();
             if (resultTwo.equalsIgnoreCase("Yes")) {
@@ -64,10 +60,7 @@ public class CreditIMPL implements CardEntryIMPL {
                 } else {
                     System.out.println("you don't have enough money on your card");
                 }
-
             }
-
-
         } else if (result.equals("3")) {
             System.out.println("number of months left = " + bankAccount.getCredit().getCountMonthsToPay());
             System.out.println("debt paid = " + bankAccount.getCredit().getPaid());
@@ -76,15 +69,9 @@ public class CreditIMPL implements CardEntryIMPL {
             System.out.println("account on the card = " + bankAccount.getCreditCard().getInvoiceAmount());
 
         }
-
-
-
-
-
-
     }
 
-    void updateDBCredit(BankAccount bankAccount){
+    void updateDBCredit(BankAccount bankAccount) {
         try {
             Statement statement = connection.getConnection().createStatement();
             statement.executeUpdate("UPDATE `bank`.`credit` SET " +

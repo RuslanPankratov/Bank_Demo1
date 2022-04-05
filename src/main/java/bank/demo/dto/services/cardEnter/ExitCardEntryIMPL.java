@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Order(5)
 @Component
-public class ExitCardEntryIMPL implements CardEntryIMPL{
+public class ExitCardEntryIMPL implements CardEntryIMPL {
 
     @Override
     public void menu(ListBankAccount listBankAccount, int i) {

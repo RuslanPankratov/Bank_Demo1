@@ -3,7 +3,6 @@ package bank.demo.dto.services;
 import bank.demo.dto.bd.DB;
 import bank.demo.dto.dto.BankAccount;
 import bank.demo.dto.dto.Insurance;
-import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -64,9 +63,5 @@ public class InsuranceCalculator {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-//        bankAccount.getCreditCard().setInvoiceAmount(bankAccount.getCreditCard().getInvoiceAmount() -
-//                bankAccount.getInsurance().getInsurancePaid());
-//        System.out.println("invoice amount : " + bankAccount.getCreditCard().getInvoiceAmount());
     }
 }

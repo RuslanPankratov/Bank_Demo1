@@ -4,23 +4,11 @@ import bank.demo.dto.dto.ListBankAccount;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
+
 @Component
 public class ScannerCardEntry {
 
     Scanner scanner = new Scanner(System.in);
-
-    public String methodChoice() {
-        System.out.println("choose what you want");
-        System.out.println("1: withdrawal or deposit");
-        System.out.println("2: credit");
-        System.out.println("3: insurance");
-        System.out.println("4: editing information");
-
-
-        String choice = scanner.nextLine();
-        return choice;
-    }
-
 
     public String methodType() {
         System.out.println("specify the type of insurance");
@@ -108,13 +96,14 @@ public class ScannerCardEntry {
         return summa;
     }
 
-    public double scannerDeposit(){
+    public double scannerDeposit() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("enter amount");
         double summa = scanner.nextDouble();
         return summa;
     }
-    public String scannerMethodCredit(){
+
+    public String scannerMethodCredit() {
         System.out.println("1: how much i want to borrow");
         System.out.println("2: manual payment ");
         System.out.println("3: current loan information");
@@ -123,14 +112,14 @@ public class ScannerCardEntry {
         return result;
     }
 
-    public double scannerCredit(){
+    public double scannerCredit() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("how much do you want to take?");//какую вы сумму хотите взять?
         double credit = scanner.nextDouble();
         return credit;
     }
 
-    public double scannerMonth(){
+    public double scannerMonth() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("how many months do you want to pay");
         double month = scanner.nextDouble();
@@ -138,7 +127,7 @@ public class ScannerCardEntry {
     }
 
 
-    public String resultTwo(){
+    public String resultTwo() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("do you want to pay off the loan? Yes or No?");
         //проверка сколько должна быть сумма на уплату кредита

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class SetCredit {
 
     public void creditSet(BankAccount bankAccount, double paymentAmountPercent, double currentPercentUser, double countMonth,
-                          double percentOverpaid, double resultPaymentMonth){
+                          double percentOverpaid, double resultPaymentMonth) {
         bankAccount.getCredit().setHowMuchToPay(paymentAmountPercent);
         bankAccount.getCredit().setPercentRate(currentPercentUser);
         bankAccount.getCredit().setPaid(0);

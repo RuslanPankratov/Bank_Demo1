@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Order(3)
 @Component
-public class UIExit implements UIAction{
+public class UIExit implements UIAction {
 
     @Override
     public void execute() {

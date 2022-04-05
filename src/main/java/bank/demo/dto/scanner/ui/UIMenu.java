@@ -8,16 +8,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Scanner;
 
- //эта анотация, это бин, которая присойдиняет все бины через скан и конфигурацию в одно
+ //эта анотация, это бин, которая присоединяет все бины через скан и конфигурацию в одно
 @Component
 public class UIMenu {
 
     @Autowired //пишеться только тогда, когда нет конструктора, или нет файла в конструторе
     private final List<UIAction> uiActions;
-
-//    public UIMenu(List<UIAction> uiActions) { в таком случае он сделает пустые бины, надо по другом сделать
-//        this.uiActions = uiActions;
-//    }
 
     public UIMenu( List<UIAction> uiActions) {// UIMenu(@Qualifier("withoutExit") List<UIAction> uiActions)
         // здесь через @Qualifier мы пишим в скобках

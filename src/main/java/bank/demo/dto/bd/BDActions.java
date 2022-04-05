@@ -4,7 +4,6 @@ import bank.demo.dto.dto.ListBankAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -15,7 +14,7 @@ public class BDActions {
     private ListBankAccount listBankAccount = new ListBankAccount();
 
 
-    public void action(){
+    public void action() {
         for (int i = 0; i < bdActions.size(); i++) {
             bdActions.get(i).action();
         }

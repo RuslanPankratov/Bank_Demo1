@@ -25,15 +25,12 @@ public class DepositOrWithdrawalCalculator {
 
         try {
             Statement statement = connection.getConnection().createStatement();
-            //UPDATE `bank`.`creditcard` SET `invoiceAmount` = '12' WHERE (`idCreditCard` = '1');
             statement.executeUpdate("UPDATE `bank`.`creditcard` SET `invoiceAmount` = '"
                     + bankAccount.getCreditCard().getInvoiceAmount() + "' WHERE (`idCreditCard` = '"
                     + bankAccount.getCreditCard().getIdCreditCard() + "');");
         } catch (SQLException e) {
             e.printStackTrace();
-
         }
-
     }
 
     void calculatorDeposit(BankAccount bankAccount, double amountOfMoney) {

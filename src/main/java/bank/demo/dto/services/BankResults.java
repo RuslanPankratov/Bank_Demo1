@@ -2,6 +2,7 @@ package bank.demo.dto.services;
 
 import bank.demo.dto.dto.ListBankAccount;
 import org.springframework.stereotype.Component;
+
 @Component
 public class BankResults {
 

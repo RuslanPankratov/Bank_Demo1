@@ -1,8 +1,6 @@
 package bank.demo.dto.dto;
 
 import bank.demo.dto.enum_class.TypeOfBenefits;
-import org.springframework.stereotype.Component;
-
 
 public class User {
     private String firstName;

@@ -5,14 +5,13 @@ import bank.demo.dto.dto.*;
 import bank.demo.dto.enum_class.TypeOfBenefits;
 import bank.demo.dto.helper.rule.RuleFirstNameAndLastName;
 import bank.demo.dto.scanner.ScannerBankAccountCreation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-import java.util.Scanner;
+
 
 @Component
 public class BankAccountCreation {
@@ -23,22 +22,6 @@ public class BankAccountCreation {
         this.ruleFirstNameAndLastName = ruleFirstNameAndLastName;
     }
 
-    //предлагаемый вариант
-    //Ruslan, [31.03.2022 16:59]
-    //@Override
-    //public ToDoEntity save(ToDoEntity toDoEntity) {
-    //    var query = "INSERT INTO todo(name, description) VALUES (?, ?)";
-    //    var keyHolder = new GeneratedKeyHolder();
-    //    jdbcTemplate.update(connection -> {
-    //        var ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-    //        ps.setString(1, toDoEntity.getName());
-    //        ps.setString(2, toDoEntity.getDescription());
-    //        return ps;
-    //    }, keyHolder);
-    //    toDoEntity.setId(keyHolder.getKey().intValue());
-    //    return toDoEntity;
-    //}
-
     public void createBankAccount(ListBankAccount bankAccountList) {
         //надо тут сделать всё под скл
         //подработать с тем, если вышла ошибка, чтобы занова всё было
@@ -48,7 +31,6 @@ public class BankAccountCreation {
 
         try {
 
-            //тут активируем таблицу user
             firstName = scannerBankAccountCreation.scannerFirstName();
             lastName = scannerBankAccountCreation.scannerLastName();
 
@@ -60,14 +42,12 @@ public class BankAccountCreation {
             e.printStackTrace();
         }
 
-
         int age = scannerBankAccountCreation.scannerAge();
         String type = scannerBankAccountCreation.scannerType();
 
         TypeOfBenefits typeOfBenefits = choiceOfStatus(type);
         User user = createUser(firstName, lastName, age, typeOfBenefits);
 
-        //sql
         try {
             Statement statement = connection.getConnection().createStatement();
             statement.executeUpdate("INSERT INTO `bank`.`user` (`firstName`, `lastName`, `age`, `typeOfBenefits`) VALUES ('" +
@@ -79,34 +59,24 @@ public class BankAccountCreation {
         int idUser = 0;
         try {//
             Statement statement = connection.getConnection().createStatement();
-            //SELECT id FROM users ORDER BY id DESC LIMIT 1;
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM bank.user ORDER BY iduser DESC LIMIT 1;");//надо изменить именно в этом
-
-            // юзеры ид, чтобы он не рещил всё юзеры изменить
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM bank.user ORDER BY iduser DESC LIMIT 1;");
             if (resultSet.next()) { //если я хочу, что-то достать, обязательно надо использовать ресулт некст
-                  idUser = resultSet.getInt("iduser");
-                 if (idUser > 0){
-                     user.setIdUser(resultSet.getInt("iduser"));
-                     System.out.println(user.getIdUser() + " id user");
-                 }
-
-
+                idUser = resultSet.getInt("iduser");
+                if (idUser > 0) {
+                    user.setIdUser(resultSet.getInt("iduser"));
+                    System.out.println(user.getIdUser() + " id user");
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-
         String login = scannerBankAccountCreation.scannerLogin();
         String password = scannerBankAccountCreation.scannerPassword();
         double limit = scannerBankAccountCreation.scannerLimit();
 
-
         CreditCard creditCard = createCreditCard(login, password, limit);
         creditCard.setIdCreditCard(idUser);
-        //INSERT INTO `bank`.`creditcard` (`login`, `password`, `withdrawalLimit`) VALUES ('res10', 'res10', '1000');
-//sql
-        //установить ид от юзера
         try {
             Statement statement = connection.getConnection().createStatement();
             statement.executeUpdate("INSERT INTO `bank`.`creditcard` (`login`, `password`, `withdrawalLimit`, `blocked`, `invoiceAmount`) VALUES ('" +
@@ -118,7 +88,7 @@ public class BankAccountCreation {
     }
 
 
-    void createBankAccount(ListBankAccount bankAccountList, User user, CreditCard creditCard,int idUser) {
+    void createBankAccount(ListBankAccount bankAccountList, User user, CreditCard creditCard, int idUser) {
 
         BankAccount bankAccount = new BankAccount(user, creditCard);
         bankAccount.setClientId(idUser);
@@ -129,9 +99,7 @@ public class BankAccountCreation {
         insurance.setIdInsurance(idUser);
         bankAccount.setInsurance(insurance);
         bankAccount.setClientId(bankAccount.getUser().getIdUser());
-        //надо установить ид от бд
         bankAccountList.getBankAccountList().add(bankAccount);
-        //добавить ид
     }
 
     private Credit createCredit() {

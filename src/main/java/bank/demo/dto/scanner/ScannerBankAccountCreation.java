@@ -3,6 +3,7 @@ package bank.demo.dto.scanner;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
+
 @Component
 public class ScannerBankAccountCreation {
 
@@ -41,21 +42,21 @@ public class ScannerBankAccountCreation {
         return type;
     }
 
-    public String scannerLogin(){
+    public String scannerLogin() {
         Scanner scanner1 = new Scanner(System.in);
         System.out.println("Enter your login");
         String login = scanner1.nextLine();
         return login;
     }
 
-    public String scannerPassword(){
+    public String scannerPassword() {
         Scanner scanner1 = new Scanner(System.in);
         System.out.println("Enter your password");
         String password = scanner1.nextLine();
         return password;
     }
 
-    public double scannerLimit(){
+    public double scannerLimit() {
         Scanner scanner1 = new Scanner(System.in);
         System.out.println("Enter enter a limit on withdrawing money at a time");
         double limit = scanner1.nextDouble();

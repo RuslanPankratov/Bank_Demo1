@@ -1,12 +1,8 @@
 package bank.demo.dto.dto;
-
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 public class BankAccount {
     private User user;
-   // private Transaction transaction;
     private CreditCard creditCard;
     private float clientId;
     private List<Transaction> transactions; //транзакции должны быть по ид на каждого человека, с возможностью иметь много транзакций
@@ -28,14 +24,6 @@ public class BankAccount {
     public void setUser(User user) {
         this.user = user;
     }
-
-//    public Transaction getTransaction() {
-//        return transaction;
-//    }
-//
-//    public void setTransaction(Transaction transaction) {
-//        this.transaction = transaction;
-//    }
 
     public CreditCard getCreditCard() {
         return creditCard;

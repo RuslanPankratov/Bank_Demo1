@@ -44,7 +44,6 @@ public class EditingCardEntryIMPL implements CardEntryIMPL {
 
         try {
             Statement statement = connection.getConnection().createStatement();
-            //update `bank`.`user` set `firstName`='led',`lastName`='pie' where`iduser`=2;
             statement.executeUpdate("update `bank`.`user` set `firstName`='" + firstName
                     + "',`lastName`='" + lastName + "' where`iduser`="
                     + listBankAccount.getBankAccountList().get(i).getUser().getIdUser() + "; ");
