@@ -9,6 +9,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
+
 @Order(1)
 @Component
 public class DepositAndWithdrawalCardEntryIMPL implements CardEntryIMPL {
@@ -26,7 +27,7 @@ public class DepositAndWithdrawalCardEntryIMPL implements CardEntryIMPL {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Enter your password");
             String pas = scanner.nextLine();
-            if (pas.equals(listBankAccount.getBankAccountList().get(i).getCreditCard().getPassword())){
+            if (pas.equals(listBankAccount.getBankAccountList().get(i).getCreditCard().getPassword())) {
                 if (summa < listBankAccount.getBankAccountList().get(i).getCreditCard().getWithdrawalLimit()) {
                     withdrawal(listBankAccount, summa, i, depositOrWithdrawalCalculator);
                 } else {
@@ -42,7 +43,7 @@ public class DepositAndWithdrawalCardEntryIMPL implements CardEntryIMPL {
     }
 
 
-  private   void withdrawal(ListBankAccount listBankAccount, double summa, int i, DepositOrWithdrawalCalculator depositOrWithdrawalCalculator) {
+    private void withdrawal(ListBankAccount listBankAccount, double summa, int i, DepositOrWithdrawalCalculator depositOrWithdrawalCalculator) {
         if (summa < listBankAccount.getBankAccountList().get(i).getCreditCard().getInvoiceAmount()) {//сумма снятия денег не должна быть больше чем счёт
             Transaction transaction = new Transaction(summa, TransactionType.WITHDRAWAL);
             depositOrWithdrawalCalculator.calculator(listBankAccount.getBankAccountList().get(i), transaction);
@@ -53,7 +54,7 @@ public class DepositAndWithdrawalCardEntryIMPL implements CardEntryIMPL {
         }
     }
 
-  private  void deposit(ListBankAccount listBankAccount, DepositOrWithdrawalCalculator depositOrWithdrawalCalculator, int i) {
+    private void deposit(ListBankAccount listBankAccount, DepositOrWithdrawalCalculator depositOrWithdrawalCalculator, int i) {
         double summa = new ScannerCardEntry().scannerDeposit();
         Transaction transaction = new Transaction(summa, TransactionType.DEPOSIT);
         depositOrWithdrawalCalculator.calculator(listBankAccount.getBankAccountList().get(i), transaction);

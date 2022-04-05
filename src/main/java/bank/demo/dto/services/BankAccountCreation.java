@@ -71,21 +71,28 @@ public class BankAccountCreation {
         try {
             Statement statement = connection.getConnection().createStatement();
             statement.executeUpdate("INSERT INTO `bank`.`user` (`firstName`, `lastName`, `age`, `typeOfBenefits`) VALUES ('" +
-                    firstName + "', '" + lastName + "', '" + age + "','type');");
+                    firstName + "', '" + lastName + "', '" + age + "','" + type + "');");
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        int idUser = 0;
         try {//
             Statement statement = connection.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM bank.user;");//надо изменить именно в этом
+            //SELECT id FROM users ORDER BY id DESC LIMIT 1;
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM bank.user ORDER BY iduser DESC LIMIT 1;");//надо изменить именно в этом
+
             // юзеры ид, чтобы он не рещил всё юзеры изменить
-            if(resultSet.next()){ //если я хочу, что-то достать, обязательно надо использовать ресулт некст
-                user.setIdUser(resultSet.getInt("iduser"));
+            if (resultSet.next()) { //если я хочу, что-то достать, обязательно надо использовать ресулт некст
+                  idUser = resultSet.getInt("iduser");
+                 if (idUser > 0){
+                     user.setIdUser(resultSet.getInt("iduser"));
+                     System.out.println(user.getIdUser() + " id user");
+                 }
+
 
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -96,27 +103,30 @@ public class BankAccountCreation {
 
 
         CreditCard creditCard = createCreditCard(login, password, limit);
+        creditCard.setIdCreditCard(idUser);
         //INSERT INTO `bank`.`creditcard` (`login`, `password`, `withdrawalLimit`) VALUES ('res10', 'res10', '1000');
 //sql
+        //установить ид от юзера
         try {
             Statement statement = connection.getConnection().createStatement();
             statement.executeUpdate("INSERT INTO `bank`.`creditcard` (`login`, `password`, `withdrawalLimit`, `blocked`, `invoiceAmount`) VALUES ('" +
                     login + "', '" + password + "', '" + limit + "','0', '0');");
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM bank.creditcard;");
-            creditCard.setIdCreditCard(resultSet.getInt(1));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        createBankAccount(bankAccountList, user, creditCard);
+        createBankAccount(bankAccountList, user, creditCard, idUser);
     }
 
 
-    void createBankAccount(ListBankAccount bankAccountList, User user, CreditCard creditCard) {
+    void createBankAccount(ListBankAccount bankAccountList, User user, CreditCard creditCard,int idUser) {
 
         BankAccount bankAccount = new BankAccount(user, creditCard);
+        bankAccount.setClientId(idUser);
         Credit credit = createCredit();
+        credit.setIdCredit(idUser);
         bankAccount.setCredit(credit);
         Insurance insurance = createInsurance();
+        insurance.setIdInsurance(idUser);
         bankAccount.setInsurance(insurance);
         bankAccount.setClientId(bankAccount.getUser().getIdUser());
         //надо установить ид от бд
@@ -124,7 +134,7 @@ public class BankAccountCreation {
         //добавить ид
     }
 
-    private Credit createCredit(){
+    private Credit createCredit() {
         Credit credit = new Credit();
         credit.setHowMuchToPay(0);
         credit.setPercentRate(0);
@@ -137,11 +147,9 @@ public class BankAccountCreation {
 
         try {
             Statement statement = connection.getConnection().createStatement();
-            statement.executeUpdate("INSERT INTO `bank`.`creditcard` (`howMuchToPay`, `percentRate`, `paid`," +
+            statement.executeUpdate("INSERT INTO `bank`.`credit` (`howMuchToPay`, `percentRate`, `paid`," +
                     " `theTotalAmountYouPay`, `countMonthsToPay`, `bankProfit`, `howMuchIsTheLoan`, `paymentPerMonth`) " +
                     "VALUES ('0','0','0','0','0','0','0','0');");
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM bank.creditcard;");
-            credit.setIdCredit(resultSet.getInt(1));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -149,16 +157,14 @@ public class BankAccountCreation {
     }
 
 
-    private Insurance createInsurance(){
-          Insurance insurance = new Insurance(0);
-          insurance.setInsurancePaid(0);
+    private Insurance createInsurance() {
+        Insurance insurance = new Insurance(0);
+        insurance.setInsurancePaid(0);
 
         try {
             Statement statement = connection.getConnection().createStatement();
             statement.executeUpdate("INSERT INTO `bank`.`insurance` (`sumInsured`, `insurancePaid`) " +
                     "VALUES ('0','0');");
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM bank.creditcard;");
-            insurance.setIdInsurance(resultSet.getInt(1));
         } catch (SQLException e) {
             e.printStackTrace();
         }

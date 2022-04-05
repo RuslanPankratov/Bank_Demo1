@@ -36,52 +36,10 @@ public class UIMenuEnter implements UIAction {
     //и тут делаем под скл
     @Override
     public void execute() {
-        List<RuleFirstNameAndLastName> lastNames = List.of(new MoreThanOneCharacter(),
-                new RuleMustContainOnlyLatinCharacters());
-        BankAccountCreation bankAccountCreation = new BankAccountCreation(lastNames);
-        TypeOfBenefits typeOfBenefits = bankAccountCreation.choiceOfStatus("3");
-        User user = bankAccountCreation.createUser("Igor","Pan", 29, typeOfBenefits);
-        CreditCard creditCard = bankAccountCreation.createCreditCard("log","pas", 40000);
-        BankAccount bankAccount = new BankAccount(user,creditCard);
 
-
-
-        TypeOfBenefits typeOfBenefits1 = bankAccountCreation.choiceOfStatus("3");
-        User user1 = bankAccountCreation.createUser("Igor","Pan", 29, typeOfBenefits1);
-        CreditCard creditCard1 = bankAccountCreation.createCreditCard("log1","pas1", 40000);
-        BankAccount bankAccount1 = new BankAccount(user1,creditCard1);
-
-        listBankAccount = new ListBankAccount();
-        listBankAccount.getBankAccountList().add(bankAccount);
-        listBankAccount.getBankAccountList().add(bankAccount1);
-
-       // CardEntry cardEntry = new CardEntry();
-       // cardEntry.setListBankAccount(listBankAccount);
-
-
-
-
-//        List<CardEntryIMPL> cardEntryIMPLS = List.of(new CreditCardEntryIMPL(), без спринка должно быть
-//                new DepositAndWithdrawalCardEntryIMPL(),
-//                new EditingCardEntryIMPL(),
-//                new InsuranceCardEntryIMPL());
-//        cardEntry.setCardEntryIMPLS(cardEntryIMPLS);
 
 
         while (true) {
-
-            //       ScannerSignInOrRegisterAnAccount scannerSignInOrRegisterAnAccount = new ScannerSignInOrRegisterAnAccount();
-            //      String result = scannerSignInOrRegisterAnAccount.result();
-
-
-//            String enter = scannerSignInOrRegisterAnAccount.enter();
-//            if (enter.equalsIgnoreCase("no")) {
-//                break;
-//            }
-
-
-            //    if (result.equals("1")) {
-            //      CardEntry cardEntry1 = new CardEntry(listBankAccount);
             ScannerSignInOrRegisterAnAccount scannerSignInOrRegisterAnAccount = new ScannerSignInOrRegisterAnAccount();
             while (true) {
                 String enter = scannerSignInOrRegisterAnAccount.enter();
@@ -97,21 +55,6 @@ public class UIMenuEnter implements UIAction {
                 CardEntry cardEntryIMPL = applicationContext.getBean(CardEntry.class); //тут должен быть имплемент а не интерфейс
                 cardEntryIMPL.enter(log,pas);
 
-          //      cardEntry.enter(log, pas);//error, attempts left before blocking 4
-                //     }
-
-//            } else if (result.equals("2")) {
-//                List<RuleFirstNameAndLastName> lastNames = List.of(new MoreThanOneCharacter(),
-//                        new RuleMustContainOnlyLatinCharacters());
-//                BankAccountCreation bankAccountCreation = new BankAccountCreation(lastNames);
-//                bankAccountCreation.createBankAccount(listBankAccount);
-//            }
-
-
-//            System.out.println("Enter login and password");
-//            String log = scannerSignInOrRegisterAnAccount.scannerLogin();
-//            String pas = scannerSignInOrRegisterAnAccount.scannerPassword();
-//            cardEntry.enter(log, pas);
             }
         }
 

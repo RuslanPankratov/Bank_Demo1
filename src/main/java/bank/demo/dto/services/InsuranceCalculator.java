@@ -1,10 +1,15 @@
 package bank.demo.dto.services;
 
+import bank.demo.dto.bd.DB;
 import bank.demo.dto.dto.BankAccount;
 import bank.demo.dto.dto.Insurance;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class InsuranceCalculator {
+    private DB connection = new DB();
     private Insurance insurance;
 
     public InsuranceCalculator(Insurance insurance) {
@@ -49,6 +54,17 @@ public class InsuranceCalculator {
         bankAccount.setInsurance(insurance);
         bankAccount.getInsurance().setSumInsured(bankAccount.getInsurance().getSumInsured() + sum);
         bankAccount.getInsurance().setInsurancePaid(bankAccount.getInsurance().getInsurancePaid() + howMuchToPay);
+        try {
+            Statement statement = connection.getConnection().createStatement();
+            statement.executeUpdate("UPDATE `bank`.`insurance` SET `sumInsured`= "
+                    + bankAccount.getInsurance().getSumInsured() + ",`insurancePaid`="
+                    + bankAccount.getInsurance().getInsurancePaid() + " WHERE `idInsurance`="
+                    + bankAccount.getInsurance().getIdInsurance() + "; ");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 //        bankAccount.getCreditCard().setInvoiceAmount(bankAccount.getCreditCard().getInvoiceAmount() -
 //                bankAccount.getInsurance().getInsurancePaid());
 //        System.out.println("invoice amount : " + bankAccount.getCreditCard().getInvoiceAmount());

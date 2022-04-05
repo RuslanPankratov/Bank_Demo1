@@ -1,21 +1,27 @@
 package bank.demo.dto.services.cardEnter;
 
+import bank.demo.dto.bd.DB;
 import bank.demo.dto.dto.ListBankAccount;
 import bank.demo.dto.enum_class.TypeOfBenefits;
 import bank.demo.dto.scanner.ScannerCardEntry;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
+import java.sql.Statement;
+
 @Order(4)
 @Component
 public class EditingCardEntryIMPL implements CardEntryIMPL {
+
+    private DB connection = new DB();
 
     @Override
     public void menu(ListBankAccount listBankAccount, int i) {
         ScannerCardEntry scannerCardEntry = new ScannerCardEntry();
         String result = scannerCardEntry.methodResult();
         if (result.equals("1")) {
-            editing( listBankAccount,i);
+            editing(listBankAccount, i);
         } else if (result.equals("2")) {
             statusEditing(listBankAccount, i);
         }
@@ -35,6 +41,17 @@ public class EditingCardEntryIMPL implements CardEntryIMPL {
         listBankAccount.getBankAccountList().get(i).getUser().setFirstName(firstName);
         listBankAccount.getBankAccountList().get(i).getUser().setLastName(lastName);
         System.out.println("now your name " + firstName + " and your last name " + lastName);
+
+        try {
+            Statement statement = connection.getConnection().createStatement();
+            //update `bank`.`user` set `firstName`='led',`lastName`='pie' where`iduser`=2;
+            statement.executeUpdate("update `bank`.`user` set `firstName`='" + firstName
+                    + "',`lastName`='" + lastName + "' where`iduser`="
+                    + listBankAccount.getBankAccountList().get(i).getUser().getIdUser() + "; ");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -57,5 +74,14 @@ public class EditingCardEntryIMPL implements CardEntryIMPL {
             listBankAccount.getBankAccountList().get(i).getUser().setTypeOfBenefits(TypeOfBenefits.VETERAN);
         }
         System.out.println("Your status: " + listBankAccount.getBankAccountList().get(i).getUser().getTypeOfBenefits());
+        try {
+            Statement statement = connection.getConnection().createStatement();
+            statement.executeUpdate("update `bank`.`user` set `typeOfBenefits`='" + resultType + "' where`iduser`="
+                    + listBankAccount.getBankAccountList().get(i).getUser().getIdUser() + ";  ");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
