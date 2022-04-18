@@ -1,8 +1,6 @@
 package bank.demo.dto.scanner.ui;
 
-import bank.demo.dto.scanner.ui.UIAction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,14 +10,19 @@ import java.util.Scanner;
 @Component
 public class UIMenu {
 
-    @Autowired //пишеться только тогда, когда нет конструктора, или нет файла в конструторе
+
+    @Autowired //пишется только тогда, когда нет конструктора, или нет файла в конструторе
     private final List<UIAction> uiActions;
 
-    public UIMenu( List<UIAction> uiActions) {// UIMenu(@Qualifier("withoutExit") List<UIAction> uiActions)
-        // здесь через @Qualifier мы пишим в скобках
-        // название бина, и через этот бин мы вызываем лист с новым меню
-        this.uiActions = uiActions;
-    }
+     public UIMenu(List<UIAction> uiActions) {
+         this.uiActions = uiActions;
+     }
+
+//     public UIMenu(List<UIAction> uiActions) {// UIMenu(@Qualifier("withoutExit") List<UIAction> uiActions)
+//        // здесь через @Qualifier мы пишим в скобках
+//        // название бина, и через этот бин мы вызываем лист с новым меню
+//        this.uiActions = uiActions;
+//    }
     public void startUI(){
         while (true) {
             try {

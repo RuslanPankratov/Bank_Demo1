@@ -2,7 +2,7 @@ package bank.demo.dto.dto;
 import java.util.List;
 
 public class BankAccount {
-    private User user;
+    private Users1 user;
     private CreditCard creditCard;
     private float clientId;
     private List<Transaction> transactions; //транзакции должны быть по ид на каждого человека, с возможностью иметь много транзакций
@@ -11,17 +11,17 @@ public class BankAccount {
     private Credit credit;
     private Insurance insurance;
 
-    public BankAccount(User user, CreditCard creditCard) {
+    public BankAccount(Users1 user, CreditCard creditCard) {
         this.user = user;
         this.creditCard = creditCard;
     }
 
 
-    public User getUser() {
+    public Users1 getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Users1 user) {
         this.user = user;
     }
 

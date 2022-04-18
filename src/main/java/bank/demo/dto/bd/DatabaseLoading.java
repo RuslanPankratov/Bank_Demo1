@@ -15,7 +15,7 @@ public class DatabaseLoading implements BDInterface {
     private DB connection = new DB();
 
     private ListBankAccount listBankAccount = new ListBankAccount();
-    private List<User> userList = new ArrayList<>();
+    private List<Users1> userList = new ArrayList<>();
     private List<CreditCard> creditCardList = new ArrayList<>();
     private List<Credit> creditList = new ArrayList<>();
     private List<Insurance> insuranceList = new ArrayList<>();
@@ -45,7 +45,7 @@ public class DatabaseLoading implements BDInterface {
                 TypeOfBenefits typeOfBenefits = choiceOfStatus(resultSet.getString("typeOfBenefits"));// так же можно по имени колонки обращаться
 //               User user = new User(resultSet.getString(2), resultSet.getString(3),//эти цифры
 //                       // говорят о том, с какого столбца мы что берём, отсчёт идёт с 1
-                User user = new User(resultSet.getString("firstName"), resultSet.getString("lastName"),//эти цифры
+                Users1 user = new Users1(resultSet.getString("firstName"), resultSet.getString("lastName"),//эти цифры
                         // говорят о том, с какого столбца мы что берём, отсчёт идёт с 1
                         resultSet.getInt("age"), typeOfBenefits);
                 user.setIdUser(resultSet.getInt("iduser"));

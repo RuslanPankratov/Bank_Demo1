@@ -35,7 +35,7 @@ public class DepositOrWithdrawalCalculatorTest {
                 new RuleMustContainOnlyLatinCharacters());
         BankAccountCreation bankAccountCreation = new BankAccountCreation(lastNames);
         TypeOfBenefits typeOfBenefits = bankAccountCreation.choiceOfStatus("3");
-        User user = bankAccountCreation.createUser("Igor","Pan", 29, typeOfBenefits);
+        Users1 user = bankAccountCreation.createUser("Igor","Pan", 29, typeOfBenefits);
         CreditCard creditCard = bankAccountCreation.createCreditCard("log","pas", 4000);
         BankAccount bankAccount = new BankAccount(user,creditCard, 0);
         return bankAccount;

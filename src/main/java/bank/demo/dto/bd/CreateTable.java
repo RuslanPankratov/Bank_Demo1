@@ -1,5 +1,6 @@
 package bank.demo.dto.bd;
 
+
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
@@ -25,6 +26,8 @@ public class CreateTable implements BDInterface {
         createTable.createInsurance();
         createTable.createTransactions();
     }
+
+
 
     void createUser() {
         try {

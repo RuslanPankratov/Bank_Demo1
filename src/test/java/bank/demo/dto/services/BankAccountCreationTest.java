@@ -6,8 +6,6 @@ import bank.demo.dto.helper.rule.MoreThanOneCharacter;
 import bank.demo.dto.helper.rule.RuleFirstNameAndLastName;
 import bank.demo.dto.helper.rule.RuleMustContainOnlyLatinCharacters;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
@@ -75,7 +73,7 @@ class BankAccountCreationTest {
                 new RuleMustContainOnlyLatinCharacters());
         BankAccountCreation bankAccountCreation = new BankAccountCreation(lastNames);
         TypeOfBenefits typeOfBenefits = bankAccountCreation.choiceOfStatus("6");
-        User user = bankAccountCreation.createUser("Igor", "Pan", 29, typeOfBenefits);
+        Users1 user = bankAccountCreation.createUser("Igor", "Pan", 29, typeOfBenefits);
         CreditCard creditCard = bankAccountCreation.createCreditCard("log", "pas", 4000);
         bankAccountCreation.createBankAccount(listBankAccount, user, creditCard);
 
@@ -95,7 +93,7 @@ class BankAccountCreationTest {
         BankAccountCreation bankAccountCreation = new BankAccountCreation(lastNames);
         ListBankAccount listBankAccount = new ListBankAccount();
         TypeOfBenefits typeOfBenefits = bankAccountCreation.choiceOfStatus(number);
-        User user = bankAccountCreation.createUser("Igor", "Pan", 29, typeOfBenefits);
+        Users1 user = bankAccountCreation.createUser("Igor", "Pan", 29, typeOfBenefits);
         CreditCard creditCard = bankAccountCreation.createCreditCard("log", "pas", 4000);
         bankAccountCreation.createBankAccount(listBankAccount, user, creditCard);
         return listBankAccount;
