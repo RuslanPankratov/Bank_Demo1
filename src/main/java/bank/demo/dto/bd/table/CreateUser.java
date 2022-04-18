@@ -14,26 +14,33 @@ import java.util.Optional;
 
 @Repository
 @Data
-@Transactional//(readOnly = true, propagation= Propagation.NOT_SUPPORTED)
-//@AllArgsConstructor
 public class CreateUser implements HibernateRepository<User> { //благодаря этому классу, можно будет его использовать в других местах
     private SessionFactory sessionFactory;
 
     //сделав такой класс, мы потом сможем хорошо манилипулировать нашими действиями
 //import org.springframework.transaction.annotation.Transactional;
-
-        @Override
+    @Transactional
+    @Override
     public User save(User user) {
+//        Transactional transactional = null;
+//        try(Session session = sessionFactory.openSession()){
+//
+//            session.beginTransaction();
+//
+//            session.save(user);
+//            transactional.commit();
+//
+//        }
 //       Session session = sessionFactory.openSession();
 //       session.get(User.class, 2);
 
-       // sessionFactory.getCurrentSession().save(user);
+        sessionFactory.getCurrentSession().save(user);
         return user;
     }
 
     @Override
     public List<User> findAll() {
-       return sessionFactory.getCurrentSession().createQuery("SELECT u FROM users u").getResultList();
+        return sessionFactory.getCurrentSession().createQuery("SELECT u FROM users u").getResultList();
 
     }
 
