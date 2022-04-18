@@ -1,6 +1,7 @@
 package bank.demo.dto.config;
 
 
+import liquibase.integration.spring.SpringLiquibase;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,7 @@ public class DatabaseConfig {
                                          @Value("${hibernate.dialect}") String dialect,
                                          //value автоматически с проперти переносит значение в стринг к примеру диалект
                                          //тут мы пишем дополнения к нашей фабрике сесий
+                                         @Value("${hibernate.hbm2ddl.auto}") String ddl,
                                          @Value("${hibernate.show_sql}") String showSql,
                                          @Value("${hibernate.package.scan}") String packageScan
     ) throws IOException {
@@ -42,6 +44,7 @@ public class DatabaseConfig {
         sessionFactory.setPackagesToScan(packageScan);
         var hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.dialect", dialect);
+        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", ddl);
         hibernateProperties.setProperty("hibernate.show_sql", showSql);
         sessionFactory.setHibernateProperties(hibernateProperties);
         sessionFactory.afterPropertiesSet();

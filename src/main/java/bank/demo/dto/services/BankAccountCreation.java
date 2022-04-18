@@ -1,21 +1,17 @@
 package bank.demo.dto.services;
 
-import bank.demo.dto.bd.DB;
 import bank.demo.dto.bd.table.CreateUser;
-import bank.demo.dto.bd.table.User;
+import bank.demo.dto.bd.table.Userbank;
 import bank.demo.dto.dto.*;
-import bank.demo.dto.enum_class.TypeOfBenefits;
 import bank.demo.dto.helper.rule.RuleFirstNameAndLastName;
 import bank.demo.dto.scanner.ScannerBankAccountCreation;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
-
+@Transactional
 @Component
 public class BankAccountCreation {
     private List<RuleFirstNameAndLastName> ruleFirstNameAndLastName;
@@ -53,14 +49,14 @@ public class BankAccountCreation {
 
         //  Users1 user = createUser(firstName, lastName, age, typeOfBenefits);
 
-        User users = new User();
+       Userbank users = new Userbank();
+
         users.setFirstName(firstName);
         users.setLastName(lastName);
         users.setAge(age);
         users.setTypeOfBenefits("12");//можно через ту стринг это сделать
 
-        CreateUser createUser = new CreateUser();
-        createUser.setSessionFactory(sessionFactory);
+        CreateUser createUser = new CreateUser(sessionFactory);
         //юзер уже существует, теперь просто для начала подключимся к бд
         createUser.save(users);//здесь он сохранит моего юзера, значит надо
         createUser.update(users);

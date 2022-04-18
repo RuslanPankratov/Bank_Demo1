@@ -1,10 +1,9 @@
 package bank.demo.dto.bd.table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -13,45 +12,49 @@ import java.util.Optional;
 
 
 @Repository
+@Transactional
+@AllArgsConstructor
 @Data
-public class CreateUser implements HibernateRepository<User> { //благодаря этому классу, можно будет его использовать в других местах
+public class CreateUser implements HibernateRepository<Userbank> { //благодаря этому классу, можно будет его использовать в других местах
     private SessionFactory sessionFactory;
 
     //сделав такой класс, мы потом сможем хорошо манилипулировать нашими действиями
 //import org.springframework.transaction.annotation.Transactional;
     @Transactional
     @Override
-    public User save(User user) {
-//        Transactional transactional = null;
+    public Userbank save(Userbank user) {
+        user.setIdUser(1);
+//        System.out.println(user.toString());
+//        Transaction transaction = null;
 //        try(Session session = sessionFactory.openSession()){
+//
 //
 //            session.beginTransaction();
 //
 //            session.save(user);
-//            transactional.commit();
-//
+//            transaction.commit();
+//        } catch (Exception e){
+//            e.printStackTrace();
 //        }
-//       Session session = sessionFactory.openSession();
-//       session.get(User.class, 2);
 
-        sessionFactory.getCurrentSession().save(user);
+      sessionFactory.getCurrentSession().save(user);
         return user;
     }
 
     @Override
-    public List<User> findAll() {
+    public List<Userbank> findAll() {
         return sessionFactory.getCurrentSession().createQuery("SELECT u FROM users u").getResultList();
 
     }
 
     @Override
-    public Optional<User> findById(Integer id) {
-        User user = sessionFactory.getCurrentSession().get(User.class, id);//он будет находить по ид класс, в сесиях
+    public Optional<Userbank> findById(Integer id) {
+        Userbank user = sessionFactory.getCurrentSession().get(Userbank.class, id);//он будет находить по ид класс, в сесиях
         return Optional.ofNullable(user);
     }
 
     @Override
-    public void update(User user) {
+    public void update(Userbank user) {
         sessionFactory.getCurrentSession().update(user);
     }
 }
