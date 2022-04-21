@@ -1,9 +1,9 @@
 package bank.demo.dto.services;
 
-import bank.demo.dto.scanner.ScannerLoanCalculation;
+//import bank.demo.dto.scanner.ScannerLoanCalculation;
 import bank.demo.dto.enum_class.TypeOfBenefits;
 import bank.demo.dto.dto.BankAccount;
-import bank.demo.dto.dto.Credit;
+import bank.demo.dto.dto.Credit1;
 
 public class LoanCalculation {
 
@@ -19,45 +19,64 @@ public class LoanCalculation {
         double discount = 0;
 
         if (bankAccount.getCredit() == null) {
-            bankAccount.setCredit(new Credit());
+            bankAccount.setCredit(new Credit1());
         }
         if (bankAccount.getUser().getTypeOfBenefits().equals(TypeOfBenefits.NO_BENEFITS)) {
-
             customerCosting(bankAccount, currentPercentUser);
 
         } else if (bankAccount.getUser().getTypeOfBenefits().equals(TypeOfBenefits.DISABILITY_ONE_TWO)) {
-            //57
-            discount = 57;
-            double count = currentPercentUser / 100 * discount;
-            currentPercentUser = currentPercentUser - count;
-            customerCosting(bankAccount, currentPercentUser);
+            oneOrTwo(discount);
 
         } else if (bankAccount.getUser().getTypeOfBenefits().equals(TypeOfBenefits.DISABILITY_THREE_FOUR)) {
-            discount = 21;
-            double count = currentPercentUser / 100 * discount;
-            currentPercentUser = currentPercentUser - count;
-            customerCosting(bankAccount, currentPercentUser);
+            threeOrFour(discount);
 
         } else if (bankAccount.getUser().getTypeOfBenefits().equals(TypeOfBenefits.THE_LARGE_FAMILY)) {
-            discount = 28;
-            double count = currentPercentUser / 100 * discount;
-            currentPercentUser = currentPercentUser - count;
-            customerCosting(bankAccount, currentPercentUser);
+            theLargeFamily(discount);
 
         } else if (bankAccount.getUser().getTypeOfBenefits().equals(TypeOfBenefits.PENSIONER)) {
-            discount = 10;
-            double count = currentPercentUser / 100 * discount;
-            currentPercentUser = currentPercentUser - count;
-            customerCosting(bankAccount, currentPercentUser);
+            pensioner(discount);
 
         } else if (bankAccount.getUser().getTypeOfBenefits().equals(TypeOfBenefits.VETERAN)) {
-            discount = 23;
-            double count = currentPercentUser / 100 * discount;
-            currentPercentUser = currentPercentUser - count;
-            customerCosting(bankAccount, currentPercentUser);
+            veteran(discount);
 
         }
     }
+
+    void veteran(double discount) {
+        discount = 23;
+        double count = currentPercentUser / 100 * discount;
+        currentPercentUser = currentPercentUser - count;
+        customerCosting(bankAccount, currentPercentUser);
+    }
+
+    void pensioner(double discount) {
+        discount = 10;
+        double count = currentPercentUser / 100 * discount;
+        currentPercentUser = currentPercentUser - count;
+        customerCosting(bankAccount, currentPercentUser);
+    }
+
+    void theLargeFamily(double discount) {
+        discount = 28;
+        double count = currentPercentUser / 100 * discount;
+        currentPercentUser = currentPercentUser - count;
+        customerCosting(bankAccount, currentPercentUser);
+    }
+
+    void oneOrTwo(double discount) {
+        discount = 57;
+        double count = currentPercentUser / 100 * discount;
+        currentPercentUser = currentPercentUser - count;
+        customerCosting(bankAccount, currentPercentUser);
+    }
+
+    void threeOrFour(double discount) {
+        discount = 21;
+        double count = currentPercentUser / 100 * discount;
+        currentPercentUser = currentPercentUser - count;
+        customerCosting(bankAccount, currentPercentUser);
+    }
+
 
     void customerCosting(BankAccount bankAccount, double currentPercentUser) {
         double countMonth = bankAccount.getCredit().getCountMonthsToPay();
@@ -74,8 +93,10 @@ public class LoanCalculation {
         System.out.println("Are you sure you want to take out a loan? Yes or No");
 
 
-        ScannerLoanCalculation scannerLoanCalculation = new ScannerLoanCalculation();
-        scannerLoanCalculation.loanCalc(bankAccount, paymentAmountPercent, currentPercentUser, countMonth, percentOverpaid,
-                resultPaymentMonth);
+//        ScannerLoanCalculation scannerLoanCalculation = new ScannerLoanCalculation();
+//        scannerLoanCalculation.loanCalc(bankAccount, paymentAmountPercent, currentPercentUser, countMonth, percentOverpaid,
+//                resultPaymentMonth);
     }
+
+
 }

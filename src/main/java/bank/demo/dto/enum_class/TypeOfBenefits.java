@@ -7,4 +7,5 @@ public enum TypeOfBenefits {
     THE_LARGE_FAMILY,
     PENSIONER,
     VETERAN
+
 }

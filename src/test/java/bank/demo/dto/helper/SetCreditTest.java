@@ -1,7 +1,7 @@
 package bank.demo.dto.helper;
 
 import bank.demo.dto.dto.BankAccount;
-import bank.demo.dto.dto.Credit;
+import bank.demo.dto.dto.Credit1;
 import bank.demo.dto.dto.CreditCard;
 import bank.demo.dto.dto.Users1;
 import bank.demo.dto.enum_class.TypeOfBenefits;
@@ -19,7 +19,7 @@ public class SetCreditTest {
         Users1 user = new Users1("Igor", "Vladislav", 29,TypeOfBenefits.NO_BENEFITS);
         CreditCard creditCard = new CreditCard(false, "log", "pas", 0,16000);
         BankAccount bankAccount = new BankAccount(user, creditCard, 1f);
-        Credit credit = new Credit();
+        Credit1 credit = new Credit1();
         bankAccount.setCredit(credit);
         setCredit.creditSet(bankAccount, 132,123,13
                 ,21,13);

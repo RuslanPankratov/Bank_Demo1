@@ -1,6 +1,6 @@
 package bank.demo.dto.services;
 
-import bank.demo.dto.bd.DB;
+//import bank.demo.dto.bd.delete.DB;
 import bank.demo.dto.enum_class.TransactionType;
 import bank.demo.dto.dto.BankAccount;
 import bank.demo.dto.dto.Transaction;
@@ -12,7 +12,7 @@ import java.sql.Statement;
 @Component
 public class DepositOrWithdrawalCalculator {
 
-    private DB connection = new DB();
+ //   private DB connection = new DB();
 
 
     public void calculator(BankAccount bankAccount, Transaction transaction) {
@@ -23,14 +23,7 @@ public class DepositOrWithdrawalCalculator {
             calculatorWithdrawal(bankAccount, transaction.getAmount());
         }
 
-        try {
-            Statement statement = connection.getConnection().createStatement();
-            statement.executeUpdate("UPDATE `bank`.`creditcard` SET `invoiceAmount` = '"
-                    + bankAccount.getCreditCard().getInvoiceAmount() + "' WHERE (`idCreditCard` = '"
-                    + bankAccount.getCreditCard().getIdCreditCard() + "');");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+      //  bd(bankAccount);
     }
 
     void calculatorDeposit(BankAccount bankAccount, double amountOfMoney) {
@@ -42,4 +35,15 @@ public class DepositOrWithdrawalCalculator {
         bankAccount.getCreditCard().setInvoiceAmount(bankAccount.getCreditCard().getInvoiceAmount() - amountOfMoney);
 
     }
+
+//    void bd(BankAccount bankAccount){
+//        try {
+//            Statement statement = connection.getConnection().createStatement();
+//            statement.executeUpdate("UPDATE `bank`.`creditcard` SET `invoiceAmount` = '"
+//                    + bankAccount.getCreditCard().getInvoiceAmount() + "' WHERE (`idCreditCard` = '"
+//                    + bankAccount.getCreditCard().getIdCreditCard() + "');");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

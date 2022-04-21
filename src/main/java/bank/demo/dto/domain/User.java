@@ -1,6 +1,7 @@
-package bank.demo.dto.bd.table;
+package bank.demo.dto.domain;
 
 
+import bank.demo.dto.enum_class.TypeOfBenefits;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,38 +11,28 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 
 @Entity(name = "users")//для того, чтобы потом использовать в коде это будет как ссылка на этот класс, когда будем работать с бд
-@Table(name = "userbank")
+@Table(name = "user")
 @Data
 @AllArgsConstructor
 @Transactional
 @NoArgsConstructor
 
-public class Userbank {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "iduser")
+    @Column(name = "id_user")  //надо писать через нижнее подчёркивание, чтобы всё работало, потому что такая стратегия
     private Integer idUser;
-    @Column(name = "firstName")
+    @Column(name = "first_name")
     private String firstName;
-    @Column(name = "lastName")
+    @Column(name = "last_name")
     private String lastName;
     @Column(name = "age")
     private int age;
-    @Column(name = "typeOfBenefits")
+    // @Enumerated(EnumType.STRING)//так можно подключать энамы
+    @Column(name = "type_of_benefits")
     private String typeOfBenefits;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "iduser", referencedColumnName = "iduser")
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "idUser=" + idUser +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                ", typeOfBenefits='" + typeOfBenefits + '\'' +
-                '}';
-    }
+
 }

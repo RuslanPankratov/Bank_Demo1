@@ -8,7 +8,7 @@ public class BankAccount {
     private List<Transaction> transactions; //транзакции должны быть по ид на каждого человека, с возможностью иметь много транзакций
     //то есть у транзации должен быть свой ид, но и в тоже время этот ид должен быть привзяаным к человеку
     //разобраться позже в этом
-    private Credit credit;
+    private Credit1 credit;
     private Insurance insurance;
 
     public BankAccount(Users1 user, CreditCard creditCard) {
@@ -49,11 +49,11 @@ public class BankAccount {
         this.transactions = transactions;
     }
 
-    public Credit getCredit() {
+    public Credit1 getCredit() {
         return credit;
     }
 
-    public void setCredit(Credit credit) {
+    public void setCredit(Credit1 credit) {
         this.credit = credit;
     }
 

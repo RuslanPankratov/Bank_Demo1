@@ -6,16 +6,17 @@ public class Users1 {
     private String firstName;
     private String lastName;
     private int age;
-    private TypeOfBenefits typeOfBenefits;
+    private String typeOfBenefits;
     private int idUser;
 
-    public Users1(String firstName, String lastName, int age, TypeOfBenefits typeOfBenefits) {
+
+    public Users1(String firstName, String lastName, int age, String typeOfBenefits, int idUser) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.typeOfBenefits = typeOfBenefits;
+        this.idUser = idUser;
     }
-
 
     public String getFirstName() {
         return firstName;
@@ -29,9 +30,7 @@ public class Users1 {
         return age;
     }
 
-    public TypeOfBenefits getTypeOfBenefits() {
-        return typeOfBenefits;
-    }
+
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -45,7 +44,11 @@ public class Users1 {
         this.age = age;
     }
 
-    public void setTypeOfBenefits(TypeOfBenefits typeOfBenefits) {
+    public String getTypeOfBenefits() {
+        return typeOfBenefits;
+    }
+
+    public void setTypeOfBenefits(String typeOfBenefits) {
         this.typeOfBenefits = typeOfBenefits;
     }
 

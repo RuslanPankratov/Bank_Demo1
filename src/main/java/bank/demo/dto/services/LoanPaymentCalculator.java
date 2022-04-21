@@ -1,6 +1,6 @@
 package bank.demo.dto.services;
 
-import bank.demo.dto.bd.DB;
+//import bank.demo.dto.bd.delete.DB;
 import bank.demo.dto.dto.BankAccount;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 @Component
 public class LoanPaymentCalculator {
-    private DB connection = new DB();
+   // private DB connection = new DB();
 
 
     public void methodPay(BankAccount bankAccount) {
@@ -31,14 +31,19 @@ public class LoanPaymentCalculator {
         System.out.println("how much more do you have to pay = " + bankAccount.getCredit().getHowMuchToPay());
         System.out.println("account on the card = " + bankAccount.getCreditCard().getInvoiceAmount());
 
-        try {
-            Statement statement = connection.getConnection().createStatement();
-            statement.executeUpdate("UPDATE `bank`.`creditcard` SET `invoiceAmount` = '"
-                    + bankAccount.getCreditCard().getInvoiceAmount() + "' WHERE (`idCreditCard` = '"
-                    + bankAccount.getCreditCard().getIdCreditCard() + "');");
-        } catch (SQLException e) {
-            e.printStackTrace();
+       // bd(bankAccount);
 
-        }
     }
+
+//    void bd(BankAccount bankAccount){
+//        try {
+//            Statement statement = connection.getConnection().createStatement();
+//            statement.executeUpdate("UPDATE `bank`.`creditcard` SET `invoiceAmount` = '"
+//                    + bankAccount.getCreditCard().getInvoiceAmount() + "' WHERE (`idCreditCard` = '"
+//                    + bankAccount.getCreditCard().getIdCreditCard() + "');");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//
+//        }
+//    }
 }
