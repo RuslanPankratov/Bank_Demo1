@@ -3,7 +3,7 @@ package bank.demo.dto.services;
 //import bank.demo.dto.scanner.ScannerLoanCalculation;
 import bank.demo.dto.enum_class.TypeOfBenefits;
 import bank.demo.dto.dto.BankAccount;
-import bank.demo.dto.dto.Credit1;
+import bank.demo.dto.dto.CreditDTO;
 
 public class LoanCalculation {
 
@@ -19,7 +19,7 @@ public class LoanCalculation {
         double discount = 0;
 
         if (bankAccount.getCredit() == null) {
-            bankAccount.setCredit(new Credit1());
+            bankAccount.setCredit(new CreditDTO());
         }
         if (bankAccount.getUser().getTypeOfBenefits().equals(TypeOfBenefits.NO_BENEFITS)) {
             customerCosting(bankAccount, currentPercentUser);

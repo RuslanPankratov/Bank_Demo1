@@ -1,8 +1,6 @@
 package bank.demo.dto.dto;
 
-import bank.demo.dto.enum_class.TypeOfBenefits;
-
-public class Users1 {
+public class UserDTO {
     private String firstName;
     private String lastName;
     private int age;
@@ -10,7 +8,7 @@ public class Users1 {
     private int idUser;
 
 
-    public Users1(String firstName, String lastName, int age, String typeOfBenefits, int idUser) {
+    public UserDTO(String firstName, String lastName, int age, String typeOfBenefits, int idUser) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;

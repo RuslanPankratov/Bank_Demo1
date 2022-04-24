@@ -1,11 +1,11 @@
 package bank.demo.dto.dto;
 
-public class Insurance {
+public class InsuranceDTO {
     private double sumInsured;
     private double insurancePaid;
     private int idInsurance;
 
-    public Insurance(double sumInsured) {
+    public InsuranceDTO(double sumInsured) {
         this.sumInsured = sumInsured;
     }
 

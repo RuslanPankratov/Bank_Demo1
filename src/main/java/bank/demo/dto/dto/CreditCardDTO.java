@@ -1,6 +1,6 @@
 package bank.demo.dto.dto;
 
-public class CreditCard {
+public class CreditCardDTO {
     private boolean blocked;
     private String login;
     private String password;
@@ -9,7 +9,7 @@ public class CreditCard {
     private int idCreditCard;
 
 
-    public CreditCard(boolean blocked, String login, String password, double invoiceAmount, double withdrawalLimit) {
+    public CreditCardDTO(boolean blocked, String login, String password, double invoiceAmount, double withdrawalLimit) {
         this.blocked = blocked;
         this.login = login;
         this.password = password;

@@ -1,7 +1,6 @@
 package bank.demo.dto.repository;
 
 import bank.demo.dto.domain.User;
-import bank.demo.dto.repository.HibernateRepository;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,8 +13,7 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-
-public class CreateUser implements HibernateRepository<User> { //благодаря этому классу, можно будет его использовать в других местах
+public class HibernateUser implements HibernateRepository<User> { //благодаря этому классу, можно будет его использовать в других местах
    @Autowired
     private SessionFactory sessionFactory;
 
@@ -42,6 +40,6 @@ public class CreateUser implements HibernateRepository<User> { //благода�
 
     @Override
     public void update(User user) {
-        sessionFactory.getCurrentSession().update(user);
+        sessionFactory.openSession().update(user);
     }
 }

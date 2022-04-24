@@ -8,33 +8,33 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-//@Entity(name = "Credit")
-////для того, чтобы потом использовать в коде это будет как ссылка на этот класс, когда будем работать с бд
-//@Table(name = "credit")
-//@Data
-//@AllArgsConstructor
-//@Transactional
-//@NoArgsConstructor
+@Entity(name = "credit")
+//для того, чтобы потом использовать в коде это будет как ссылка на этот класс, когда будем работать с бд
+@Table(name = "credit")
+@Data
+@AllArgsConstructor
+@Transactional
+@NoArgsConstructor
 public class Credit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCredit")
+    @Column(name = "id_credit")
     private int idCredit;
-    @Column(name = "howMuchToPay")
+    @Column(name = "how_much_to_pay")
     private BigDecimal howMuchToPay; //надо выплатить ещё
-    @Column(name = "percentRate")
+    @Column(name = "percent_rate")
     private BigDecimal percentRate; // процентная ставка
     @Column(name = "paid")
     private BigDecimal paid;//выплачено
-    @Column(name = "theTotalAmountYouPay")
+    @Column(name = "the_total_amount_you_pay")
     private BigDecimal theTotalAmountYouPay;//сколько в общем надо выплатить
-    @Column(name = "countMonthsToPay")
+    @Column(name = "count_months_to_pay")
     private BigDecimal countMonthsToPay; //количество месяцев ещё платить
-    @Column(name = "bankProfit")
+    @Column(name = "bank_profit")
     private BigDecimal bankProfit; //прибыль банка
-    @Column(name = "howMuchIsTheLoan")
+    @Column(name = "how_much_is_the_loan")
     private BigDecimal howMuchIsTheLoan;// сколько берёт кредита человек
-    @Column(name = "paymentPerMonth")
+    @Column(name = "payment_per_month")
     private BigDecimal paymentPerMonth;//сколько в месяц платить  нельзя создавая такие колонки, они должны быть ещё созданы и в бд
 }

@@ -3,7 +3,7 @@ package bank.demo.dto.dto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Credit1 {
+public class CreditDTO {
 
     private int idCredit;
     private double howMuchToPay; //надо выплатить ещё

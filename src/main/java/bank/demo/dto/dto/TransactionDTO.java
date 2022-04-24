@@ -2,12 +2,12 @@ package bank.demo.dto.dto;
 
 import bank.demo.dto.enum_class.TransactionType;
 
-public class Transaction {
+public class TransactionDTO {
 
     private double amount;
     private TransactionType transactionType;
 
-    public Transaction(double amount, TransactionType transactionType) {
+    public TransactionDTO(double amount, TransactionType transactionType) {
         this.amount = amount;
         this.transactionType = transactionType;
     }

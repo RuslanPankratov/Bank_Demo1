@@ -18,11 +18,11 @@ public class DepositOrWithdrawalCalculatorTest {
     public void calculatorTest (){
         BankAccount bankAccount = create();
         DepositOrWithdrawalCalculator depositOrWithdrawalCalculator = new DepositOrWithdrawalCalculator();
-        Transaction transaction = new Transaction(20000, TransactionType.DEPOSIT);
+        TransactionDTO transaction = new TransactionDTO(20000, TransactionType.DEPOSIT);
         depositOrWithdrawalCalculator.calculator(bankAccount,transaction);
         assertEquals(bankAccount.getCreditCard().getInvoiceAmount(), 20000);
 
-        Transaction transaction1 = new Transaction(3000, TransactionType.WITHDRAWAL);
+        TransactionDTO transaction1 = new TransactionDTO(3000, TransactionType.WITHDRAWAL);
         depositOrWithdrawalCalculator.calculator(bankAccount,transaction1);
         assertEquals(bankAccount.getCreditCard().getInvoiceAmount(), 17000);
 
@@ -35,8 +35,8 @@ public class DepositOrWithdrawalCalculatorTest {
                 new RuleMustContainOnlyLatinCharacters());
         BankAccountCreation bankAccountCreation = new BankAccountCreation(lastNames);
         TypeOfBenefits typeOfBenefits = bankAccountCreation.choiceOfStatus("3");
-        Users1 user = bankAccountCreation.createUser("Igor","Pan", 29, typeOfBenefits);
-        CreditCard creditCard = bankAccountCreation.createCreditCard("log","pas", 4000);
+        UserDTO user = bankAccountCreation.createUser("Igor","Pan", 29, typeOfBenefits);
+        CreditCardDTO creditCard = bankAccountCreation.createCreditCard("log","pas", 4000);
         BankAccount bankAccount = new BankAccount(user,creditCard, 0);
         return bankAccount;
     }

@@ -2,34 +2,34 @@ package bank.demo.dto.dto;
 import java.util.List;
 
 public class BankAccount {
-    private Users1 user;
-    private CreditCard creditCard;
+    private UserDTO user;
+    private CreditCardDTO creditCard;
     private float clientId;
-    private List<Transaction> transactions; //транзакции должны быть по ид на каждого человека, с возможностью иметь много транзакций
+    private List<TransactionDTO> transactions; //транзакции должны быть по ид на каждого человека, с возможностью иметь много транзакций
     //то есть у транзации должен быть свой ид, но и в тоже время этот ид должен быть привзяаным к человеку
     //разобраться позже в этом
-    private Credit1 credit;
-    private Insurance insurance;
+    private CreditDTO credit;
+    private InsuranceDTO insurance;
 
-    public BankAccount(Users1 user, CreditCard creditCard) {
+    public BankAccount(UserDTO user, CreditCardDTO creditCard) {
         this.user = user;
         this.creditCard = creditCard;
     }
 
 
-    public Users1 getUser() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUser(Users1 user) {
+    public void setUser(UserDTO user) {
         this.user = user;
     }
 
-    public CreditCard getCreditCard() {
+    public CreditCardDTO getCreditCard() {
         return creditCard;
     }
 
-    public void setCreditCard(CreditCard creditCard) {
+    public void setCreditCard(CreditCardDTO creditCard) {
         this.creditCard = creditCard;
     }
 
@@ -41,27 +41,27 @@ public class BankAccount {
         this.clientId = clientId;
     }
 
-    public List<Transaction> getTransactions() {
+    public List<TransactionDTO> getTransactions() {
         return transactions;
     }
 
-    public void setTransactions(List<Transaction> transactions) {
+    public void setTransactions(List<TransactionDTO> transactions) {
         this.transactions = transactions;
     }
 
-    public Credit1 getCredit() {
+    public CreditDTO getCredit() {
         return credit;
     }
 
-    public void setCredit(Credit1 credit) {
+    public void setCredit(CreditDTO credit) {
         this.credit = credit;
     }
 
-    public Insurance getInsurance() {
+    public InsuranceDTO getInsurance() {
         return insurance;
     }
 
-    public void setInsurance(Insurance insurance) {
+    public void setInsurance(InsuranceDTO insurance) {
         this.insurance = insurance;
     }
 

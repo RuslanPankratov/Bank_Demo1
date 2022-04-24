@@ -3,11 +3,8 @@ package bank.demo.dto.services;
 //import bank.demo.dto.bd.delete.DB;
 import bank.demo.dto.enum_class.TransactionType;
 import bank.demo.dto.dto.BankAccount;
-import bank.demo.dto.dto.Transaction;
+import bank.demo.dto.dto.TransactionDTO;
 import org.springframework.stereotype.Component;
-
-import java.sql.SQLException;
-import java.sql.Statement;
 
 @Component
 public class DepositOrWithdrawalCalculator {
@@ -15,7 +12,7 @@ public class DepositOrWithdrawalCalculator {
  //   private DB connection = new DB();
 
 
-    public void calculator(BankAccount bankAccount, Transaction transaction) {
+    public void calculator(BankAccount bankAccount, TransactionDTO transaction) {
 
         if (transaction.getTransactionType().equals(TransactionType.DEPOSIT)) {
             calculatorDeposit(bankAccount, transaction.getAmount());

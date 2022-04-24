@@ -2,16 +2,13 @@ package bank.demo.dto.services;
 
 //import bank.demo.dto.bd.delete.DB;
 import bank.demo.dto.dto.BankAccount;
-import bank.demo.dto.dto.Insurance;
-
-import java.sql.SQLException;
-import java.sql.Statement;
+import bank.demo.dto.dto.InsuranceDTO;
 
 public class InsuranceCalculator {
   //  private DB connection = new DB();
-    private Insurance insurance;
+    private InsuranceDTO insurance;
 
-    public InsuranceCalculator(Insurance insurance) {
+    public InsuranceCalculator(InsuranceDTO insurance) {
         this.insurance = insurance;
     }
 
@@ -49,7 +46,7 @@ public class InsuranceCalculator {
 
     private void calculate(BankAccount bankAccount, double sum, double percent) {
         double howMuchToPay = sum / percent;
-        Insurance insurance = new Insurance(0);
+        InsuranceDTO insurance = new InsuranceDTO(0);
         bankAccount.setInsurance(insurance);
         bankAccount.getInsurance().setSumInsured(bankAccount.getInsurance().getSumInsured() + sum);
         bankAccount.getInsurance().setInsurancePaid(bankAccount.getInsurance().getInsurancePaid() + howMuchToPay);

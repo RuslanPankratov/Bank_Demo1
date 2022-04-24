@@ -73,8 +73,8 @@ class BankAccountCreationTest {
                 new RuleMustContainOnlyLatinCharacters());
         BankAccountCreation bankAccountCreation = new BankAccountCreation(lastNames);
         TypeOfBenefits typeOfBenefits = bankAccountCreation.choiceOfStatus("6");
-        Users1 user = bankAccountCreation.createUser("Igor", "Pan", 29, typeOfBenefits);
-        CreditCard creditCard = bankAccountCreation.createCreditCard("log", "pas", 4000);
+        UserDTO user = bankAccountCreation.createUser("Igor", "Pan", 29, typeOfBenefits);
+        CreditCardDTO creditCard = bankAccountCreation.createCreditCard("log", "pas", 4000);
         bankAccountCreation.createBankAccount(listBankAccount, user, creditCard);
 
 
@@ -93,8 +93,8 @@ class BankAccountCreationTest {
         BankAccountCreation bankAccountCreation = new BankAccountCreation(lastNames);
         ListBankAccount listBankAccount = new ListBankAccount();
         TypeOfBenefits typeOfBenefits = bankAccountCreation.choiceOfStatus(number);
-        Users1 user = bankAccountCreation.createUser("Igor", "Pan", 29, typeOfBenefits);
-        CreditCard creditCard = bankAccountCreation.createCreditCard("log", "pas", 4000);
+        UserDTO user = bankAccountCreation.createUser("Igor", "Pan", 29, typeOfBenefits);
+        CreditCardDTO creditCard = bankAccountCreation.createCreditCard("log", "pas", 4000);
         bankAccountCreation.createBankAccount(listBankAccount, user, creditCard);
         return listBankAccount;
 

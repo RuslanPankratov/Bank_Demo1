@@ -1,6 +1,6 @@
-package bank.demo.dto.dto;
+package bank.demo.dto.dto.bd;
 
-import bank.demo.dto.domain.User;
+import bank.demo.dto.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class FindAllUser {
 
-    private List<Users1> users;
+    private List<UserDTO> users;
 
 
 }

@@ -22,7 +22,59 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="create.table.credit" author="ruslan">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="credit"/>
+            </not>
+        </preConditions>
+        <createTable tableName="credit">
+            <column name="id_credit" type="INT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="how_much_to_pay" type="DECIMAL(19,4)"></column>
+            <column name="percent_rate" type="DECIMAL(19,4)"></column>
+            <column name="paid" type="DECIMAL(19,4)"></column>
+            <column name="the_total_amount_you_pay" type="DECIMAL(19,4)"></column>
+            <column name="count_months_to_pay" type="DECIMAL(19,4)"></column>
+            <column name="bank_profit" type="DECIMAL(19,4)"></column>
+            <column name="how_much_is_the_loan" type="DECIMAL(19,4)"></column>
+            <column name="payment_per_month" type="DECIMAL(19,4)"></column>
+        </createTable>
+    </changeSet>
 
 
+    <changeSet id="create.table.credit.card" author="ruslan">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="credit_card"/>
+            </not>
+        </preConditions>
+        <createTable tableName="credit_card">
+            <column name="id_credit_card" type="INT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="blocked" type="TINYINT"></column>
+            <column name="login" type="VARCHAR(120)"></column>
+            <column name="password" type="VARCHAR(120)"></column>
+            <column name="invoice_amount" type="DECIMAL(19,4)"></column>
+            <column name="withdrawal_limit" type="DECIMAL(19,4)"></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create.table.insurance" author="ruslan">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="insurance"/>
+            </not>
+        </preConditions>
+        <createTable tableName="insurance">
+            <column name="id_insurance" type="INT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="sum_insured" type="DECIMAL(19,4)"></column>
+            <column name="insurance_paid" type="DECIMAL(19,4)"></column>
+        </createTable>
+    </changeSet>
 
 </databaseChangeLog>

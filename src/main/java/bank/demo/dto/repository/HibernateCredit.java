@@ -24,16 +24,17 @@ public class HibernateCredit implements HibernateRepository<Credit>{
 
     @Override
     public List<Credit> findAll() {
-        return null;
+        return sessionFactory.openSession().createQuery("SELECTED c FROM credit c").getResultList();
     }
 
     @Override
     public Optional<Credit> findById(Integer id) {
-        return Optional.empty();
+        Credit credit = sessionFactory.openSession().get(Credit.class, id);
+        return Optional.ofNullable(credit);
     }
 
     @Override
     public void update(Credit entity) {
-
+          sessionFactory.openSession().update(entity);
     }
 }
