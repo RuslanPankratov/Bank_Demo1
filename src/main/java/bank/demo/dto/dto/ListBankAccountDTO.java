@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ListBankAccount {
+public class ListBankAccountDTO {
 
-    private static List<BankAccount> bankAccountList = new ArrayList<>();
+    private static List<BankAccountDTO> bankAccountList = new ArrayList<>();
 
-    public List<BankAccount> getBankAccountList() {
+    public List<BankAccountDTO> getBankAccountList() {
         return bankAccountList;
     }
 
 
-    public void setBankAccount(BankAccount bankAccount) {
+    public void setBankAccount(BankAccountDTO bankAccount) {
         bankAccountList.add(bankAccount);
     }
 

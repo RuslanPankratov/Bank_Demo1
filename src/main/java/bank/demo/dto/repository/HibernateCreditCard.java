@@ -4,6 +4,7 @@ package bank.demo.dto.repository;
 import bank.demo.dto.domain.CreditCard;
 import lombok.AllArgsConstructor;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -12,11 +13,11 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-@AllArgsConstructor
 public class HibernateCreditCard implements HibernateRepository<CreditCard> {
-
+    @Autowired
     private SessionFactory sessionFactory;
 
+    @Transactional
     @Override
     public CreditCard save(CreditCard entity) {
         sessionFactory.openSession().save(entity);
@@ -25,7 +26,7 @@ public class HibernateCreditCard implements HibernateRepository<CreditCard> {
 
     @Override
     public List<CreditCard> findAll() {
-        return sessionFactory.openSession().createQuery("SELECT c FROM credit_card c").getResultList();
+        return sessionFactory.openSession().createQuery("SELECT u FROM credit_cards u").getResultList();
     }
 
     @Override
@@ -36,6 +37,6 @@ public class HibernateCreditCard implements HibernateRepository<CreditCard> {
 
     @Override
     public void update(CreditCard entity) {
-           sessionFactory.openSession().update(entity);
+        sessionFactory.openSession().update(entity);
     }
 }

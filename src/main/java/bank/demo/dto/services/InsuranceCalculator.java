@@ -1,7 +1,7 @@
 package bank.demo.dto.services;
 
 //import bank.demo.dto.bd.delete.DB;
-import bank.demo.dto.dto.BankAccount;
+import bank.demo.dto.dto.BankAccountDTO;
 import bank.demo.dto.dto.InsuranceDTO;
 
 public class InsuranceCalculator {
@@ -12,7 +12,7 @@ public class InsuranceCalculator {
         this.insurance = insurance;
     }
 
-    public void insurance(BankAccount bankAccount, double sum, String typeInsurance) {
+    public void insurance(BankAccountDTO bankAccount, double sum, String typeInsurance) {
 
         if (typeInsurance.equalsIgnoreCase("house")) {
             houses(bankAccount, sum);
@@ -27,24 +27,24 @@ public class InsuranceCalculator {
     }
 
 
-    private void houses(BankAccount bankAccount, double sum) {
+    private void houses(BankAccountDTO bankAccount, double sum) {
         calculate(bankAccount, sum, 200);
     }
 
-    private void items(BankAccount bankAccount, double sum) {
+    private void items(BankAccountDTO bankAccount, double sum) {
         calculate(bankAccount, sum, 100);
     }
 
-    private void health(BankAccount bankAccount, double sum) {
+    private void health(BankAccountDTO bankAccount, double sum) {
         calculate(bankAccount, sum, 110);
     }
 
-    private void car(BankAccount bankAccount, double sum) {
+    private void car(BankAccountDTO bankAccount, double sum) {
         calculate(bankAccount, sum, 20);
     }
 
 
-    private void calculate(BankAccount bankAccount, double sum, double percent) {
+    private void calculate(BankAccountDTO bankAccount, double sum, double percent) {
         double howMuchToPay = sum / percent;
         InsuranceDTO insurance = new InsuranceDTO(0);
         bankAccount.setInsurance(insurance);

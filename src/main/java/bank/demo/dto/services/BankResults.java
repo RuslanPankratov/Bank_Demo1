@@ -1,14 +1,14 @@
 package bank.demo.dto.services;
 
-import bank.demo.dto.dto.ListBankAccount;
+import bank.demo.dto.dto.ListBankAccountDTO;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BankResults {
 
-    private ListBankAccount listBankAccount;
+    private ListBankAccountDTO listBankAccount;
 
-    public BankResults(ListBankAccount listBankAccount) {
+    public BankResults(ListBankAccountDTO listBankAccount) {
         this.listBankAccount = listBankAccount;
     }
 

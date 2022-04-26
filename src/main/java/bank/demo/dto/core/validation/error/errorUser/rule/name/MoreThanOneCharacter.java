@@ -1,5 +1,6 @@
-package bank.demo.dto.helper.rule;
+package bank.demo.dto.core.validation.error.errorUser.rule.name;
 
+import bank.demo.dto.core.validation.error.errorUser.rule.RuleException;
 import org.springframework.stereotype.Component;
 
 @Component//связывает бины в контейнер
@@ -8,7 +9,7 @@ public class MoreThanOneCharacter implements RuleFirstNameAndLastName {
     @Override
     public void rule(String firstNameOrLastName) {
         if (firstNameOrLastName.length() < 1) {
-            throw new RuleException(nameRule());
+                throw new RuleException(nameRule());
         }
     }
 

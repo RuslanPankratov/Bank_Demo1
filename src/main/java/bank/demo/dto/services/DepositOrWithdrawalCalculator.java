@@ -2,7 +2,7 @@ package bank.demo.dto.services;
 
 //import bank.demo.dto.bd.delete.DB;
 import bank.demo.dto.enum_class.TransactionType;
-import bank.demo.dto.dto.BankAccount;
+import bank.demo.dto.dto.BankAccountDTO;
 import bank.demo.dto.dto.TransactionDTO;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ public class DepositOrWithdrawalCalculator {
  //   private DB connection = new DB();
 
 
-    public void calculator(BankAccount bankAccount, TransactionDTO transaction) {
+    public void calculator(BankAccountDTO bankAccount, TransactionDTO transaction) {
 
         if (transaction.getTransactionType().equals(TransactionType.DEPOSIT)) {
             calculatorDeposit(bankAccount, transaction.getAmount());
@@ -23,12 +23,12 @@ public class DepositOrWithdrawalCalculator {
       //  bd(bankAccount);
     }
 
-    void calculatorDeposit(BankAccount bankAccount, double amountOfMoney) {
+    void calculatorDeposit(BankAccountDTO bankAccount, double amountOfMoney) {
         bankAccount.getCreditCard().setInvoiceAmount(bankAccount.getCreditCard().getInvoiceAmount() + amountOfMoney);
     }
 
 
-    void calculatorWithdrawal(BankAccount bankAccount, double amountOfMoney) {
+    void calculatorWithdrawal(BankAccountDTO bankAccount, double amountOfMoney) {
         bankAccount.getCreditCard().setInvoiceAmount(bankAccount.getCreditCard().getInvoiceAmount() - amountOfMoney);
 
     }

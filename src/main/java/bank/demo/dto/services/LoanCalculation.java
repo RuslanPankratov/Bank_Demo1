@@ -2,15 +2,15 @@ package bank.demo.dto.services;
 
 //import bank.demo.dto.scanner.ScannerLoanCalculation;
 import bank.demo.dto.enum_class.TypeOfBenefits;
-import bank.demo.dto.dto.BankAccount;
+import bank.demo.dto.dto.BankAccountDTO;
 import bank.demo.dto.dto.CreditDTO;
 
 public class LoanCalculation {
 
-    private BankAccount bankAccount;
+    private BankAccountDTO bankAccount;
     private double currentPercentUser;
 
-    public LoanCalculation(BankAccount bankAccount, double currentPercentUser) {
+    public LoanCalculation(BankAccountDTO bankAccount, double currentPercentUser) {
         this.bankAccount = bankAccount;
         this.currentPercentUser = currentPercentUser;
     }
@@ -78,7 +78,7 @@ public class LoanCalculation {
     }
 
 
-    void customerCosting(BankAccount bankAccount, double currentPercentUser) {
+    void customerCosting(BankAccountDTO bankAccount, double currentPercentUser) {
         double countMonth = bankAccount.getCredit().getCountMonthsToPay();
         double year = countMonth / 12;
         double onePercent = bankAccount.getCredit().getHowMuchIsTheLoan() / 100;

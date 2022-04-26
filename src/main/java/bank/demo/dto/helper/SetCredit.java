@@ -1,12 +1,12 @@
 package bank.demo.dto.helper;
 
-import bank.demo.dto.dto.BankAccount;
+import bank.demo.dto.dto.BankAccountDTO;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SetCredit {
 
-    public void creditSet(BankAccount bankAccount, double paymentAmountPercent, double currentPercentUser, double countMonth,
+    public void creditSet(BankAccountDTO bankAccount, double paymentAmountPercent, double currentPercentUser, double countMonth,
                           double percentOverpaid, double resultPaymentMonth) {
         bankAccount.getCredit().setHowMuchToPay(paymentAmountPercent);
         bankAccount.getCredit().setPercentRate(currentPercentUser);

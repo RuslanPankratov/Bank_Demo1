@@ -1,18 +1,15 @@
 package bank.demo.dto.services;
 
 //import bank.demo.dto.bd.delete.DB;
-import bank.demo.dto.dto.BankAccount;
+import bank.demo.dto.dto.BankAccountDTO;
 import org.springframework.stereotype.Component;
-
-import java.sql.SQLException;
-import java.sql.Statement;
 
 @Component
 public class LoanPaymentCalculator {
    // private DB connection = new DB();
 
 
-    public void methodPay(BankAccount bankAccount) {
+    public void methodPay(BankAccountDTO bankAccount) {
         System.out.println("number of months left = " + bankAccount.getCredit().getCountMonthsToPay());
         System.out.println("debt paid = " + bankAccount.getCredit().getPaid());
         System.out.println("how much more do you have to pay =  " + bankAccount.getCredit().getHowMuchToPay());

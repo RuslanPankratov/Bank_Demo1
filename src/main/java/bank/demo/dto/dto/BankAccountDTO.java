@@ -1,7 +1,7 @@
 package bank.demo.dto.dto;
 import java.util.List;
 
-public class BankAccount {
+public class BankAccountDTO {
     private UserDTO user;
     private CreditCardDTO creditCard;
     private float clientId;
@@ -11,7 +11,7 @@ public class BankAccount {
     private CreditDTO credit;
     private InsuranceDTO insurance;
 
-    public BankAccount(UserDTO user, CreditCardDTO creditCard) {
+    public BankAccountDTO(UserDTO user, CreditCardDTO creditCard) {
         this.user = user;
         this.creditCard = creditCard;
     }

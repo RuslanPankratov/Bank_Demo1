@@ -1,4 +1,4 @@
-package bank.demo.dto.helper.rule;
+package bank.demo.dto.core.validation.error.errorUser.rule;
 
 public class RuleException extends RuntimeException {
 

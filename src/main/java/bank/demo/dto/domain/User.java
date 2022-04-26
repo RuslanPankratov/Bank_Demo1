@@ -33,6 +33,12 @@ public class User {
     @Column(name = "type_of_benefits")
     private String typeOfBenefits;
 
+    //firstName
+    //lastName
+    //age
+    //typeOfBenefits
+
+
 
 
 }

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity(name = "credit_card")
+@Entity(name = "credit_cards")
 @Table(name = "credit_card")
 @Data
 @AllArgsConstructor
@@ -21,15 +21,15 @@ public class CreditCard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_credit_card")
     private int idCreditCard;
-    @Column(columnDefinition = "TINYINT",name = "blocked")
-    private boolean blocked;
+//    @Column(name = "blocked",columnDefinition = "TINYINT")
+//    private boolean blocked;
     @Column(name = "login")
     private String login;
     @Column(name = "password")
     private String password;
-    @Column(name = "invoiceAmount")
+    @Column(name = "invoice_amount")
     private BigDecimal invoiceAmount; //сума не счету
-    @Column(name = "withdrawalLimit")
+    @Column(name = "withdrawal_limit")
     private BigDecimal withdrawalLimit;//ограничение на снятие суммы денег за день,
 
 
