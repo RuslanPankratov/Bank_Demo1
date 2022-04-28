@@ -2,6 +2,7 @@ package bank.demo.dto.repository;
 
 import bank.demo.dto.domain.Insurance;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 

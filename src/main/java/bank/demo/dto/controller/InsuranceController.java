@@ -32,6 +32,7 @@ public class InsuranceController {
     @PostMapping("/createInsurance")
     public Insurance create(@RequestBody Insurance insurance){ //нельзя использовать напрямую юзера, иначе можно записать
         // ошибочные данные, но если мы запишем ошибочные, юзер просто не будет созда
+
         hibernateInsurance.save(insurance);
         return insurance;
     }
@@ -40,7 +41,9 @@ public class InsuranceController {
 
     @PostMapping("/updateInsurance")
     public Insurance update(@RequestBody Insurance insurance){
+        log.info("info", insurance);
         hibernateInsurance.update(insurance);
+        log.info("info", insurance);
         return insurance;
     }
 
