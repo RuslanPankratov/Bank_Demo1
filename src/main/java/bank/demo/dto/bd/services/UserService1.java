@@ -2,13 +2,20 @@ package bank.demo.dto.bd.services;
 
 import bank.demo.dto.core.validation.error.errorUser.rule.age.RuleAge;
 import bank.demo.dto.core.validation.error.errorUser.rule.name.RuleFirstNameAndLastName;
+import bank.demo.dto.domain.Credit;
+import bank.demo.dto.domain.Insurance;
 import bank.demo.dto.domain.User;
 import bank.demo.dto.dto.UserDTO;
+import bank.demo.dto.enum_class.TypeOfBenefits;
+import bank.demo.dto.repository.HibernateCredit;
+import bank.demo.dto.repository.HibernateInsurance;
 import bank.demo.dto.repository.HibernateRepository;
+import bank.demo.dto.repository.HibernateUser;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -18,7 +25,9 @@ public class UserService1 {
     private List<RuleFirstNameAndLastName> ruleFirstNameAndLastNameList;
     @Autowired
     private List<RuleAge> ruleAges;
-    private final HibernateRepository<User> createUser;
+    private final HibernateUser hibernateUser;
+    private final HibernateInsurance hibernateInsurance;
+    private final HibernateCredit hibernateCredit;
 
 //    public static void main(String[] args) {
 //        RuleFirstNameAndLastName ruleFirstNameAndLastName = new MoreThanOneCharacter();
@@ -88,8 +97,28 @@ public class UserService1 {
                user.setFirstName(userDTO.getFirstName());
                user.setLastName(userDTO.getLastName());
                user.setAge(userDTO.getAge());
+              // TypeOfBenefits typeOfBenefits = TypeOfBenefits.DISABILITY_ONE_TWO;
                user.setTypeOfBenefits(userDTO.getTypeOfBenefits());
-               createUser.save(user);
+               hibernateUser.save(user);
+
+
+//                Insurance insurance = new Insurance();
+//                insurance.setIdInsurance(user.getIdUser());
+//                insurance.setInsurancePaid(new BigDecimal(0));
+//                insurance.setSumInsured(new BigDecimal(0));
+//                hibernateInsurance.save(insurance);
+//
+//                Credit credit = new Credit();
+//                credit.setIdCredit(user.getIdUser());
+//                credit.setHowMuchToPay(new BigDecimal(0));
+//                credit.setPercentRate(new BigDecimal(0));
+//                credit.setPaid(new BigDecimal(0));
+//                credit.setTheTotalAmountYouPay(new BigDecimal(0));
+//                credit.setCountMonthsToPay(new BigDecimal(0));
+//                credit.setBankProfit(new BigDecimal(0));
+//                credit.setHowMuchIsTheLoan(new BigDecimal(0));
+//                credit.setPaymentPerMonth(new BigDecimal(0));
+//                hibernateCredit.save(credit);
 
             }
         }

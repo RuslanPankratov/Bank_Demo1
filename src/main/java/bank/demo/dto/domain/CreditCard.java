@@ -31,6 +31,7 @@ public class CreditCard {
     private BigDecimal invoiceAmount; //сума не счету
     @Column(name = "withdrawal_limit")
     private BigDecimal withdrawalLimit;//ограничение на снятие суммы денег за день,
-
+//    @Column(name = "id_bank_account")
+//    private int idBankAccount;
 
 }

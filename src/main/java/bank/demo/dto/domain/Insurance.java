@@ -19,10 +19,13 @@ public class Insurance {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_insurance")
+    private int idInsurance;
     @Column(name = "sum_insured")
     private BigDecimal sumInsured;
     @Column(name = "insurance_paid")
     private BigDecimal insurancePaid;
-    @Column(name = "id_insurance")
-    private int idInsurance;
+//    @Column(name = "id_bank_account")
+//    private int idBankAccount;
+
 }

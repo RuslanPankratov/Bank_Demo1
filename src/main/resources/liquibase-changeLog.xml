@@ -29,7 +29,7 @@
             </not>
         </preConditions>
         <createTable tableName="credit">
-            <column name="id_credit" type="INT" autoIncrement="true">
+            <column name="id_credit" type="INT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="how_much_to_pay" type="DECIMAL(19,4)"></column>
@@ -51,7 +51,7 @@
             </not>
         </preConditions>
         <createTable tableName="credit_card">
-            <column name="id_credit_card" type="INT" autoIncrement="true">
+            <column name="id_credit_card" type="INT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="login" type="VARCHAR(120)"></column>
@@ -68,7 +68,7 @@
             </not>
         </preConditions>
         <createTable tableName="insurance">
-            <column name="id_insurance" type="INT" autoIncrement="true">
+            <column name="id_insurance" type="INT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="sum_insured" type="DECIMAL(19,4)"></column>

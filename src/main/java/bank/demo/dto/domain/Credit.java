@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity(name = "credit")
+@Entity(name = "credits")
 //для того, чтобы потом использовать в коде это будет как ссылка на этот класс, когда будем работать с бд
 @Table(name = "credit")
 @Data
@@ -37,4 +37,6 @@ public class Credit {
     private BigDecimal howMuchIsTheLoan;// сколько берёт кредита человек
     @Column(name = "payment_per_month")
     private BigDecimal paymentPerMonth;//сколько в месяц платить  нельзя создавая такие колонки, они должны быть ещё созданы и в бд
+//    @Column(name = "id_bank_account")
+//    private int idBankAccount;
 }

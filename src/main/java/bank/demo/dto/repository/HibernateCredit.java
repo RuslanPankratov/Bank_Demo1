@@ -24,7 +24,7 @@ public class HibernateCredit implements HibernateRepository<Credit>{
 
     @Override
     public List<Credit> findAll() {
-        return sessionFactory.openSession().createQuery("SELECTED c FROM credit c").getResultList();
+        return sessionFactory.openSession().createQuery("SELECT c FROM credits c").getResultList();
     }
 
     @Override

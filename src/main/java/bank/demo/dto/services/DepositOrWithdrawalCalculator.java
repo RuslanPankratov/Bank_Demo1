@@ -14,7 +14,8 @@ public class DepositOrWithdrawalCalculator {
 
     public void calculator(BankAccountDTO bankAccount, TransactionDTO transaction) {
 
-        if (transaction.getTransactionType().equals(TransactionType.DEPOSIT)) {
+        if (transaction.getTransactionType().equals(TransactionType.DEPOSIT
+        )) {
             calculatorDeposit(bankAccount, transaction.getAmount());
         } else if (transaction.getTransactionType().equals(TransactionType.WITHDRAWAL)) {
             calculatorWithdrawal(bankAccount, transaction.getAmount());

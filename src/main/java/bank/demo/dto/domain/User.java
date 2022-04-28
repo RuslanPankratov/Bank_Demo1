@@ -30,9 +30,12 @@ public class User {
     @Column(name = "age")
     private int age;
     // @Enumerated(EnumType.STRING)//так можно подключать энамы
-    @Column(name = "type_of_benefits")
-    private String typeOfBenefits;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type_of_benefits")
+    private TypeOfBenefits typeOfBenefits;
+//    @Column(name = "id_bank_account")
+//    private int idBankAccount;
     //firstName
     //lastName
     //age

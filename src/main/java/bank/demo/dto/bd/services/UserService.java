@@ -35,7 +35,7 @@ public class UserService {
 
 
 
-       //принимая дто юзера, я должен возвращать настоещего юзера
+       //принимая дто юзера, я должен возвращать настоящего юзера
        User user = convert(userDTO);
        // user.setIdUser(userDTO.getIdUser());
        User createUsers = createUser.save(user);

@@ -1,18 +1,30 @@
 package bank.demo.dto.services;
 
 //import bank.demo.dto.bd.delete.DB;
+import bank.demo.dto.domain.BankAccount;
+import bank.demo.dto.domain.Insurance;
 import bank.demo.dto.dto.BankAccountDTO;
 import bank.demo.dto.dto.InsuranceDTO;
+import bank.demo.dto.repository.HibernateInsurance;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+//@AllArgsConstructor
+@Service
+@Data
+@AllArgsConstructor
 public class InsuranceCalculator {
-  //  private DB connection = new DB();
-    private InsuranceDTO insurance;
 
-    public InsuranceCalculator(InsuranceDTO insurance) {
-        this.insurance = insurance;
-    }
+    @Autowired
+    private HibernateInsurance hibernateInsurance;
 
-    public void insurance(BankAccountDTO bankAccount, double sum, String typeInsurance) {
+    public void insurance(BankAccount bankAccount, BigDecimal sum, String typeInsurance) {
 
         if (typeInsurance.equalsIgnoreCase("house")) {
             houses(bankAccount, sum);
@@ -27,45 +39,34 @@ public class InsuranceCalculator {
     }
 
 
-    private void houses(BankAccountDTO bankAccount, double sum) {
-        calculate(bankAccount, sum, 200);
+    private void houses(BankAccount bankAccount, BigDecimal sum) {
+        calculate(bankAccount, sum, new BigDecimal(200));
     }
 
-    private void items(BankAccountDTO bankAccount, double sum) {
-        calculate(bankAccount, sum, 100);
+    private void items(BankAccount bankAccount, BigDecimal sum) {
+        calculate(bankAccount, sum, new BigDecimal(100));
     }
 
-    private void health(BankAccountDTO bankAccount, double sum) {
-        calculate(bankAccount, sum, 110);
+    private void health(BankAccount bankAccount, BigDecimal sum) {
+        calculate(bankAccount, sum, new BigDecimal(110));
     }
 
-    private void car(BankAccountDTO bankAccount, double sum) {
-        calculate(bankAccount, sum, 20);
-    }
-
-
-    private void calculate(BankAccountDTO bankAccount, double sum, double percent) {
-        double howMuchToPay = sum / percent;
-        InsuranceDTO insurance = new InsuranceDTO(0);
-        bankAccount.setInsurance(insurance);
-        bankAccount.getInsurance().setSumInsured(bankAccount.getInsurance().getSumInsured() + sum);
-        bankAccount.getInsurance().setInsurancePaid(bankAccount.getInsurance().getInsurancePaid() + howMuchToPay);
-
-
-      //  db(bankAccount);
+    private void car(BankAccount bankAccount, BigDecimal sum) {
+        calculate(bankAccount, sum, new BigDecimal(20));
     }
 
 
-//    void db(BankAccount bankAccount){
-//        try {
-//            Statement statement = connection.getConnection().createStatement();
-//            statement.executeUpdate("UPDATE `bank`.`insurance` SET `sumInsured`= "
-//                    + bankAccount.getInsurance().getSumInsured() + ",`insurancePaid`="
-//                    + bankAccount.getInsurance().getInsurancePaid() + " WHERE `idInsurance`="
-//                    + bankAccount.getInsurance().getIdInsurance() + "; ");
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void calculate(BankAccount bankAccount, BigDecimal sum, BigDecimal percent) {
+        BigDecimal howMuchToPay = sum.divide(percent);
+      //  howMuchToPay.setScale(3, RoundingMode.UP);
+       // 111.5551 -> setScale(3, ROUND_UP)
+
+       bankAccount.getInsurance().setIdInsurance(bankAccount.getUser().getIdUser());
+       BigDecimal sumInsured = bankAccount.getInsurance().getSumInsured().add(sum);
+        bankAccount.getInsurance().setSumInsured(sumInsured);
+        BigDecimal paid = bankAccount.getInsurance().getInsurancePaid().add(howMuchToPay);
+        bankAccount.getInsurance().setInsurancePaid(paid);
+
+        hibernateInsurance.update(bankAccount.getInsurance());
+    }
 }
