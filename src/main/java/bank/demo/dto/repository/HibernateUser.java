@@ -40,6 +40,17 @@ public class HibernateUser implements HibernateRepository<User> { //благод
 
     @Override
     public void update(User user) {
-        sessionFactory.openSession().update(user);
+
+        try(var session = sessionFactory.openSession()) {
+            findById(user.getIdUser())
+                    .ifPresent(e -> {
+                        e.setAge(user.getAge());
+                        e.setFirstName(user.getFirstName());
+                        e.setLastName(user.getLastName());
+                        session.update(e);
+                    });
+
+        }
+
     }
 }

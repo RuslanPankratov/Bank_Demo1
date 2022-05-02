@@ -41,9 +41,7 @@ public class InsuranceController {
 
     @PostMapping("/updateInsurance")
     public Insurance update(@RequestBody Insurance insurance){
-        log.info("info", insurance);
         hibernateInsurance.update(insurance);
-        log.info("info", insurance);
         return insurance;
     }
 

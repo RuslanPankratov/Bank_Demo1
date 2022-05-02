@@ -35,7 +35,20 @@ public class HibernateInsurance implements HibernateRepository<Insurance> {
     }
 
     @Override
-    public void update(Insurance entity) {
-        sessionFactory.openSession().update(entity);
+    public void update(Insurance entity) {//проверить всё
+
+      //  sessionFactory.getCurrentSession().update(entity);
+        try(var session = sessionFactory.openSession()) {
+            findById(entity.getIdInsurance())
+                    .ifPresent(e -> {
+                        e.setInsurancePaid(entity.getInsurancePaid());
+                        e.setSumInsured(entity.getSumInsured());
+                        session.update(e);
+                    });
+
+        }
+      //  sessionFactory.openSession().update(entity);
     }
+
+
 }
