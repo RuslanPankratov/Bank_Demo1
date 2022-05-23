@@ -15,15 +15,15 @@ public class CreditPayResponse {
     @Range(min = 1)
     private Integer idCredit;
     @Range(min = 0)
-    private BigDecimal howMuchToPay; //надо выплатить ещё
+    private BigDecimal howMuchToPay;
     @Range(min = 0)
-    private BigDecimal percentRate; // процентная ставка
+    private BigDecimal percentRate;
     @Range(min = 0)
-    private BigDecimal paid;//выплачено
+    private BigDecimal paid;
     @Range(min = 0)
-    private BigDecimal theTotalAmountYouPay;//сколько в общем надо выплатить
+    private BigDecimal theTotalAmountYouPay;
     @Range(min = 0)
-    private BigDecimal countMonthsToPay; //количество месяцев ещё платить
+    private BigDecimal countMonthsToPay;
     @Range(min = 0)
     private BigDecimal bankProfit; //прибыль банка
     @Range(min = 0)

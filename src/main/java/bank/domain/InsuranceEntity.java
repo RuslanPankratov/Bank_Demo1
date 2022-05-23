@@ -27,7 +27,5 @@ public class InsuranceEntity {
     private BigDecimal insurancePaid;
     @Column(name = "id_user")
     private Integer idUser;
-//    @Column(name = "id_bank_account")
-//    private int idBankAccount;
 
 }
