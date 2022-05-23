@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  datasource:
+    password: root
+    username: root
+    url: jdbc:mysql://localhost:3306/bank
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  liquibase:
+    change-log: liquibase-changeLog.xml
+logging:
+ level:
+   bank: DEBUG
