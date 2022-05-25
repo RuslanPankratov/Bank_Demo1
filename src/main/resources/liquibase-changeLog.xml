@@ -95,7 +95,7 @@
             <column name="between_whom_the_transaction" type="VARCHAR(120)"></column>
             <column name="transaction_success" type="VARCHAR(120)"></column>
             <column name="id_user" type="INT"></column>
-            <column name="date" type="DATE"></column>
+            <column name="date" type="TIMESTAMP"></column>
 
         </createTable>
     </changeSet>

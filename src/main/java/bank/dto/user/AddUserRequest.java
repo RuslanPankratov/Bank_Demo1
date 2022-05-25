@@ -19,9 +19,8 @@ public class AddUserRequest {
     @Length(min = 2, max = 20)
     private String lastName;
     @Range(min = 18)
-    private int age;
+    private Integer age;
     @NotNull
     private TypeOfBenefits typeOfBenefits;
-    @Range(min = 1)
     private Integer idUser;
 }
