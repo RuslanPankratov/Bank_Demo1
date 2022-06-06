@@ -20,7 +20,7 @@ public class InsuranceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_insurance")
-    private int idInsurance;
+    private Integer idInsurance;
     @Column(name = "sum_insured")
     private BigDecimal sumInsured;
     @Column(name = "insurance_paid")

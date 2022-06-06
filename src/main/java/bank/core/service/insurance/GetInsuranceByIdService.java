@@ -1,7 +1,7 @@
 package bank.core.service.insurance;
 
 import bank.domain.InsuranceEntity;
-import bank.dto.insurance.GetByIdInsuranceResponse;
+import bank.dto.insurance.find.GetByIdInsuranceResponse;
 import bank.dto.insurance.InsuranceDTO;
 import bank.repository.InsuranceRepository;
 import lombok.AllArgsConstructor;
@@ -16,6 +16,7 @@ public class GetInsuranceByIdService {
     private InsuranceRepository repository;
 
     public GetByIdInsuranceResponse getInsuranceById(Integer id) {
+
         GetByIdInsuranceResponse getByIdInsuranceResponse = repository.findById(id)
                 .map(this::convert)
                 .map(GetByIdInsuranceResponse::new)
@@ -27,6 +28,7 @@ public class GetInsuranceByIdService {
     }
 
     private InsuranceDTO convert(InsuranceEntity entity) {
-        return new InsuranceDTO(entity.getSumInsured(), entity.getInsurancePaid(), entity.getIdInsurance(),entity.getIdUser());
+        return new InsuranceDTO(entity.getSumInsured(), entity.getInsurancePaid(), entity.getIdInsurance()
+                , entity.getIdUser());
     }
 }

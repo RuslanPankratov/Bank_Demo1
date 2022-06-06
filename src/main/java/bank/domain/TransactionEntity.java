@@ -3,9 +3,7 @@ package bank.domain;
 import bank.enum_class.BetweenWhomTheTransaction;
 import bank.enum_class.TransactionSuccess;
 import bank.enum_class.TransactionType;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
@@ -18,9 +16,7 @@ import java.util.Date;
 @Entity(name = "transaction")
 @Table(name = "transaction")
 @Data
-@AllArgsConstructor
 @Transactional
-@NoArgsConstructor
 public class TransactionEntity {
 
     @Id

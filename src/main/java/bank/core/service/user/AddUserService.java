@@ -2,8 +2,8 @@ package bank.core.service.user;
 
 
 import bank.domain.UserEntity;
-import bank.dto.user.AddUserRequest;
-import bank.dto.user.AddUserResponse;
+import bank.dto.user.add.AddUserRequest;
+import bank.dto.user.add.AddUserResponse;
 import bank.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,10 +18,10 @@ public class AddUserService {
 
 
     public AddUserResponse add(AddUserRequest request) {
-        var entity = convert(request);
-        entity.setIdUser(request.getIdUser());
-        var createdEntity = userRepository.save(entity);
-        var response = new AddUserResponse();
+        UserEntity entity = convert(request);
+
+        UserEntity createdEntity = userRepository.save(entity);
+        AddUserResponse response = new AddUserResponse();
         response.setCreatedUserId(createdEntity.getIdUser());
 
         log.debug("User Entity request: {}", entity);
@@ -37,7 +37,7 @@ public class AddUserService {
         entity.setLastName(request.getLastName());
         entity.setAge(request.getAge());
         entity.setTypeOfBenefits(request.getTypeOfBenefits());
-        return entity;
 
+        return entity;
     }
 }

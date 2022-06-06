@@ -1,7 +1,8 @@
 package bank.core.service.transaction;
 
 import bank.domain.TransactionEntity;
-import bank.dto.transaction.AddTransactionRequest;
+import bank.dto.transaction.add.AddTransactionRequest;
+import bank.dto.transaction.add.AddTransactionResponse;
 import bank.repository.TransactionRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,13 +17,15 @@ public class AddTransactionService {
 
     private final TransactionRepository transactionRepository;
 
-   public void transaction(AddTransactionRequest request){
-       TransactionEntity transactionEntity = convert(request);
-       transactionRepository.save(transactionEntity);
+    public AddTransactionResponse transaction(AddTransactionRequest request) {
 
+        TransactionEntity transactionEntity = convert(request);
+        transactionRepository.save(transactionEntity);
+
+        return convertResponse(request);
     }
 
-   private TransactionEntity convert(AddTransactionRequest request){
+    private TransactionEntity convert(AddTransactionRequest request) {
         TransactionEntity transaction = new TransactionEntity();
         transaction.setAmount(request.getAmount());
         transaction.setTransactionType(request.getTransactionType());
@@ -35,5 +38,20 @@ public class AddTransactionService {
         log.debug("Return TransactionEntity: {}", transaction);
 
         return transaction;
+    }
+
+
+    private AddTransactionResponse convertResponse(AddTransactionRequest request) {
+        AddTransactionResponse addTransactionResponse = new AddTransactionResponse();
+        addTransactionResponse.setAmount(request.getAmount());
+        addTransactionResponse.setTransactionType(request.getTransactionType());
+        addTransactionResponse.setIdUser(request.getIdUser());
+        addTransactionResponse.setTransactionSuccess(request.getTransactionSuccess());
+        addTransactionResponse.setBetweenWhomTheTransaction(request.getBetweenWhomTheTransaction());
+
+        log.debug("Received request: {}", request);
+        log.debug("Return TransactionEntity: {}", addTransactionResponse);
+
+        return addTransactionResponse;
     }
 }

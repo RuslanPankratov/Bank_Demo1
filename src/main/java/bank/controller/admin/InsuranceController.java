@@ -4,9 +4,12 @@ import bank.core.service.insurance.AddInsuranceService;
 import bank.core.service.insurance.FindAllInsuranceService;
 import bank.core.service.insurance.GetInsuranceByIdService;
 import bank.core.service.insurance.UpdateInsuranceService;
-import bank.dto.insurance.*;
 import bank.dto.insurance.add.AddInsuranceRequest;
 import bank.dto.insurance.add.AddInsuranceResponse;
+import bank.dto.insurance.find.FindAllInsuranceResponse;
+import bank.dto.insurance.find.GetByIdInsuranceResponse;
+import bank.dto.insurance.update.UpdateInsuranceRequest;
+import bank.dto.insurance.update.UpdateInsuranceResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -44,9 +47,9 @@ public class InsuranceController {
     }
 
     @PutMapping("/insurance")
-    public void update(@RequestBody @Valid UpdateInsuranceRequest request) {
+    public UpdateInsuranceResponse update(@RequestBody @Valid UpdateInsuranceRequest request) {
         log.debug("Received update Insurance request: {}", request);
-        updateInsuranceService.update(request);
+        return updateInsuranceService.update(request);
     }
 
 }

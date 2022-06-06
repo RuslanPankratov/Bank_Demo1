@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 
 @Entity(name = "users")
-@Table(name = "user")
+@Table(name = "users")
 @Data
 @AllArgsConstructor
 @Transactional
@@ -28,7 +28,7 @@ public class UserEntity {
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "age")
-    private int age;
+    private Integer age;
     @Enumerated(EnumType.STRING)
     @Column(name = "type_of_benefits")
     private TypeOfBenefits typeOfBenefits;

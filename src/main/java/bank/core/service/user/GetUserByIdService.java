@@ -1,8 +1,7 @@
 package bank.core.service.user;
 
 import bank.domain.UserEntity;
-import bank.dto.insurance.GetByIdInsuranceResponse;
-import bank.dto.user.GetByIdUserResponse;
+import bank.dto.user.find.GetByIdUserResponse;
 import bank.dto.user.UserDTO;
 import bank.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -16,7 +15,7 @@ public class GetUserByIdService {
 
     private final UserRepository userRepository;
 
-    public GetByIdUserResponse getUserById(Integer id){
+    public GetByIdUserResponse getUserById(Integer id) {
         GetByIdUserResponse getByIdUserResponse = userRepository.findById(id)
                 .map(this::convert)
                 .map(GetByIdUserResponse::new)
@@ -27,8 +26,8 @@ public class GetUserByIdService {
         return getByIdUserResponse;
     }
 
-    private UserDTO convert(UserEntity entity){
-        return new UserDTO(entity.getIdUser(), entity.getFirstName(),
-                entity.getLastName(), entity.getAge(), entity.getTypeOfBenefits());
+    private UserDTO convert(UserEntity entity) {
+        return new UserDTO(entity.getFirstName(),
+                entity.getLastName(), entity.getAge(), entity.getTypeOfBenefits(), entity.getIdUser());
     }
 }

@@ -17,10 +17,11 @@ public class AddInsuranceService {
     private InsuranceRepository repository;
 
     public AddInsuranceResponse add(AddInsuranceRequest request) {
-        var entity = convert(request);
-        entity.setIdInsurance(request.getIdInsurance());
-        var createdEntity = repository.save(entity);
-        var response = new AddInsuranceResponse();
+
+        InsuranceEntity entity = convert(request);
+
+        InsuranceEntity createdEntity = repository.save(entity);
+        AddInsuranceResponse response = new AddInsuranceResponse();
         response.setCreatedInsuranceId(createdEntity.getIdInsurance());
 
         log.debug("Insurance Entity request: {}", entity);
@@ -34,6 +35,7 @@ public class AddInsuranceService {
         InsuranceEntity entity = new InsuranceEntity();
         entity.setInsurancePaid(request.getInsurancePaid());
         entity.setSumInsured(request.getSumInsured());
+        entity.setIdUser(request.getIdUser());
         return entity;
     }
 }

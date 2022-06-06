@@ -1,0 +1,20 @@
+<dataset reset_sequences="insurance_sequence">
+
+    <credit_card
+            id_credit_card="11"
+            login="login test 3"
+            password="password test"
+            invoice_amount="40000"
+            withdrawal_limit="2000"
+            id_user="3"
+    />
+
+    <credit_card
+            id_credit_card="12"
+            login="login test 3"
+            password="password test"
+            invoice_amount="40000"
+            withdrawal_limit="2000"
+            id_user="4"
+    />
+</dataset>

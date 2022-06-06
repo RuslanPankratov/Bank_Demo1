@@ -19,7 +19,7 @@ public class CreditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_credit")
-    private int idCredit;
+    private Integer idCredit;
     @Column(name = "how_much_to_pay")
     private BigDecimal howMuchToPay;
     @Column(name = "percent_rate")

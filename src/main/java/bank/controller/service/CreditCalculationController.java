@@ -2,8 +2,8 @@ package bank.controller.service;
 
 import bank.core.service.calculator.CreditPayService;
 import bank.core.service.calculator.LoanCalculationService;
-import bank.dto.credit.creditPay.CreditPayResponse;
-import bank.dto.credit.loan.CreditLoanCalculationResponse;
+import bank.dto.credit.creditPay.CreditPayTransactionResponse;
+import bank.dto.credit.loan.CreditLoanCalculationTransactionResponse;
 import bank.dto.credit.loan.CreditLoanRequest;
 import bank.dto.credit.creditPay.CreditPayRequest;
 import lombok.AllArgsConstructor;
@@ -24,13 +24,13 @@ public class CreditCalculationController {
     private CreditPayService creditPayService;
 
     @PutMapping("/creditCalculation")
-    public Optional<CreditLoanCalculationResponse> calculate(@RequestBody @Valid CreditLoanRequest request) {
+    public Optional<CreditLoanCalculationTransactionResponse> calculate(@RequestBody @Valid CreditLoanRequest request) {
         log.debug("Received calculation credit request: {}", request);
         return loanCalculationService.loan(request);
     }
 
     @PutMapping("/creditPay")
-    public Optional<CreditPayResponse> pay(@RequestBody @Valid CreditPayRequest request) {
+    public Optional<CreditPayTransactionResponse> pay(@RequestBody @Valid CreditPayRequest request) {
         log.debug("Received pay credit request: {}", request);
         return creditPayService.pay(request);
     }

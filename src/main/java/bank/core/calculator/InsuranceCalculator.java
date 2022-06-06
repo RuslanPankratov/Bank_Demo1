@@ -1,7 +1,7 @@
 package bank.core.calculator;
 
 import bank.domain.InsuranceEntity;
-import bank.dto.transaction.AddTransactionRequest;
+import bank.dto.transaction.add.AddTransactionRequest;
 import bank.enum_class.BetweenWhomTheTransaction;
 import bank.enum_class.TransactionSuccess;
 import bank.enum_class.TransactionType;
@@ -9,13 +9,13 @@ import bank.enum_class.TypeInsurance;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 
-@Service
+@Component
 @Data
 @AllArgsConstructor
 @Slf4j
@@ -34,15 +34,10 @@ public class InsuranceCalculator {
         } else if (typeInsurance.equals(TypeInsurance.HEALTH)) {
             return health(entity, sum);
 
-        } else if (typeInsurance.equals(TypeInsurance.CAR)) {
+        } else {
             return car(entity, sum);
 
         }
-        AddTransactionRequest addTransactionRequest = new AddTransactionRequest(sum, TransactionType.RECEIVING,
-                BetweenWhomTheTransaction.INSURANCE, TransactionSuccess.NO_TYPE_OF_INSURANCE, entity.getIdUser());
-        log.debug("Return Add Transaction Request: {}", addTransactionRequest);
-
-        return addTransactionRequest;
     }
 
 

@@ -1,14 +1,15 @@
 package bank.dto.credit.add;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Range;
 
 @NoArgsConstructor
 @Data
+@AllArgsConstructor
 public class AddCreditResponse {
 
-    @Range(min = 0)
     private Integer createdCreditId;
+
 }

@@ -5,9 +5,12 @@ import bank.core.service.creditCard.AddCreditCardService;
 import bank.core.service.creditCard.FindAllCreditCardService;
 import bank.core.service.creditCard.GetCreditCardByIdService;
 import bank.core.service.creditCard.UpdateCreditCardService;
-import bank.dto.creditCard.*;
 import bank.dto.creditCard.add.AddCreditCardRequest;
 import bank.dto.creditCard.add.AddCreditCardResponse;
+import bank.dto.creditCard.find.FindAllCreditCardResponse;
+import bank.dto.creditCard.find.GetByIdCreditCardResponse;
+import bank.dto.creditCard.update.UpdateCreditCardRequest;
+import bank.dto.creditCard.update.UpdateCreditCardResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -43,9 +46,9 @@ public class CreditCardController {
     }
 
     @PutMapping("/creditCard")
-    public void updateCreditCard(@RequestBody @Valid UpdateCreditCardRequest request) {
+    public UpdateCreditCardResponse updateCreditCard(@RequestBody @Valid UpdateCreditCardRequest request) {
         log.debug("Received update Credit Card request: {}", request);
-        updateCreditCardService.update(request);
+        return updateCreditCardService.update(request);
     }
 
 }

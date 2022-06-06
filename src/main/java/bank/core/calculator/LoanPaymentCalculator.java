@@ -1,10 +1,9 @@
 package bank.core.calculator;
 
-//import bank.demo.dto.bd.delete.DB;
 
 import bank.domain.CreditCardEntity;
 import bank.domain.CreditEntity;
-import bank.dto.transaction.AddTransactionRequest;
+import bank.dto.transaction.add.AddTransactionRequest;
 import bank.enum_class.BetweenWhomTheTransaction;
 import bank.enum_class.TransactionSuccess;
 import bank.enum_class.TransactionType;
@@ -22,8 +21,9 @@ public class LoanPaymentCalculator {
         log.debug("Received Credit Entity request: {}", creditEntity);
         log.debug("Received Credit Card Entity request: {}", creditCardEntity);
 
-        AddTransactionRequest addTransactionRequest = new AddTransactionRequest(creditEntity.getPaymentPerMonth(), TransactionType.PAY,
-                BetweenWhomTheTransaction.CREDIT, TransactionSuccess.NOT_ENOUGH_MONEY, creditEntity.getIdUser());
+        AddTransactionRequest addTransactionRequest = new AddTransactionRequest(creditEntity.getPaymentPerMonth(),
+                TransactionType.PAY, BetweenWhomTheTransaction.CREDIT, TransactionSuccess.NOT_ENOUGH_MONEY,
+                creditEntity.getIdUser());
 
         if (creditCardEntity.getInvoiceAmount().compareTo(creditEntity.getPaymentPerMonth()) > 0) {
             creditEntity.setCountMonthsToPay(creditEntity.getCountMonthsToPay().subtract(new BigDecimal(1)));
@@ -40,6 +40,5 @@ public class LoanPaymentCalculator {
 
         return addTransactionRequest;
     }
-
 
 }

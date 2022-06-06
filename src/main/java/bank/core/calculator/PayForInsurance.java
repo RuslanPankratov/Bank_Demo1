@@ -2,7 +2,7 @@ package bank.core.calculator;
 
 import bank.domain.CreditCardEntity;
 import bank.domain.InsuranceEntity;
-import bank.dto.transaction.AddTransactionRequest;
+import bank.dto.transaction.add.AddTransactionRequest;
 import bank.enum_class.BetweenWhomTheTransaction;
 import bank.enum_class.TransactionSuccess;
 import bank.enum_class.TransactionType;
@@ -29,7 +29,7 @@ public class PayForInsurance {
             creditCardEntity.setInvoiceAmount(creditCardEntity.getInvoiceAmount().subtract(
                     insuranceEntity.getInsurancePaid()));
             insuranceEntity.setInsurancePaid(new BigDecimal(0));
-            addTransactionRequest.setTransactionSuccess(TransactionSuccess.NOT_ENOUGH_MONEY);
+            addTransactionRequest.setTransactionSuccess(TransactionSuccess.SUCCESSFUL);
 
             log.debug("Changed Insurance Entity request: {}", insuranceEntity);
             log.debug("Changed Credit Card Entity request: {}", creditCardEntity);

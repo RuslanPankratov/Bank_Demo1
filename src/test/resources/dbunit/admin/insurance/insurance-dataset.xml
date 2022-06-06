@@ -1,0 +1,26 @@
+<dataset reset_sequences="insurance_sequence">
+    <insurance
+            id_insurance="5"
+            sum_insured="2000"
+            insurance_paid="100"
+            id_user="2"
+    />
+    <insurance
+            id_insurance="2"
+            sum_insured="3000"
+            insurance_paid="100"
+            id_user="1"
+    />
+    <insurance
+            id_insurance="3"
+            sum_insured="4000"
+            insurance_paid="100"
+            id_user="3"
+    />
+    <insurance
+            id_insurance="4"
+            sum_insured="5000"
+            insurance_paid="100"
+            id_user="4"
+    />
+</dataset>

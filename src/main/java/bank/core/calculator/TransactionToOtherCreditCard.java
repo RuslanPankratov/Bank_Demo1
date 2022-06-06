@@ -1,7 +1,7 @@
 package bank.core.calculator;
 
 import bank.domain.CreditCardEntity;
-import bank.dto.transaction.AddTransactionRequest;
+import bank.dto.transaction.add.AddTransactionRequest;
 import bank.enum_class.BetweenWhomTheTransaction;
 import bank.enum_class.TransactionSuccess;
 import bank.enum_class.TransactionType;
@@ -28,15 +28,22 @@ public class TransactionToOtherCreditCard {
                 creditCardRecipientEntity, departureAmount);
 
         if (creditCardSenderEntity.getInvoiceAmount().compareTo(departureAmount) > 0) {
-            creditCardSenderEntity.setInvoiceAmount(creditCardSenderEntity.getInvoiceAmount().
-                    subtract(departureAmount));
-            creditCardRecipientEntity.setInvoiceAmount(creditCardRecipientEntity.getInvoiceAmount().
-                    add(departureAmount));
-            addTransactionRequests.get(0).setTransactionSuccess(TransactionSuccess.SUCCESSFUL);
-            addTransactionRequests.get(1).setTransactionSuccess(TransactionSuccess.SUCCESSFUL);
 
-            log.debug("Changed Credit Card Entity Sender request: {}", creditCardSenderEntity);
-            log.debug("Changed Credit Card Entity Recipient request: {}", creditCardRecipientEntity);
+            if (creditCardSenderEntity.getWithdrawalLimit().compareTo(departureAmount) > 0){
+                creditCardSenderEntity.setInvoiceAmount(creditCardSenderEntity.getInvoiceAmount().
+                        subtract(departureAmount));
+                creditCardRecipientEntity.setInvoiceAmount(creditCardRecipientEntity.getInvoiceAmount().
+                        add(departureAmount));
+                addTransactionRequests.get(0).setTransactionSuccess(TransactionSuccess.SUCCESSFUL);
+                addTransactionRequests.get(1).setTransactionSuccess(TransactionSuccess.SUCCESSFUL);
+
+                log.debug("Changed Credit Card Entity Sender request: {}", creditCardSenderEntity);
+                log.debug("Changed Credit Card Entity Recipient request: {}", creditCardRecipientEntity);
+            } else {
+                addTransactionRequests.get(0).setTransactionSuccess(TransactionSuccess.TRANSACTION_LIMIT_EXCEEDED);
+                addTransactionRequests.get(1).setTransactionSuccess(TransactionSuccess.TRANSACTION_LIMIT_EXCEEDED);
+            }
+
         }
         log.debug("Return Add Transaction Request: {}", addTransactionRequests);
 
