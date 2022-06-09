@@ -26,6 +26,10 @@ public class TransactionToOtherCreditCardService {
     private final AddTransactionService addTransactionService;
     private final TransactionToOtherCreditCard transactionToOtherCreditCard;
 
+    /*
+    could be split into several private methods
+    method should be <20 LoC (lines of code)
+     */
     public Optional<ListAddTransactionResponse> transaction(CreditCardToOtherRequest request) {
 
         log.debug("Received Credit Card To Other request: {}", request);
