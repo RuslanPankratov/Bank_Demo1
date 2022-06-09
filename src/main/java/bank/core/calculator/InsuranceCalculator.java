@@ -20,6 +20,10 @@ import java.math.RoundingMode;
 @AllArgsConstructor
 @Slf4j
 public class InsuranceCalculator {
+
+    /*
+    bad method name. Is it calculation? Creation? ...
+     */
     public AddTransactionRequest insurance(InsuranceEntity entity, BigDecimal sum, TypeInsurance typeInsurance) {
         log.debug("Received Insurance Entity request: {}", entity);
         log.debug("Received Sum request: {}", sum);

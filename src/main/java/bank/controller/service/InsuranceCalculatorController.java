@@ -26,6 +26,10 @@ public class InsuranceCalculatorController {
     private InsuranceCalculatorService insuranceCalculator;
     private InsurancePayService insurancePayService;
 
+    /*
+    endpoint could be like `/users/{id}/insurances?operation=CALCULATE` or something like that
+    check rest best practices
+     */
     @PutMapping("/insuranceCalculate")
     public Optional<InsuranceCalculatorTransactionResponse> calculate(
             @RequestBody @Valid InsuranceCalculatorRequest request) {

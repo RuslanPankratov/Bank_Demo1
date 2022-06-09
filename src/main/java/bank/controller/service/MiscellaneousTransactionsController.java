@@ -24,6 +24,9 @@ public class MiscellaneousTransactionsController {
     private final DepositOrWithdrawalService depositOrWithdrawalService;
     private final TransactionToOtherCreditCardService transactionToOtherCreditCardService;
 
+    /*
+    Could be achieved by request with specified type like deposit/withdraw
+     */
     @PutMapping("/withdrawOrDeposit")
     public Optional<DepositOrWithdrawalCalculatorTransactionResponse> withdrawOrDeposit(
             @RequestBody @Valid AddTransactionRequest request) {

@@ -25,13 +25,23 @@ public class CreditController {
     private final AddCreditService addCreditService;
     private final UpdateCreditService updateCreditService;
 
+    /*
 
+    Better to use plural words - users/credits/accounts/transactions/cards etc
+     - Find all credits
+    /credits - could be moved to @RequestMapping("/credits") instead of duplication in every endpoint
+     */
     @GetMapping("/credit")
     public FindAllCreditResponse findAllCredits() {
         log.debug("Find all credit received");
         return findAllCreditService.findAll();
     }
 
+    /*
+    REST best practices
+    credits = list
+    credits/1 = credit with id 1 from list
+     */
     @GetMapping("/credit/{id}")
     public GetByIdCreditResponse findById(@PathVariable("id") Integer id) {
         log.debug("Find by id request received, id: {}", id);

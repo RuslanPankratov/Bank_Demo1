@@ -15,6 +15,11 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 @Slf4j
+/*
+Better to split into 2 services
+DepositService
+WithdrawalService
+ */
 public class DepositOrWithdrawalService {
 
     private final CreditCardRepository creditCardRepository;
