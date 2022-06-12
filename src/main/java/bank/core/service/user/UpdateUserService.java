@@ -2,9 +2,9 @@ package bank.core.service.user;
 
 
 import bank.domain.UserEntity;
-import bank.dto.user.update.UpdateUserRequest;
+import bank.core.service.credit.dto.user.update.UpdateUserRequest;
 
-import bank.dto.user.update.UpdateUserResponse;
+import bank.core.service.credit.dto.user.update.UpdateUserResponse;
 import bank.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -5,10 +5,10 @@ import bank.core.service.transaction.AddTransactionService;
 import bank.domain.CreditCardEntity;
 import bank.domain.CreditEntity;
 import bank.domain.UserEntity;
-import bank.dto.credit.loan.CreditLoanCalculationTransactionResponse;
-import bank.dto.credit.loan.CreditLoanRequest;
-import bank.dto.transaction.add.AddTransactionRequest;
-import bank.enum_class.BetweenWhomTheTransaction;
+import bank.core.service.credit.dto.credit.loan.CreditLoanCalculationTransactionResponse;
+import bank.core.service.credit.dto.credit.loan.CreditLoanRequest;
+import bank.core.service.credit.dto.transaction.add.AddTransactionRequest;
+import bank.enum_class.WithWhomTheDeal;
 import bank.enum_class.TransactionSuccess;
 import bank.enum_class.TransactionType;
 import bank.enum_class.TypeOfBenefits;
@@ -57,7 +57,7 @@ class LoanCalculationServiceTest {
         when(creditCardRepository.findByIdUser(any())).thenReturn(creditCard);
         when(loanCalculation.interestRateMethod(any(), any(), any(), any())).thenReturn(addTransactionRequestConvert());
 
-        Optional<CreditLoanCalculationTransactionResponse> result = loanCalculationService.loan(request);
+        Optional<CreditLoanCalculationTransactionResponse> result = loanCalculationService.loan(request,3);
         Optional<CreditLoanCalculationTransactionResponse> expectedResult = convert(addTransactionRequestConvert());
 
         assertEquals(expectedResult, result);
@@ -67,7 +67,7 @@ class LoanCalculationServiceTest {
         verify(creditRepository).save(any());
         verify(creditCardRepository).findByIdUser(any());
         verify(creditCardRepository).save(any());
-        verify(addTransactionService).transaction(any());
+        verify(addTransactionService).save(any());
         verify(loanCalculation).interestRateMethod(any(), any(), any(), any());
 
         verifyNoMoreInteractions(userRepository, creditRepository, creditCardRepository, addTransactionService
@@ -80,7 +80,7 @@ class LoanCalculationServiceTest {
     }
 
     private CreditLoanRequest convertRequest() {
-        return new CreditLoanRequest(3, new BigDecimal(2), new BigDecimal(20000)
+        return new CreditLoanRequest( new BigDecimal(2), new BigDecimal(20000)
                 , new BigDecimal(200));
     }
 
@@ -92,14 +92,14 @@ class LoanCalculationServiceTest {
 
     private AddTransactionRequest addTransactionRequestConvert() {
         return new AddTransactionRequest(new BigDecimal(100)
-                , TransactionType.PAY, BetweenWhomTheTransaction.INSURANCE, TransactionSuccess.SUCCESSFUL, 1);
+                , TransactionType.PAY, WithWhomTheDeal.INSURANCE, TransactionSuccess.SUCCESSFUL, 1);
     }
 
 
     private Optional<CreditLoanCalculationTransactionResponse> convert(AddTransactionRequest request) {
         CreditLoanCalculationTransactionResponse response =
                 new CreditLoanCalculationTransactionResponse(request.getAmount(),
-                        request.getTransactionType(), request.getBetweenWhomTheTransaction()
+                        request.getTransactionType(), request.getWithWhomTheDeal()
                         , request.getTransactionSuccess(), request.getIdUser());
 
         return Optional.of(response);

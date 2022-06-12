@@ -1,6 +1,6 @@
 package bank.domain;
 
-import bank.enum_class.BetweenWhomTheTransaction;
+import bank.enum_class.WithWhomTheDeal;
 import bank.enum_class.TransactionSuccess;
 import bank.enum_class.TransactionType;
 import lombok.Data;
@@ -30,7 +30,7 @@ public class TransactionEntity {
     private TransactionType transactionType;
     @Enumerated(EnumType.STRING)
     @Column(name = "between_whom_the_transaction")
-    private BetweenWhomTheTransaction betweenWhomTheTransaction;
+    private WithWhomTheDeal withWhomTheDeal;
     @Enumerated(EnumType.STRING)
     @Column(name = "transaction_success")
     private TransactionSuccess transactionSuccess;

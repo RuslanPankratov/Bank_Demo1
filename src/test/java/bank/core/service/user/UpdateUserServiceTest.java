@@ -1,8 +1,8 @@
 package bank.core.service.user;
 
 import bank.domain.UserEntity;
-import bank.dto.user.update.UpdateUserRequest;
-import bank.dto.user.update.UpdateUserResponse;
+import bank.core.service.credit.dto.user.update.UpdateUserRequest;
+import bank.core.service.credit.dto.user.update.UpdateUserResponse;
 import bank.enum_class.TypeOfBenefits;
 import bank.repository.UserRepository;
 import org.junit.jupiter.api.Test;

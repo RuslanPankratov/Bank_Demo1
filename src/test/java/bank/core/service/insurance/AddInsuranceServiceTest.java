@@ -1,8 +1,8 @@
 package bank.core.service.insurance;
 
 import bank.domain.InsuranceEntity;
-import bank.dto.insurance.add.AddInsuranceRequest;
-import bank.dto.insurance.add.AddInsuranceResponse;
+import bank.core.service.credit.dto.insurance.add.AddInsuranceRequest;
+import bank.core.service.credit.dto.insurance.add.AddInsuranceResponse;
 import bank.repository.InsuranceRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,8 +1,8 @@
 package bank.core.service.credit;
 
 import bank.domain.CreditEntity;
-import bank.dto.credit.add.AddCreditRequest;
-import bank.dto.credit.add.AddCreditResponse;
+import bank.core.service.credit.dto.credit.add.AddCreditRequest;
+import bank.core.service.credit.dto.credit.add.AddCreditResponse;
 import bank.repository.CreditRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

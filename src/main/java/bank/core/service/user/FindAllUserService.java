@@ -1,8 +1,8 @@
 package bank.core.service.user;
 
 import bank.domain.UserEntity;
-import bank.dto.user.find.FindAllUserResponse;
-import bank.dto.user.UserDTO;
+import bank.core.service.credit.dto.user.find.FindAllUserResponse;
+import bank.core.service.credit.dto.user.UserDTO;
 import bank.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

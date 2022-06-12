@@ -1,8 +1,8 @@
 package bank.core.service.credit;
 
 import bank.domain.CreditEntity;
-import bank.dto.credit.CreditDTO;
-import bank.dto.credit.find.GetByIdCreditResponse;
+import bank.core.service.credit.dto.credit.CreditDTO;
+import bank.core.service.credit.dto.credit.find.GetByIdCreditResponse;
 import bank.repository.CreditRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

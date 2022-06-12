@@ -4,9 +4,9 @@ import bank.core.calculator.PayForInsurance;
 import bank.core.service.transaction.AddTransactionService;
 import bank.domain.CreditCardEntity;
 import bank.domain.InsuranceEntity;
-import bank.dto.insurance.pay.InsurancePayTransactionResponse;
-import bank.dto.transaction.add.AddTransactionRequest;
-import bank.enum_class.BetweenWhomTheTransaction;
+import bank.core.service.credit.dto.insurance.pay.InsurancePayTransactionResponse;
+import bank.core.service.credit.dto.transaction.add.AddTransactionRequest;
+import bank.enum_class.WithWhomTheDeal;
 import bank.enum_class.TransactionSuccess;
 import bank.enum_class.TransactionType;
 import bank.repository.CreditCardRepository;
@@ -58,7 +58,7 @@ class InsurancePayServiceTest {
         verify(insuranceRepository).save(any());
         verify(creditCardRepository).findByIdUser(any());
         verify(creditCardRepository).save(any());
-        verify(addTransactionService).transaction(any());
+        verify(addTransactionService).save(any());
         verify(payForInsurance).payInsurance(any(), any());
 
         verifyNoMoreInteractions(insuranceRepository, creditCardRepository, addTransactionService, payForInsurance);
@@ -76,13 +76,13 @@ class InsurancePayServiceTest {
 
     private AddTransactionRequest requestConvert() {
         return new AddTransactionRequest(new BigDecimal(1000), TransactionType.DEPOSIT
-                , BetweenWhomTheTransaction.INSIDE, TransactionSuccess.SUCCESSFUL, 3);
+                , WithWhomTheDeal.INSIDE, TransactionSuccess.SUCCESSFUL, 3);
     }
 
     private Optional<InsurancePayTransactionResponse> transactionConvert(AddTransactionRequest request) {
         InsurancePayTransactionResponse response =
                 new InsurancePayTransactionResponse(request.getAmount()
-                        , request.getTransactionType(), request.getBetweenWhomTheTransaction()
+                        , request.getTransactionType(), request.getWithWhomTheDeal()
                         , request.getTransactionSuccess(), 3);
 
         return Optional.of(response);

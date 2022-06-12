@@ -30,18 +30,17 @@ class MiscellaneousTransactionsControllerIT {
     @Autowired
     private MockMvc mockMvc;
 
-
     @Test
     @DatabaseSetup("classpath:dbunit/service/miscellaneous-transactions-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/service/miscellaneous-transactions-dataset.xml")
-    void shouldCalculate() throws Exception{
-        mockMvc.perform(put("/withdrawOrDeposit")
+    void shouldWithdrawal() throws Exception{
+        mockMvc.perform(put("/users/3/creditCards/operation=WITHDRAWAL")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(withdrawOrDepositJSON()))
+                        .content(withdrawalJSON()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("amount").value("300"))
                 .andExpect(jsonPath("transactionType").value("WITHDRAWAL"))
-                .andExpect(jsonPath("betweenWhomTheTransaction").value("INSIDE"))
+                .andExpect(jsonPath("withWhomTheDeal").value("INSIDE"))
                 .andExpect(jsonPath("transactionSuccess").value("SUCCESSFUL"))
                 .andExpect(jsonPath("idUser").value("3"));
     }
@@ -49,8 +48,24 @@ class MiscellaneousTransactionsControllerIT {
     @Test
     @DatabaseSetup("classpath:dbunit/service/miscellaneous-transactions-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/service/miscellaneous-transactions-dataset.xml")
+    void shouldDeposit() throws Exception{
+        mockMvc.perform(put("/users/3/creditCards/operation=DEPOSIT")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(depositJSON()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("amount").value("3000"))
+                .andExpect(jsonPath("transactionType").value("DEPOSIT"))
+                .andExpect(jsonPath("withWhomTheDeal").value("INSIDE"))
+                .andExpect(jsonPath("transactionSuccess").value("SUCCESSFUL"))
+                .andExpect(jsonPath("idUser").value("3"));
+    }
+
+
+    @Test
+    @DatabaseSetup("classpath:dbunit/service/miscellaneous-transactions-dataset.xml")
+    @DatabaseTearDown("classpath:dbunit/service/miscellaneous-transactions-dataset.xml")
     void shouldSender() throws Exception{
-        mockMvc.perform(put("/sender")
+        mockMvc.perform(put("/users/3/usersRecipient/4/creditCards/operation=SENDER")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(senderJSON()))
                 .andExpect(status().isOk())
@@ -64,13 +79,21 @@ class MiscellaneousTransactionsControllerIT {
                 .andExpect(jsonPath("$.responses[1].transactionSuccess").value("SUCCESSFUL"));
     }
 
-    private String withdrawOrDepositJSON() throws JSONException {
+    private String depositJSON() throws JSONException {
+        return new JSONObject()
+                .put("amount","3000")
+                .put("transactionType","DEPOSIT")
+                .put("withWhomTheDeal","INSIDE")
+                .put("transactionSuccess","SUCCESSFUL")
+                .toString();
+    }
+
+    private String withdrawalJSON() throws JSONException {
         return new JSONObject()
                 .put("amount","300")
                 .put("transactionType","WITHDRAWAL")
-                .put("betweenWhomTheTransaction","INSIDE")
+                .put("withWhomTheDeal","INSIDE")
                 .put("transactionSuccess","SUCCESSFUL")
-                .put("idUser","3")
                 .toString();
     }
 

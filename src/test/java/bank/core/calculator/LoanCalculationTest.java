@@ -3,7 +3,7 @@ package bank.core.calculator;
 import bank.domain.CreditCardEntity;
 import bank.domain.CreditEntity;
 import bank.domain.UserEntity;
-import bank.dto.credit.loan.CreditLoanRequest;
+import bank.core.service.credit.dto.credit.loan.CreditLoanRequest;
 import bank.enum_class.TypeOfBenefits;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -134,7 +134,7 @@ class LoanCalculationTest {
 
     private CreditLoanRequest addCreditLoanRequest() {
         CreditLoanRequest creditLoanRequest = new CreditLoanRequest();
-        creditLoanRequest.setIdUser(2);
+       // creditLoanRequest.setIdUser(2);
         creditLoanRequest.setCurrentPercentUser(new BigDecimal(2));
         creditLoanRequest.setNumberOfMonthsOfLoan(new BigDecimal(300));
         creditLoanRequest.setAmountOfCredit(new BigDecimal(20000));

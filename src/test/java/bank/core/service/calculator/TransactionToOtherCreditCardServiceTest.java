@@ -3,11 +3,11 @@ package bank.core.service.calculator;
 import bank.core.calculator.TransactionToOtherCreditCard;
 import bank.core.service.transaction.AddTransactionService;
 import bank.domain.CreditCardEntity;
-import bank.dto.creditCard.CreditCardToOtherRequest;
-import bank.dto.transaction.add.AddTransactionRequest;
-import bank.dto.transaction.add.AddTransactionResponse;
-import bank.dto.transaction.add.ListAddTransactionResponse;
-import bank.enum_class.BetweenWhomTheTransaction;
+import bank.core.service.credit.dto.creditCard.CreditCardToOtherRequest;
+import bank.core.service.credit.dto.transaction.add.AddTransactionRequest;
+import bank.core.service.credit.dto.transaction.add.AddTransactionResponse;
+import bank.core.service.credit.dto.transaction.add.ListAddTransactionResponse;
+import bank.enum_class.WithWhomTheDeal;
 import bank.enum_class.TransactionSuccess;
 import bank.enum_class.TransactionType;
 import bank.repository.CreditCardRepository;
@@ -49,14 +49,15 @@ class TransactionToOtherCreditCardServiceTest {
         when(creditCardRepository.findByIdUser(3)).thenReturn(creditCardRecipient);
         when(transactionToOtherCreditCard.transaction(any(), any(), any())).thenReturn(requestListConvert());
 
-        Optional<ListAddTransactionResponse> result = transactionToOtherCreditCardService.transaction(request);
+        Optional<ListAddTransactionResponse> result = transactionToOtherCreditCardService.transaction(request
+                , 3, 2);
         Optional<ListAddTransactionResponse> expectedResult = convertList(requestListConvert());
 
         assertEquals(expectedResult, result);
 
         verify(creditCardRepository, times(2)).findByIdUser(any());
         verify(creditCardRepository, times(2)).save(any());
-        verify(addTransactionService, times(2)).transaction(any());
+        verify(addTransactionService, times(2)).save(any());
         verify(transactionToOtherCreditCard).transaction(any(), any(), any());
 
         verifyNoMoreInteractions(creditCardRepository, addTransactionService, transactionToOtherCreditCard);
@@ -73,7 +74,7 @@ class TransactionToOtherCreditCardServiceTest {
 
     private AddTransactionRequest requestConvert(TransactionType transactionType, Integer id) {
         return new AddTransactionRequest(new BigDecimal(2000), transactionType
-                , BetweenWhomTheTransaction.OTHER_PEOPLE, TransactionSuccess.SUCCESSFUL, id);
+                , WithWhomTheDeal.OTHER_PEOPLE, TransactionSuccess.SUCCESSFUL, id);
     }
 
     private Optional<ListAddTransactionResponse> convertList(List<AddTransactionRequest> request) {
@@ -87,7 +88,7 @@ class TransactionToOtherCreditCardServiceTest {
 
     private AddTransactionResponse convert(AddTransactionRequest request) {
         return new AddTransactionResponse(request.getAmount(),
-                request.getTransactionType(), request.getBetweenWhomTheTransaction(), request.getTransactionSuccess(),
+                request.getTransactionType(), request.getWithWhomTheDeal(), request.getTransactionSuccess(),
                 request.getIdUser());
     }
 
@@ -97,8 +98,7 @@ class TransactionToOtherCreditCardServiceTest {
     }
 
     private CreditCardToOtherRequest request() {
-        return new CreditCardToOtherRequest(3, 2
-                , new BigDecimal(2000));
+        return new CreditCardToOtherRequest(new BigDecimal(2000));
     }
 
 }

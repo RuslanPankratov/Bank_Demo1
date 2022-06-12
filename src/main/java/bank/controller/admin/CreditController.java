@@ -5,18 +5,19 @@ import bank.core.service.credit.AddCreditService;
 import bank.core.service.credit.FindAllCreditService;
 import bank.core.service.credit.GetCreditByIdService;
 import bank.core.service.credit.UpdateCreditService;
-import bank.dto.credit.add.AddCreditRequest;
-import bank.dto.credit.add.AddCreditResponse;
-import bank.dto.credit.find.FindAllCreditResponse;
-import bank.dto.credit.find.GetByIdCreditResponse;
-import bank.dto.credit.update.UpdateCreditRequest;
-import bank.dto.credit.update.UpdateCreditResponse;
+import bank.core.service.credit.dto.credit.add.AddCreditRequest;
+import bank.core.service.credit.dto.credit.add.AddCreditResponse;
+import bank.core.service.credit.dto.credit.find.FindAllCreditResponse;
+import bank.core.service.credit.dto.credit.find.GetByIdCreditResponse;
+import bank.core.service.credit.dto.credit.update.UpdateCreditRequest;
+import bank.core.service.credit.dto.credit.update.UpdateCreditResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
+@RequestMapping("/credits")
 @AllArgsConstructor
 public class CreditController {
 
@@ -26,25 +27,25 @@ public class CreditController {
     private final UpdateCreditService updateCreditService;
 
 
-    @GetMapping("/credit")
+    @GetMapping()
     public FindAllCreditResponse findAllCredits() {
         log.debug("Find all credit received");
         return findAllCreditService.findAll();
     }
 
-    @GetMapping("/credit/{id}")
+    @GetMapping("/{id}")
     public GetByIdCreditResponse findById(@PathVariable("id") Integer id) {
         log.debug("Find by id request received, id: {}", id);
         return getCreditByIdService.getCreditById(id);
     }
 
-    @PostMapping("/credit")
+    @PostMapping()
     public AddCreditResponse addCredit(@RequestBody AddCreditRequest request) {
         log.debug("Add Credit Request: {}", request);
         return addCreditService.add(request);
     }
 
-    @PutMapping("/credit")
+    @PutMapping()
     public UpdateCreditResponse updateCredit(@RequestBody UpdateCreditRequest request) {
         log.debug("Update Credit Request: {}", request);
         return updateCreditService.update(request);

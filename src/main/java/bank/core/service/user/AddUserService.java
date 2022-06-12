@@ -2,8 +2,8 @@ package bank.core.service.user;
 
 
 import bank.domain.UserEntity;
-import bank.dto.user.add.AddUserRequest;
-import bank.dto.user.add.AddUserResponse;
+import bank.core.service.credit.dto.user.add.AddUserRequest;
+import bank.core.service.credit.dto.user.add.AddUserResponse;
 import bank.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

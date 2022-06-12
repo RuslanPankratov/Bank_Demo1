@@ -4,15 +4,12 @@ package bank.controller.service;
 import bank.core.service.calculator.InsuranceCalculatorService;
 import bank.core.service.calculator.InsurancePayService;
 
-import bank.dto.insurance.calculator.InsuranceCalculatorRequest;
-import bank.dto.insurance.calculator.InsuranceCalculatorTransactionResponse;
-import bank.dto.insurance.pay.InsurancePayRequest;
-import bank.dto.insurance.pay.InsurancePayTransactionResponse;
+import bank.core.service.credit.dto.insurance.calculator.InsuranceCalculatorRequest;
+import bank.core.service.credit.dto.insurance.calculator.InsuranceCalculatorTransactionResponse;
+import bank.core.service.credit.dto.insurance.pay.InsurancePayTransactionResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -20,23 +17,29 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
+@RequestMapping("/users")
 @AllArgsConstructor
 public class InsuranceCalculatorController {
+
 
     private InsuranceCalculatorService insuranceCalculator;
     private InsurancePayService insurancePayService;
 
-    @PutMapping("/insuranceCalculate")
+    @PutMapping("{id}/insurances/operation=CALCULATE")
     public Optional<InsuranceCalculatorTransactionResponse> calculate(
+            @PathVariable("id") Integer idUser,
             @RequestBody @Valid InsuranceCalculatorRequest request) {
+
         log.debug("Received Insurance Calculator request: {}", request);
-        return insuranceCalculator.calculate(request);
+        log.debug("Id user: {}", idUser);
+
+        return insuranceCalculator.calculate(request, idUser);
     }
 
-    @PutMapping("/insurancePay")
-    public Optional<InsurancePayTransactionResponse> pay(@RequestBody @Valid InsurancePayRequest request) {
-        log.debug("Received Insurance Pay request: {}", request);
-        return insurancePayService.pay(request.getIdUser());
+    @PutMapping("{id}/insurance/operation=PAY")
+    public Optional<InsurancePayTransactionResponse> pay(@PathVariable("id") Integer idUser) {
+        log.debug("Received Insurance Pay request: {}", idUser);
+        return insurancePayService.pay(idUser);
     }
 
 }

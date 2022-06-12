@@ -39,7 +39,7 @@ public class InsuranceControllerIT {
     @DatabaseSetup("classpath:dbunit/admin/insurance/insurance-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/admin/insurance/insurance-dataset.xml")
     void shouldGetByIdInsurance() throws Exception {
-        mockMvc.perform(get("/insurance/3"))
+        mockMvc.perform(get("/insurances/3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.insurance.sumInsured").value("4000.0"))
                 .andExpect(jsonPath("$.insurance.insurancePaid").value("100.0"))
@@ -51,7 +51,7 @@ public class InsuranceControllerIT {
     @DatabaseSetup("classpath:dbunit/admin/insurance/insurance-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/admin/insurance/insurance-dataset.xml")
     void shouldFindAllInsurance() throws Exception {
-        mockMvc.perform(get("/insurance"))
+        mockMvc.perform(get("/insurances"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.insurances[3].sumInsured").value("2000.0"))
                 .andExpect(jsonPath("$.insurances[3].insurancePaid").value("100.0"))
@@ -64,7 +64,7 @@ public class InsuranceControllerIT {
     @DatabaseTearDown(value = "classpath:dbunit/admin/insurance/insurance-dataset.xml"
             , type = DatabaseOperation.DELETE_ALL)
     void shouldCreateInsurance() throws Exception {
-        mockMvc.perform(post("/insurance")
+        mockMvc.perform(post("/insurances")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(createInsuranceJSON()))
                 .andExpect(status().isOk())
@@ -75,7 +75,7 @@ public class InsuranceControllerIT {
     @DatabaseSetup("classpath:dbunit/admin/insurance/insurance-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/admin/insurance/insurance-dataset.xml")
     void shouldUpdateInsurance() throws Exception {
-        mockMvc.perform(put("/insurance")
+        mockMvc.perform(put("/insurances")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updateInsuranceJSON()))
                 .andExpect(status().isOk())

@@ -35,29 +35,26 @@ class CreditCalculationControllerIT {
     @DatabaseSetup("classpath:dbunit/service/credit-calculate-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/service/credit-calculate-dataset.xml")
     void shouldCalculate() throws Exception {
-        mockMvc.perform(put("/creditCalculation")
+        mockMvc.perform(put("/users/3/credits/operation=CALCULATE")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(calculationJSON()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("amount").value("30000"))
                 .andExpect(jsonPath("transactionType").value("RECEIVING"))
-                .andExpect(jsonPath("betweenWhomTheTransaction").value("CREDIT"))
+                .andExpect(jsonPath("withWhomTheDeal").value("CREDIT"))
                 .andExpect(jsonPath("transactionSuccess").value("SUCCESSFUL"))
                 .andExpect(jsonPath("idUser").value("3"));
     }
-
 
     @Test
     @DatabaseSetup("classpath:dbunit/service/credit-calculate-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/service/credit-calculate-dataset.xml")
     void shouldPAY() throws Exception {
-        mockMvc.perform(put("/creditPay")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(payJSON()))
+        mockMvc.perform(put("/users/4/credits/operation=PAY"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("amount").value("117.91"))
                 .andExpect(jsonPath("transactionType").value("PAY"))
-                .andExpect(jsonPath("betweenWhomTheTransaction").value("CREDIT"))
+                .andExpect(jsonPath("withWhomTheDeal").value("CREDIT"))
                 .andExpect(jsonPath("transactionSuccess").value("SUCCESSFUL"))
                 .andExpect(jsonPath("idUser").value("4"));
     }
@@ -65,17 +62,11 @@ class CreditCalculationControllerIT {
 
     private String calculationJSON() throws JSONException {
         return new JSONObject()
-                .put("idUser", "3")
+              //  .put("idUser", "3")
                 .put("currentPercentUser", "10")
                 .put("amountOfCredit", "30000")
                 .put("numberOfMonthsOfLoan", "300")
                 .toString();
     }
 
-
-    private String payJSON() throws JSONException {
-        return new JSONObject()
-                .put("idUser", "4")
-                .toString();
-    }
 }

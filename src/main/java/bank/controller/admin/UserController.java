@@ -5,12 +5,12 @@ import bank.core.service.user.FindAllUserService;
 import bank.core.service.user.GetUserByIdService;
 import bank.core.service.user.UpdateUserService;
 
-import bank.dto.user.add.AddUserRequest;
-import bank.dto.user.add.AddUserResponse;
-import bank.dto.user.find.FindAllUserResponse;
-import bank.dto.user.find.GetByIdUserResponse;
-import bank.dto.user.update.UpdateUserRequest;
-import bank.dto.user.update.UpdateUserResponse;
+import bank.core.service.credit.dto.user.add.AddUserRequest;
+import bank.core.service.credit.dto.user.add.AddUserResponse;
+import bank.core.service.credit.dto.user.find.FindAllUserResponse;
+import bank.core.service.credit.dto.user.find.GetByIdUserResponse;
+import bank.core.service.credit.dto.user.update.UpdateUserRequest;
+import bank.core.service.credit.dto.user.update.UpdateUserResponse;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.AllArgsConstructor;
@@ -20,6 +20,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @RestController
+@RequestMapping("/users")
 @AllArgsConstructor
 public class UserController {
 
@@ -28,25 +29,25 @@ public class UserController {
     private AddUserService addUserService;
     private UpdateUserService updateUserService;
 
-    @GetMapping("/users")
+    @GetMapping()
     public FindAllUserResponse findAllUsers() {
         log.debug("Find All User received");
         return findAllUserService.findAll();
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public GetByIdUserResponse findById(@PathVariable("id") Integer id) {
         log.debug("Find By Id Request Received, id: {}", id);
         return getUserByIdService.getUserById(id);
     }
 
-    @PostMapping("/users")
+    @PostMapping()
     public AddUserResponse create(@RequestBody @Valid AddUserRequest request) {
         log.debug("Received Add User request: {}", request);
         return addUserService.add(request);
     }
 
-    @PutMapping("/users")
+    @PutMapping()
     public UpdateUserResponse updateUser(@RequestBody @Valid UpdateUserRequest request) {
         log.debug("Received update User request: {}", request);
         return updateUserService.update(request);

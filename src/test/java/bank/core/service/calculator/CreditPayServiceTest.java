@@ -4,10 +4,9 @@ import bank.core.calculator.LoanPaymentCalculator;
 import bank.core.service.transaction.AddTransactionService;
 import bank.domain.CreditCardEntity;
 import bank.domain.CreditEntity;
-import bank.dto.credit.creditPay.CreditPayRequest;
-import bank.dto.credit.creditPay.CreditPayTransactionResponse;
-import bank.dto.transaction.add.AddTransactionRequest;
-import bank.enum_class.BetweenWhomTheTransaction;
+import bank.core.service.credit.dto.credit.creditPay.CreditPayTransactionResponse;
+import bank.core.service.credit.dto.transaction.add.AddTransactionRequest;
+import bank.enum_class.WithWhomTheDeal;
 import bank.enum_class.TransactionSuccess;
 import bank.enum_class.TransactionType;
 import bank.repository.CreditCardRepository;
@@ -43,7 +42,7 @@ class CreditPayServiceTest {
     @Test
     void payTest() {
 
-        CreditPayRequest creditPayRequest = new CreditPayRequest();
+
         CreditEntity creditEntity = creditConvert();
         CreditCardEntity creditCardEntity = creditCardConvert();
 
@@ -51,7 +50,7 @@ class CreditPayServiceTest {
         when(creditRepository.findByIdUser(any())).thenReturn(Optional.of(creditEntity));
         when(loanPaymentCalculator.methodPay(any(), any())).thenReturn(addTransactionRequestConvert());
 
-        Optional<CreditPayTransactionResponse> result = creditPayService.pay(creditPayRequest);
+        Optional<CreditPayTransactionResponse> result = creditPayService.pay(3);
         Optional<CreditPayTransactionResponse> expectedResult = convert();
 
         assertEquals(expectedResult, result);
@@ -60,7 +59,7 @@ class CreditPayServiceTest {
         verify(creditCardRepository).save(any());
         verify(creditRepository).findByIdUser(any());
         verify(creditRepository).save(any());
-        verify(addTransactionService).transaction(any());
+        verify(addTransactionService).save(any());
         verify(loanPaymentCalculator).methodPay(any(), any());
 
         verifyNoMoreInteractions(creditCardRepository, creditRepository, addTransactionService, loanPaymentCalculator);
@@ -79,7 +78,7 @@ class CreditPayServiceTest {
 
     private Optional<CreditPayTransactionResponse> convert() {
         CreditPayTransactionResponse creditPayTransactionResponse = new CreditPayTransactionResponse(
-                new BigDecimal(100), TransactionType.PAY, BetweenWhomTheTransaction.INSURANCE
+                new BigDecimal(100), TransactionType.PAY, WithWhomTheDeal.INSURANCE
                 , TransactionSuccess.SUCCESSFUL, 1);
 
         return Optional.of(creditPayTransactionResponse);
@@ -88,7 +87,7 @@ class CreditPayServiceTest {
 
     private AddTransactionRequest addTransactionRequestConvert() {
         return new AddTransactionRequest(new BigDecimal(100)
-                , TransactionType.PAY, BetweenWhomTheTransaction.INSURANCE, TransactionSuccess.SUCCESSFUL, 1);
+                , TransactionType.PAY, WithWhomTheDeal.INSURANCE, TransactionSuccess.SUCCESSFUL, 1);
     }
 
 }

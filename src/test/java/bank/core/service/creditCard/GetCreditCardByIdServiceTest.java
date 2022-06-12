@@ -1,8 +1,8 @@
 package bank.core.service.creditCard;
 
 import bank.domain.CreditCardEntity;
-import bank.dto.creditCard.CreditCardDTO;
-import bank.dto.creditCard.find.GetByIdCreditCardResponse;
+import bank.core.service.credit.dto.creditCard.CreditCardDTO;
+import bank.core.service.credit.dto.creditCard.find.GetByIdCreditCardResponse;
 import bank.repository.CreditCardRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

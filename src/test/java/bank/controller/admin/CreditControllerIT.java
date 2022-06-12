@@ -35,7 +35,7 @@ class CreditControllerIT {
     @DatabaseSetup("classpath:dbunit/admin/credit/credit-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/admin/credit/credit-dataset.xml")
     void shouldGetByIdCredit() throws Exception {
-        mockMvc.perform(get("/credit/3"))
+        mockMvc.perform(get("/credits/3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.creditDTO.idCredit").value("3"))
                 .andExpect(jsonPath("$.creditDTO.howMuchToPay").value("11790.95"))
@@ -53,7 +53,7 @@ class CreditControllerIT {
     @DatabaseSetup("classpath:dbunit/admin/credit/credit-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/admin/credit/credit-dataset.xml")
     void shouldFindAllCredit() throws Exception {
-        mockMvc.perform(get("/credit"))
+        mockMvc.perform(get("/credits"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.creditDTOS[2].idCredit").value("4"))
                 .andExpect(jsonPath("$.creditDTOS[2].howMuchToPay").value("11790.95"))
@@ -71,7 +71,7 @@ class CreditControllerIT {
     @DatabaseSetup("classpath:dbunit/admin/credit/credit-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/admin/credit/credit-dataset.xml")
     void shouldCreateCredit() throws Exception {
-        mockMvc.perform(post("/credit")
+        mockMvc.perform(post("/credits")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(createCreditJSON()))
                 .andExpect(status().isOk())
@@ -82,7 +82,7 @@ class CreditControllerIT {
     @DatabaseSetup("classpath:dbunit/admin/credit/credit-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/admin/credit/credit-dataset.xml")
     void shouldUpdateCredit() throws Exception {
-        mockMvc.perform(put("/credit")
+        mockMvc.perform(put("/credits")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updateCreditJSON()))
                  .andExpect(status().isOk())

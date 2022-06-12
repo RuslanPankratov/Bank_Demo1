@@ -35,7 +35,7 @@ class CreditCardControllerIT {
     @DatabaseSetup("classpath:dbunit/admin/creditCard/credit-card-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/admin/creditCard/credit-card-dataset.xml")
     void shouldFindByIdCreditCard() throws Exception {
-        mockMvc.perform(get("/creditCard/5"))
+        mockMvc.perform(get("/creditCards/5"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.creditCardDTO.login").value("login test 5"))
                 .andExpect(jsonPath("$.creditCardDTO.password").value("password test"))
@@ -49,7 +49,7 @@ class CreditCardControllerIT {
     @DatabaseSetup("classpath:dbunit/admin/creditCard/credit-card-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/admin/creditCard/credit-card-dataset.xml")
     void shouldFindAllCreditCard() throws Exception {
-        mockMvc.perform(get("/creditCard"))
+        mockMvc.perform(get("/creditCards"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.creditCardDTOS[2].login").value("login test 4"))
                 .andExpect(jsonPath("$.creditCardDTOS[2].password").value("password test"))
@@ -63,7 +63,7 @@ class CreditCardControllerIT {
     @DatabaseSetup("classpath:dbunit/admin/creditCard/credit-card-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/admin/creditCard/credit-card-dataset.xml")
     void shouldAddCreditCard() throws Exception {
-        mockMvc.perform(post("/creditCard")
+        mockMvc.perform(post("/creditCards")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(addCreditCardJSON()))
                 .andExpect(status().isOk())
@@ -74,7 +74,7 @@ class CreditCardControllerIT {
     @DatabaseSetup("classpath:dbunit/admin/creditCard/credit-card-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/admin/creditCard/credit-card-dataset.xml")
     void shouldUpdateCreditCard() throws Exception {
-        mockMvc.perform(put("/creditCard")
+        mockMvc.perform(put("/creditCards")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(updateCreditCardJSON()))
                 .andExpect(status().isOk())

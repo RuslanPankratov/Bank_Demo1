@@ -31,14 +31,13 @@ class TransactionControllerIT {
 
     @Test
     void shouldTransaction() throws Exception {
-        mockMvc.perform(put("/transaction")
+        mockMvc.perform(put("/transactions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(transactionJSON()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("amount").value("20000"))
                 .andExpect(jsonPath("transactionType").value("PAY"))
-                .andExpect(jsonPath("betweenWhomTheTransaction")
-                        .value("CREDIT"))
+                .andExpect(jsonPath("withWhomTheDeal").value("CREDIT"))
                 .andExpect(jsonPath("transactionSuccess").value("SUCCESSFUL"))
                 .andExpect(jsonPath("idUser").value("12"));
     }
@@ -47,7 +46,7 @@ class TransactionControllerIT {
         return new JSONObject()
                 .put("amount", "20000")
                 .put("transactionType", "PAY")
-                .put("betweenWhomTheTransaction", "CREDIT")
+                .put("withWhomTheDeal", "CREDIT")
                 .put("transactionSuccess", "SUCCESSFUL")
                 .put("idUser", "12")
                 .toString();

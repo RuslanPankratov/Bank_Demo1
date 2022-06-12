@@ -33,13 +33,13 @@ class InsuranceCalculatorControllerIT {
     @DatabaseSetup("classpath:dbunit/service/insurance-calculator-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/service/insurance-calculator-dataset.xml")
     void shouldCalculate() throws Exception {
-        mockMvc.perform(put("/insuranceCalculate")
+        mockMvc.perform(put("/users/3/insurances/operation=CALCULATE")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(insuranceCalculateJSON()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("amount").value("30000"))
                 .andExpect(jsonPath("transactionType").value("RECEIVING"))
-                .andExpect(jsonPath("betweenWhomTheTransaction").value("INSURANCE"))
+                .andExpect(jsonPath("withWhomTheDeal").value("INSURANCE"))
                 .andExpect(jsonPath("transactionSuccess").value("SUCCESSFUL"))
                 .andExpect(jsonPath("idUser").value("3"));
     }
@@ -49,28 +49,21 @@ class InsuranceCalculatorControllerIT {
     @DatabaseSetup("classpath:dbunit/service/insurance-calculator-dataset.xml")
     @DatabaseTearDown("classpath:dbunit/service/insurance-calculator-dataset.xml")
     void shouldPay() throws Exception {
-        mockMvc.perform(put("/insurancePay")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(insurancePayJSON()))
+        mockMvc.perform(put("/users/4/insurance/operation=PAY"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("amount").value("900.0"))
                 .andExpect(jsonPath("transactionType").value("PAY"))
-                .andExpect(jsonPath("betweenWhomTheTransaction").value("INSURANCE"))
+                .andExpect(jsonPath("withWhomTheDeal").value("INSURANCE"))
                 .andExpect(jsonPath("transactionSuccess").value("SUCCESSFUL"))
                 .andExpect(jsonPath("idUser").value("4"));
     }
 
     private String insuranceCalculateJSON() throws JSONException {
         return new JSONObject()
-                .put("idUser", "3")
+               // .put("idUser", "3")
                 .put("sum", "30000")
                 .put("typeInsurance", "ITEMS")
                 .toString();
     }
 
-    private String insurancePayJSON() throws JSONException {
-        return new JSONObject()
-                .put("idUser", "4")
-                .toString();
-    }
 }
