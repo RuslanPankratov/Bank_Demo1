@@ -56,7 +56,7 @@ public class InsuranceControllerIT {
                 .andExpect(jsonPath("$.insurances[3].sumInsured").value("2000.0"))
                 .andExpect(jsonPath("$.insurances[3].insurancePaid").value("100.0"))
                 .andExpect(jsonPath("$.insurances[3].idInsurance").value("5"))
-                .andExpect(jsonPath("$.insurances[3].idUser").value("2"));
+                .andExpect(jsonPath("$.insurances[3].idUser").value("5"));
     }
 
     @Test
@@ -82,14 +82,14 @@ public class InsuranceControllerIT {
                 .andExpect(jsonPath("$.sumInsured").value("5000.0"))
                 .andExpect(jsonPath("$.insurancePaid").value("300.0"))
                 .andExpect(jsonPath("$.idInsurance").value("2"))
-                .andExpect(jsonPath("$.idUser").value("1"));
+                .andExpect(jsonPath("$.idUser").value("2"));
     }
 
     private String createInsuranceJSON() throws JSONException {
         return new JSONObject()
                 .put("sumInsured", "5000.0")
                 .put("insurancePaid", "300.0")
-                .put("idUser", "10")
+                .put("idUser", "1")
                 .toString();
     }
 
@@ -98,7 +98,7 @@ public class InsuranceControllerIT {
                 .put("sumInsured", "5000.0")
                 .put("insurancePaid", "300.0")
                 .put("idInsurance", "2")
-                .put("idUser", "1")
+                .put("idUser", "2")
                 .toString();
     }
 

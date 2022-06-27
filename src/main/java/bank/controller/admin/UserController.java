@@ -5,12 +5,12 @@ import bank.core.service.user.FindAllUserService;
 import bank.core.service.user.GetUserByIdService;
 import bank.core.service.user.UpdateUserService;
 
-import bank.core.service.credit.dto.user.add.AddUserRequest;
-import bank.core.service.credit.dto.user.add.AddUserResponse;
-import bank.core.service.credit.dto.user.find.FindAllUserResponse;
-import bank.core.service.credit.dto.user.find.GetByIdUserResponse;
-import bank.core.service.credit.dto.user.update.UpdateUserRequest;
-import bank.core.service.credit.dto.user.update.UpdateUserResponse;
+import bank.dto.user.add.AddUserRequest;
+import bank.dto.user.add.AddUserResponse;
+import bank.dto.user.find.FindAllUserResponse;
+import bank.dto.user.find.GetByIdUserResponse;
+import bank.dto.user.update.UpdateUserRequest;
+import bank.dto.user.update.UpdateUserResponse;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.AllArgsConstructor;

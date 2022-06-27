@@ -1,16 +1,21 @@
 package bank.core.calculator;
 
+import bank.core.strategy.loanCalculation.HelperLoanCalculationStrategy;
+import bank.core.strategy.loanCalculation.LoanCalculationStrategy;
+import bank.core.strategy.loanCalculation.impl.*;
 import bank.domain.CreditCardEntity;
 import bank.domain.CreditEntity;
 import bank.domain.UserEntity;
-import bank.core.service.credit.dto.credit.loan.CreditLoanRequest;
+import bank.dto.credit.loan.CreditLoanRequest;
 import bank.enum_class.TypeOfBenefits;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +23,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class LoanCalculationTest {
 
-    LoanCalculation loanCalculation = new LoanCalculation();
+
+    private LoanCalculation loanCalculation = new LoanCalculation(convert());
 
     @Test
     void interestRateMethodNoBenefitsTest() {
@@ -117,8 +123,17 @@ class LoanCalculationTest {
 
 
     private UserEntity addUser() {
-        return new UserEntity(2, "Ruslan", "Pankratov", 20,
-                TypeOfBenefits.NO_BENEFITS);
+        UserEntity user = new UserEntity();
+        user.setIdUser(2);
+        user.setFirstName("Ruslan");
+        user.setLastName("Pankratov");
+        user.setAge(20);
+        user.setTypeOfBenefits(TypeOfBenefits.NO_BENEFITS);
+
+        return user;
+
+        //2, "Ruslan", "Pankratov", 20,
+        //                TypeOfBenefits.NO_BENEFITS
     }
 
     private CreditEntity addCreditEntity() {
@@ -139,6 +154,17 @@ class LoanCalculationTest {
         creditLoanRequest.setNumberOfMonthsOfLoan(new BigDecimal(300));
         creditLoanRequest.setAmountOfCredit(new BigDecimal(20000));
         return creditLoanRequest;
+    }
+
+
+    private List<LoanCalculationStrategy> convert(){
+        HelperLoanCalculationStrategy helper = new HelperLoanCalculationStrategy();
+        return List.of(new DisabilityOneTwoStrategy(helper),
+                new DisabilityThreeFourStrategy(helper),
+                new NoBenefitsStrategy(helper),
+                new PensionerStrategy(helper),
+                new TheLargeFamilyStrategy(helper),
+                new VeteranStrategy(helper));
     }
 
 }

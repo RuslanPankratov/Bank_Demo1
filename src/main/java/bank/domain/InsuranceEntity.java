@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity(name = "insurance")
 @Table(name = "insurance")

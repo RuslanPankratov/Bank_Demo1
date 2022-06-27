@@ -3,9 +3,9 @@ package bank.core.service.calculator;
 import bank.core.calculator.InsuranceCalculator;
 import bank.core.service.transaction.AddTransactionService;
 import bank.domain.InsuranceEntity;
-import bank.core.service.credit.dto.insurance.calculator.InsuranceCalculatorRequest;
-import bank.core.service.credit.dto.insurance.calculator.InsuranceCalculatorTransactionResponse;
-import bank.core.service.credit.dto.transaction.add.AddTransactionRequest;
+import bank.dto.insurance.calculator.InsuranceCalculatorRequest;
+import bank.dto.insurance.calculator.InsuranceCalculatorTransactionResponse;
+import bank.dto.transaction.add.AddTransactionRequest;
 import bank.enum_class.WithWhomTheDeal;
 import bank.enum_class.TransactionSuccess;
 import bank.enum_class.TransactionType;
@@ -43,15 +43,15 @@ class InsuranceCalculatorServiceTest {
         InsuranceEntity insuranceEntity = insuranceConvert();
         AddTransactionRequest addTransactionRequest = requestTransactionConvert();
 
-        when(repository.findByIdUser(any())).thenReturn(Optional.of(insuranceEntity));
+        when(repository.findById(any())).thenReturn(Optional.of(insuranceEntity));
         when(insuranceCalculator.insuranceCalculate(any(), any(), any())).thenReturn(addTransactionRequest);
 
-        Optional<InsuranceCalculatorTransactionResponse> result = insuranceCalculatorService.calculate(request,3);
-        Optional<InsuranceCalculatorTransactionResponse> expectedResult = transactionConvert(addTransactionRequest);
+        InsuranceCalculatorTransactionResponse result = insuranceCalculatorService.calculate(request, 3);
+        InsuranceCalculatorTransactionResponse expectedResult = transactionConvert(addTransactionRequest);
 
         assertEquals(expectedResult, result);
 
-        verify(repository).findByIdUser(any());
+        verify(repository).findById(any());
         verify(repository).save(any());
         verify(addTransactionService).save(any());
         verify(insuranceCalculator).insuranceCalculate(any(), any(), any());
@@ -73,13 +73,10 @@ class InsuranceCalculatorServiceTest {
                 , WithWhomTheDeal.INSIDE, TransactionSuccess.NOT_ENOUGH_MONEY, 3);
     }
 
-    private Optional<InsuranceCalculatorTransactionResponse> transactionConvert(
+    private InsuranceCalculatorTransactionResponse transactionConvert(
             AddTransactionRequest request) {
-        InsuranceCalculatorTransactionResponse response =
-                new InsuranceCalculatorTransactionResponse(request.getAmount()
-                        , request.getTransactionType(), request.getWithWhomTheDeal()
-                        , request.getTransactionSuccess(), 3);
-
-        return Optional.of(response);
+        return new InsuranceCalculatorTransactionResponse(request.getAmount()
+                , request.getTransactionType(), request.getWithWhomTheDeal()
+                , request.getTransactionSuccess(), 3);
     }
 }

@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import javax.persistence.*;
-
 @Entity(name = "users")
 @Table(name = "users")
 @Data
@@ -21,6 +20,8 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_user", referencedColumnName = "id")
     @Column(name = "id_user")
     private Integer idUser;
     @Column(name = "first_name")

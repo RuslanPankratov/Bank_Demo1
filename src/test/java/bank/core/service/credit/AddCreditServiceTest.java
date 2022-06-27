@@ -1,8 +1,8 @@
 package bank.core.service.credit;
 
 import bank.domain.CreditEntity;
-import bank.core.service.credit.dto.credit.add.AddCreditRequest;
-import bank.core.service.credit.dto.credit.add.AddCreditResponse;
+import bank.dto.credit.add.AddCreditRequest;
+import bank.dto.credit.add.AddCreditResponse;
 import bank.repository.CreditRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

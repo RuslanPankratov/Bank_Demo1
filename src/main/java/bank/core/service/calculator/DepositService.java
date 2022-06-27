@@ -3,8 +3,8 @@ package bank.core.service.calculator;
 import bank.core.calculator.DepositCalculator;
 import bank.core.service.transaction.AddTransactionService;
 import bank.domain.CreditCardEntity;
-import bank.core.service.credit.dto.transaction.DepositCalculatorTransactionResponse;
-import bank.core.service.credit.dto.transaction.add.AddTransactionRequest;
+import bank.dto.transaction.DepositCalculatorTransactionResponse;
+import bank.dto.transaction.add.AddTransactionRequest;
 import bank.repository.CreditCardRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,52 +21,46 @@ public class DepositService {
     private final AddTransactionService addTransactionService;
     private final DepositCalculator depositCalculator;
 
-    public Optional<DepositCalculatorTransactionResponse> deposit(
-            AddTransactionRequest request, Integer idUser) {
+    public DepositCalculatorTransactionResponse deposit(
+            AddTransactionRequest request, Integer idCreditCard) {
 
         log.debug("Received Add Transaction request: {}", request);
 
-        Optional<CreditCardEntity> creditCard = creditCardRepository.findByIdUser(idUser);
+        Optional<CreditCardEntity> creditCard = creditCardRepository.findById(idCreditCard);
         DepositCalculatorTransactionResponse response =
                 new DepositCalculatorTransactionResponse();
-        Optional<DepositCalculatorTransactionResponse> responseOptional = Optional.of(response);
+
 
         log.debug("Received Credit Card Entity request: {}", creditCard);
-        log.debug("Received Add Transaction Response request: {}"
-                , responseOptional);
+        log.debug("Received Add Transaction Response request: {}" , response);
 
         if (creditCard.isPresent()) {
-            responseOptional = responseOptionalConvert(creditCard, request, idUser);
+            response = responseOptionalConvert(creditCard.get(), request, idCreditCard);
         }
-        return responseOptional;
+        return response;
     }
 
-    private Optional<DepositCalculatorTransactionResponse> convert(AddTransactionRequest request, Integer idUser) {
-        DepositCalculatorTransactionResponse response =
-                new DepositCalculatorTransactionResponse(request.getAmount(),
+    private DepositCalculatorTransactionResponse convert(AddTransactionRequest request, Integer idUser) {
+        return new DepositCalculatorTransactionResponse(request.getAmount(),
                         request.getTransactionType(), request.getWithWhomTheDeal()
                         , request.getTransactionSuccess(), idUser);
-
-        return Optional.of(response);
     }
 
 
-    private Optional<DepositCalculatorTransactionResponse> responseOptionalConvert(Optional<CreditCardEntity> creditCard
-            , AddTransactionRequest request, Integer idUser) {
+    private DepositCalculatorTransactionResponse responseOptionalConvert(CreditCardEntity creditCard
+            , AddTransactionRequest request, Integer idCreditCard) {
 
-        CreditCardEntity creditCardEntity = creditCard.get();
-
-        AddTransactionRequest addTransactionRequest = depositCalculator.depositCalculator(creditCardEntity,
+        AddTransactionRequest addTransactionRequest = depositCalculator.depositCalculator(creditCard,
                 request);
 
         addTransactionService.save(addTransactionRequest);
 
-        Optional<DepositCalculatorTransactionResponse> responseOptional = convert(addTransactionRequest, idUser);
+        DepositCalculatorTransactionResponse responseOptional = convert(addTransactionRequest, idCreditCard);
 
-        log.debug("Changed Credit Card Entity request: {}", creditCardEntity);
+        log.debug("Changed Credit Card Entity request: {}", creditCard);
         log.debug("Changed Add Transaction Response request: {}", responseOptional);
 
-        creditCardRepository.save(creditCardEntity);
+        creditCardRepository.save(creditCard);
 
         return responseOptional;
     }

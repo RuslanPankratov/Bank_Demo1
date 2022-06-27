@@ -1,15 +1,40 @@
 <dataset reset_sequences="insurance_sequence">
-    <insurance
-            id_insurance="5"
-            sum_insured="2000"
-            insurance_paid="100"
-            id_user="2"
+    <users id_user="1"
+           first_name="test name"
+           last_name="test name"
+           age="200"
+           type_of_benefits="DISABILITY_ONE_TWO"
+    />
+
+    <users id_user="2"
+           first_name="test name"
+           last_name="test name"
+           age="200"
+           type_of_benefits="DISABILITY_ONE_TWO"
+    />
+    <users id_user="3"
+           first_name="test name"
+           last_name="test name"
+           age="200"
+           type_of_benefits="DISABILITY_ONE_TWO"
+    />
+    <users id_user="4"
+           first_name="test name"
+           last_name="test name"
+           age="200"
+           type_of_benefits="DISABILITY_ONE_TWO"
+    />
+    <users id_user="5"
+           first_name="test name"
+           last_name="test name"
+           age="200"
+           type_of_benefits="DISABILITY_ONE_TWO"
     />
     <insurance
             id_insurance="2"
             sum_insured="3000"
             insurance_paid="100"
-            id_user="1"
+            id_user="2"
     />
     <insurance
             id_insurance="3"
@@ -23,4 +48,12 @@
             insurance_paid="100"
             id_user="4"
     />
+    <insurance
+            id_insurance="5"
+            sum_insured="2000"
+            insurance_paid="100"
+            id_user="5"
+    />
+
+
 </dataset>

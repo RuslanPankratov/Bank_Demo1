@@ -41,7 +41,9 @@
             <column name="how_much_is_the_loan" type="DECIMAL(19,4)"/>
             <column name="payment_per_month" type="DECIMAL(19,4)"/>
             <column name="id_user" type="INT"/>
+
         </createTable>
+
     </changeSet>
 
 
@@ -96,7 +98,6 @@
             <column name="transaction_success" type="VARCHAR(120)"/>
             <column name="id_user" type="INT"/>
             <column name="date" type="TIMESTAMP"/>
-
         </createTable>
     </changeSet>
 

@@ -3,8 +3,8 @@ package bank.core.service.calculator;
 import bank.core.calculator.DepositCalculator;
 import bank.core.service.transaction.AddTransactionService;
 import bank.domain.CreditCardEntity;
-import bank.core.service.credit.dto.transaction.DepositCalculatorTransactionResponse;
-import bank.core.service.credit.dto.transaction.add.AddTransactionRequest;
+import bank.dto.transaction.DepositCalculatorTransactionResponse;
+import bank.dto.transaction.add.AddTransactionRequest;
 import bank.enum_class.WithWhomTheDeal;
 import bank.enum_class.TransactionSuccess;
 import bank.enum_class.TransactionType;
@@ -40,20 +40,19 @@ class DepositServiceTest {
         AddTransactionRequest request = requestConvert();
         CreditCardEntity creditCardEntity = creditCardConvert(3);
 
-        when(creditCardRepository.findByIdUser(any())).thenReturn(Optional.of(creditCardEntity));
+        when(creditCardRepository.findById(any())).thenReturn(Optional.of(creditCardEntity));
         when(depositCalculator.depositCalculator(any(), any())).thenReturn(request);
 
-        Optional<DepositCalculatorTransactionResponse> result
-                = depositService.deposit(request,request.getIdUser());
-        Optional<DepositCalculatorTransactionResponse> expectedResult = transactionConvert(request);
+        DepositCalculatorTransactionResponse result
+                = depositService.deposit(request, request.getIdUser());
+        DepositCalculatorTransactionResponse expectedResult = transactionConvert(request);
 
         assertEquals(expectedResult, result);
 
-        verify(creditCardRepository).findByIdUser(any());
+        verify(creditCardRepository).findById(any());
         verify(creditCardRepository).save(any());
         verify(addTransactionService).save(any());
         verify(depositCalculator).depositCalculator(any(), any());
-
 
         verifyNoMoreInteractions(creditCardRepository, addTransactionService, depositCalculator);
     }
@@ -66,20 +65,19 @@ class DepositServiceTest {
         request.setTransactionType(TransactionType.WITHDRAWAL);
         CreditCardEntity creditCardEntity = creditCardConvert(3);
 
-        when(creditCardRepository.findByIdUser(any())).thenReturn(Optional.of(creditCardEntity));
+        when(creditCardRepository.findById(any())).thenReturn(Optional.of(creditCardEntity));
         when(depositCalculator.depositCalculator(any(), any())).thenReturn(request);
 
-        Optional<DepositCalculatorTransactionResponse> result =
-                depositService.deposit(request,request.getIdUser());
-        Optional<DepositCalculatorTransactionResponse> expectedResult = transactionConvert(request);
+        DepositCalculatorTransactionResponse result =
+                depositService.deposit(request, request.getIdUser());
+        DepositCalculatorTransactionResponse expectedResult = transactionConvert(request);
 
         assertEquals(expectedResult, result);
 
-        verify(creditCardRepository).findByIdUser(any());
+        verify(creditCardRepository).findById(any());
         verify(creditCardRepository).save(any());
         verify(addTransactionService).save(any());
         verify(depositCalculator).depositCalculator(any(), any());
-
 
         verifyNoMoreInteractions(creditCardRepository, addTransactionService, depositCalculator);
     }
@@ -94,14 +92,11 @@ class DepositServiceTest {
                 , new BigDecimal(1000), 3);
     }
 
-    private Optional<DepositCalculatorTransactionResponse> transactionConvert(
+    private DepositCalculatorTransactionResponse transactionConvert(
             AddTransactionRequest request) {
-        DepositCalculatorTransactionResponse response =
-                new DepositCalculatorTransactionResponse(request.getAmount()
-                        , request.getTransactionType(), request.getWithWhomTheDeal()
-                        , request.getTransactionSuccess(), 3);
-
-        return Optional.of(response);
+        return new DepositCalculatorTransactionResponse(request.getAmount()
+                , request.getTransactionType(), request.getWithWhomTheDeal()
+                , request.getTransactionSuccess(), 3);
     }
 
 }

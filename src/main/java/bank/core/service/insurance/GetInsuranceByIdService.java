@@ -1,8 +1,8 @@
 package bank.core.service.insurance;
 
 import bank.domain.InsuranceEntity;
-import bank.core.service.credit.dto.insurance.find.GetByIdInsuranceResponse;
-import bank.core.service.credit.dto.insurance.InsuranceDTO;
+import bank.dto.insurance.find.GetByIdInsuranceResponse;
+import bank.dto.insurance.InsuranceDTO;
 import bank.repository.InsuranceRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

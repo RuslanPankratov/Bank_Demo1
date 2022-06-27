@@ -1,8 +1,8 @@
 package bank.core.service.creditCard;
 
 import bank.domain.CreditCardEntity;
-import bank.core.service.credit.dto.creditCard.update.UpdateCreditCardRequest;
-import bank.core.service.credit.dto.creditCard.update.UpdateCreditCardResponse;
+import bank.dto.creditCard.update.UpdateCreditCardRequest;
+import bank.dto.creditCard.update.UpdateCreditCardResponse;
 import bank.repository.CreditCardRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

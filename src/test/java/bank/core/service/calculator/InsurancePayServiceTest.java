@@ -4,8 +4,8 @@ import bank.core.calculator.PayForInsurance;
 import bank.core.service.transaction.AddTransactionService;
 import bank.domain.CreditCardEntity;
 import bank.domain.InsuranceEntity;
-import bank.core.service.credit.dto.insurance.pay.InsurancePayTransactionResponse;
-import bank.core.service.credit.dto.transaction.add.AddTransactionRequest;
+import bank.dto.insurance.pay.InsurancePayTransactionResponse;
+import bank.dto.transaction.add.AddTransactionRequest;
 import bank.enum_class.WithWhomTheDeal;
 import bank.enum_class.TransactionSuccess;
 import bank.enum_class.TransactionType;
@@ -46,17 +46,17 @@ class InsurancePayServiceTest {
         Optional<CreditCardEntity> creditCard = Optional.of(convertCreditCardEntity());
 
         when(payForInsurance.payInsurance(any(), any())).thenReturn(request);
-        when(insuranceRepository.findByIdUser(any())).thenReturn(insurance);
-        when(creditCardRepository.findByIdUser(any())).thenReturn(creditCard);
+        when(insuranceRepository.findById(any())).thenReturn(insurance);
+        when(creditCardRepository.findById(any())).thenReturn(creditCard);
 
-        Optional<InsurancePayTransactionResponse> result = insurancePayService.pay(3);
-        Optional<InsurancePayTransactionResponse> expectedResult = transactionConvert(request);
+        InsurancePayTransactionResponse result = insurancePayService.pay(3,3);
+        InsurancePayTransactionResponse expectedResult = transactionConvert(request);
 
         assertEquals(expectedResult, result);
 
-        verify(insuranceRepository).findByIdUser(any());
+        verify(insuranceRepository).findById(any());
         verify(insuranceRepository).save(any());
-        verify(creditCardRepository).findByIdUser(any());
+        verify(creditCardRepository).findById(any());
         verify(creditCardRepository).save(any());
         verify(addTransactionService).save(any());
         verify(payForInsurance).payInsurance(any(), any());
@@ -79,12 +79,10 @@ class InsurancePayServiceTest {
                 , WithWhomTheDeal.INSIDE, TransactionSuccess.SUCCESSFUL, 3);
     }
 
-    private Optional<InsurancePayTransactionResponse> transactionConvert(AddTransactionRequest request) {
-        InsurancePayTransactionResponse response =
-                new InsurancePayTransactionResponse(request.getAmount()
-                        , request.getTransactionType(), request.getWithWhomTheDeal()
-                        , request.getTransactionSuccess(), 3);
+    private InsurancePayTransactionResponse transactionConvert(AddTransactionRequest request) {
+        return new InsurancePayTransactionResponse(request.getAmount()
+                , request.getTransactionType(), request.getWithWhomTheDeal()
+                , request.getTransactionSuccess(), 3);
 
-        return Optional.of(response);
     }
 }

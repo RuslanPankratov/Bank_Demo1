@@ -1,7 +1,7 @@
 package bank.core.calculator;
 
 import bank.domain.CreditCardEntity;
-import bank.core.service.credit.dto.transaction.add.AddTransactionRequest;
+import bank.dto.transaction.add.AddTransactionRequest;
 import bank.enum_class.TransactionSuccess;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

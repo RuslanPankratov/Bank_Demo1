@@ -1,21 +1,29 @@
 package bank.core.calculator;
 
 import bank.domain.InsuranceEntity;
+import bank.core.strategy.insuranceCalculator.InsuranceCalculatorStrategy;
+import bank.core.strategy.insuranceCalculator.impl.CarStrategy;
+import bank.core.strategy.insuranceCalculator.impl.HealthStrategy;
+import bank.core.strategy.insuranceCalculator.impl.HousesStrategy;
+import bank.core.strategy.insuranceCalculator.impl.ItemsStrategy;
 import bank.enum_class.InsuranceType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
 
 @ExtendWith(MockitoExtension.class)
 class InsuranceCalculatorTest {
 
-    private InsuranceCalculator insuranceCalculator = new InsuranceCalculator();
+    @Autowired
+    private InsuranceCalculator insuranceCalculator = new InsuranceCalculator(convert());
 
 
     @Test
@@ -69,4 +77,11 @@ class InsuranceCalculatorTest {
         assertEquals(expectedResult, result);
     }
 
+
+    private List<InsuranceCalculatorStrategy> convert(){
+        return List.of(new CarStrategy(),
+                new HealthStrategy(),
+                new HousesStrategy(),
+                new ItemsStrategy());
+    }
 }

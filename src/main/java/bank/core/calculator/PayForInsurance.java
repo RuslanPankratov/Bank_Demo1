@@ -2,7 +2,7 @@ package bank.core.calculator;
 
 import bank.domain.CreditCardEntity;
 import bank.domain.InsuranceEntity;
-import bank.core.service.credit.dto.transaction.add.AddTransactionRequest;
+import bank.dto.transaction.add.AddTransactionRequest;
 import bank.enum_class.WithWhomTheDeal;
 import bank.enum_class.TransactionSuccess;
 import bank.enum_class.TransactionType;

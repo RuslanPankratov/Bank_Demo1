@@ -4,8 +4,8 @@ import bank.core.calculator.LoanPaymentCalculator;
 import bank.core.service.transaction.AddTransactionService;
 import bank.domain.CreditCardEntity;
 import bank.domain.CreditEntity;
-import bank.core.service.credit.dto.credit.creditPay.CreditPayTransactionResponse;
-import bank.core.service.credit.dto.transaction.add.AddTransactionRequest;
+import bank.dto.credit.creditPay.CreditPayTransactionResponse;
+import bank.dto.transaction.add.AddTransactionRequest;
 import bank.enum_class.WithWhomTheDeal;
 import bank.enum_class.TransactionSuccess;
 import bank.enum_class.TransactionType;
@@ -41,23 +41,21 @@ class CreditPayServiceTest {
 
     @Test
     void payTest() {
-
-
         CreditEntity creditEntity = creditConvert();
         CreditCardEntity creditCardEntity = creditCardConvert();
 
-        when(creditCardRepository.findByIdUser(any())).thenReturn(Optional.of(creditCardEntity));
-        when(creditRepository.findByIdUser(any())).thenReturn(Optional.of(creditEntity));
+        when(creditCardRepository.findById(any())).thenReturn(Optional.of(creditCardEntity));
+        when(creditRepository.findById(any())).thenReturn(Optional.of(creditEntity));
         when(loanPaymentCalculator.methodPay(any(), any())).thenReturn(addTransactionRequestConvert());
 
-        Optional<CreditPayTransactionResponse> result = creditPayService.pay(3);
-        Optional<CreditPayTransactionResponse> expectedResult = convert();
+        CreditPayTransactionResponse result = creditPayService.pay(3,3);
+        CreditPayTransactionResponse expectedResult = convert();
 
         assertEquals(expectedResult, result);
 
-        verify(creditCardRepository).findByIdUser(any());
+        verify(creditCardRepository).findById(any());
         verify(creditCardRepository).save(any());
-        verify(creditRepository).findByIdUser(any());
+        verify(creditRepository).findById(any());
         verify(creditRepository).save(any());
         verify(addTransactionService).save(any());
         verify(loanPaymentCalculator).methodPay(any(), any());
@@ -71,17 +69,16 @@ class CreditPayServiceTest {
     }
 
     private CreditEntity creditConvert() {
-        return new CreditEntity(23, new BigDecimal(11790.95), new BigDecimal("2.15"), new BigDecimal(0)
+        return new CreditEntity(23, new BigDecimal(11790.95), new BigDecimal("2.15")
+                , new BigDecimal(0)
                 , new BigDecimal(11790), new BigDecimal(100), new BigDecimal(1790)
                 , new BigDecimal(10000), new BigDecimal(117.91), 3);
     }
 
-    private Optional<CreditPayTransactionResponse> convert() {
-        CreditPayTransactionResponse creditPayTransactionResponse = new CreditPayTransactionResponse(
+    private CreditPayTransactionResponse convert() {
+        return new CreditPayTransactionResponse(
                 new BigDecimal(100), TransactionType.PAY, WithWhomTheDeal.INSURANCE
                 , TransactionSuccess.SUCCESSFUL, 1);
-
-        return Optional.of(creditPayTransactionResponse);
     }
 
 

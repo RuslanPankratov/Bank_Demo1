@@ -8,6 +8,4 @@ import java.util.Optional;
 
 public interface CreditCardRepository extends JpaRepository<CreditCardEntity, Integer> {
 
-    Optional<CreditCardEntity> findByIdUser(Integer id);
-
 }

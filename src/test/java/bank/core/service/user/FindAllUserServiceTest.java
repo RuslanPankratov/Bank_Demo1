@@ -1,8 +1,8 @@
 package bank.core.service.user;
 
 import bank.domain.UserEntity;
-import bank.core.service.credit.dto.user.find.FindAllUserResponse;
-import bank.core.service.credit.dto.user.UserDTO;
+import bank.dto.user.find.FindAllUserResponse;
+import bank.dto.user.UserDTO;
 import bank.enum_class.TypeOfBenefits;
 import bank.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -43,8 +43,12 @@ class FindAllUserServiceTest {
     }
 
     private List<UserEntity> entities() {
-        UserEntity user = new UserEntity(1, "Ruslan", "Pankratov", 25
-                , TypeOfBenefits.NO_BENEFITS);
+        UserEntity user = new UserEntity();
+        user.setIdUser(1);
+        user.setFirstName("Ruslan");
+        user.setLastName("Pankratov");
+        user.setAge(25);
+        user.setTypeOfBenefits(TypeOfBenefits.NO_BENEFITS);
         return List.of(user);
     }
 

@@ -3,8 +3,8 @@ package bank.core.service.calculator;
 import bank.core.calculator.WithdrawalCalculator;
 import bank.core.service.transaction.AddTransactionService;
 import bank.domain.CreditCardEntity;
-import bank.core.service.credit.dto.transaction.WithdrawalCalculatorTransactionResponse;
-import bank.core.service.credit.dto.transaction.add.AddTransactionRequest;
+import bank.dto.transaction.WithdrawalCalculatorTransactionResponse;
+import bank.dto.transaction.add.AddTransactionRequest;
 import bank.repository.CreditCardRepository;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -22,51 +22,44 @@ public class WithdrawalService {
 
     private final WithdrawalCalculator withdrawalCalculator;
 
-    public Optional<WithdrawalCalculatorTransactionResponse> withdrawal(
-            AddTransactionRequest request, Integer idUser) {
+    public WithdrawalCalculatorTransactionResponse withdrawal(
+            AddTransactionRequest request, Integer idCreditCard) {
 
         log.debug("Received Add Transaction request: {}", request);
 
-        Optional<CreditCardEntity> creditCard = creditCardRepository.findByIdUser(idUser);
+        Optional<CreditCardEntity> creditCard = creditCardRepository.findById(idCreditCard);
         WithdrawalCalculatorTransactionResponse response =
                 new WithdrawalCalculatorTransactionResponse();
-        Optional<WithdrawalCalculatorTransactionResponse> responseOptional = Optional.of(response);
+
 
         log.debug("Received Credit Card Entity request: {}", creditCard);
         log.debug("Received Add Transaction Response request: {}"
-                , responseOptional);
+                , response);
 
         if (creditCard.isPresent()) {
-            responseOptional = convertResponse(creditCard, request, idUser);
+            response = convertResponse(creditCard.get(), request, idCreditCard);
         }
-        return responseOptional;
+        return response;
     }
 
-    private Optional<WithdrawalCalculatorTransactionResponse> convert(AddTransactionRequest request, Integer idUser) {
-        WithdrawalCalculatorTransactionResponse response =
-                new WithdrawalCalculatorTransactionResponse(request.getAmount(),
+    private WithdrawalCalculatorTransactionResponse convert(AddTransactionRequest request, Integer idCreditCard) {
+        return new WithdrawalCalculatorTransactionResponse(request.getAmount(),
                         request.getTransactionType(), request.getWithWhomTheDeal()
-                        , request.getTransactionSuccess(), idUser);
-
-        return Optional.of(response);
+                        , request.getTransactionSuccess(), idCreditCard);
     }
 
-    private Optional<WithdrawalCalculatorTransactionResponse> convertResponse(Optional<CreditCardEntity> creditCard
-            , AddTransactionRequest request, Integer idUser) {
+    private WithdrawalCalculatorTransactionResponse convertResponse(CreditCardEntity creditCard
+            , AddTransactionRequest request, Integer idCreditCard) {
 
-        CreditCardEntity creditCardEntity = creditCard.get();
-
-        log.debug("Received Credit Card Entity request: {}", creditCardEntity);
-
-        AddTransactionRequest addTransactionRequest = withdrawalCalculator.withdrawalCalculator(creditCardEntity,
+        AddTransactionRequest addTransactionRequest = withdrawalCalculator.withdrawalCalculator(creditCard,
                 request);
 
         addTransactionService.save(addTransactionRequest);
-        creditCardRepository.save(creditCardEntity);
+        creditCardRepository.save(creditCard);
 
-        Optional<WithdrawalCalculatorTransactionResponse> responseOptional = convert(addTransactionRequest, idUser);
+        WithdrawalCalculatorTransactionResponse responseOptional = convert(addTransactionRequest, idCreditCard);
 
-        log.debug("Changed Credit Card Entity request: {}", creditCardEntity);
+        log.debug("Changed Credit Card Entity request: {}", creditCard);
         log.debug("Changed Add Transaction Response request: {}", responseOptional);
 
         return responseOptional;

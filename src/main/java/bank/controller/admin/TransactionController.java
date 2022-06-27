@@ -2,8 +2,8 @@ package bank.controller.admin;
 
 
 import bank.core.service.transaction.AddTransactionService;
-import bank.core.service.credit.dto.transaction.add.AddTransactionRequest;
-import bank.core.service.credit.dto.transaction.add.AddTransactionResponse;
+import bank.dto.transaction.add.AddTransactionRequest;
+import bank.dto.transaction.add.AddTransactionResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PutMapping;

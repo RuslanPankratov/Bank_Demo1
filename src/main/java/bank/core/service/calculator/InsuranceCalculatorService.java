@@ -4,9 +4,9 @@ package bank.core.service.calculator;
 import bank.core.calculator.InsuranceCalculator;
 import bank.core.service.transaction.AddTransactionService;
 import bank.domain.InsuranceEntity;
-import bank.core.service.credit.dto.insurance.calculator.InsuranceCalculatorRequest;
-import bank.core.service.credit.dto.insurance.calculator.InsuranceCalculatorTransactionResponse;
-import bank.core.service.credit.dto.transaction.add.AddTransactionRequest;
+import bank.dto.insurance.calculator.InsuranceCalculatorRequest;
+import bank.dto.insurance.calculator.InsuranceCalculatorTransactionResponse;
+import bank.dto.transaction.add.AddTransactionRequest;
 import bank.repository.InsuranceRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,52 +25,47 @@ public class InsuranceCalculatorService {
     private final InsuranceCalculator insuranceCalculator;
 
     @Transactional
-    public Optional<InsuranceCalculatorTransactionResponse> calculate(InsuranceCalculatorRequest request
-            , Integer idUSer) {
+    public InsuranceCalculatorTransactionResponse calculate(InsuranceCalculatorRequest request
+            , Integer idInsurance) {
 
         log.debug("Received Insurance Calculator request: {}", request);
 
-        Optional<InsuranceEntity> entity = repository.findByIdUser(idUSer);
+        Optional<InsuranceEntity> entity = repository.findById(idInsurance);
         InsuranceCalculatorTransactionResponse response = new InsuranceCalculatorTransactionResponse();
-        Optional<InsuranceCalculatorTransactionResponse> responseOptional =
-                Optional.of(response);
 
         log.debug("Received Insurance Entity request: {}", entity);
-        log.debug("Received Insurance Calculator Transaction Response request: {}", responseOptional);
+        log.debug("Received Insurance Calculator Transaction Response request: {}", response);
 
         if (entity.isPresent()) {
-            responseOptional = convertResponse(entity, request);
+            response = convertResponse(entity.get(), request);
         }
 
-        return responseOptional;
+        return response;
     }
 
-    private Optional<InsuranceCalculatorTransactionResponse> convert(AddTransactionRequest request) {
-        InsuranceCalculatorTransactionResponse response =
-                new InsuranceCalculatorTransactionResponse(request.getAmount(),
+    private InsuranceCalculatorTransactionResponse convert(AddTransactionRequest request) {
+           return new InsuranceCalculatorTransactionResponse(request.getAmount(),
                         request.getTransactionType(), request.getWithWhomTheDeal()
                         , request.getTransactionSuccess(), request.getIdUser());
-
-        return Optional.of(response);
     }
 
 
-    private Optional<InsuranceCalculatorTransactionResponse> convertResponse(Optional<InsuranceEntity> entity
+    private InsuranceCalculatorTransactionResponse convertResponse(InsuranceEntity entity
             , InsuranceCalculatorRequest request) {
-        InsuranceEntity insuranceEntity = entity.get();
 
-        AddTransactionRequest addTransactionRequest = insuranceCalculator.insuranceCalculate(insuranceEntity,
+
+        AddTransactionRequest addTransactionRequest = insuranceCalculator.insuranceCalculate(entity,
                 request.getSum(), request.getTypeInsurance());
 
         addTransactionService.save(addTransactionRequest);
-        repository.save(insuranceEntity);
+        repository.save(entity);
 
-        Optional<InsuranceCalculatorTransactionResponse> responseOptional = convert(addTransactionRequest);
+        InsuranceCalculatorTransactionResponse response = convert(addTransactionRequest);
 
-        log.debug("Changed Insurance Entity request: {}", insuranceEntity);
+        log.debug("Changed Insurance Entity request: {}", entity);
         log.debug("Changed Add Transaction request: {}", addTransactionRequest);
-        log.debug("Changed Insurance Calculator Transaction Response request: {}", responseOptional);
+        log.debug("Changed Insurance Calculator Transaction Response request: {}", response);
 
-        return responseOptional;
+        return response;
     }
 }
