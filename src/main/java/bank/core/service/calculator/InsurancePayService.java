@@ -4,8 +4,8 @@ import bank.core.calculator.PayForInsurance;
 import bank.core.service.transaction.AddTransactionService;
 import bank.domain.CreditCardEntity;
 import bank.domain.InsuranceEntity;
-import bank.dto.insurance.pay.InsurancePayResponse;
-import bank.dto.transaction.AddTransactionRequest;
+import bank.dto.insurance.pay.InsurancePayTransactionResponse;
+import bank.dto.transaction.add.AddTransactionRequest;
 import bank.repository.CreditCardRepository;
 import bank.repository.InsuranceRepository;
 import lombok.AllArgsConstructor;
@@ -23,48 +23,52 @@ public class InsurancePayService {
     private final CreditCardRepository creditCardRepository;
 
     private final AddTransactionService addTransactionService;
+    private final PayForInsurance payForInsurance;
 
-    public Optional<InsurancePayResponse> pay(Integer userId) {
+    public InsurancePayTransactionResponse pay(Integer idInsurance, Integer idCreditCard) {
 
-        log.debug("Received User Id request: {}", userId);
+        log.debug("Received Id Insurance request: {}", idInsurance);
+        log.debug("Received Id Credit Card request: {}", idCreditCard);
 
-        Optional<InsuranceEntity> insurance = insuranceRepository.findByIdUser(userId);
-        Optional<CreditCardEntity> creditCard = creditCardRepository.findByIdUser(userId);
-        InsurancePayResponse insurancePayResponse = new InsurancePayResponse();
-        Optional<InsurancePayResponse> insurancePayResponseOptional = Optional.of(insurancePayResponse);
+        Optional<InsuranceEntity> insurance = insuranceRepository.findById(idInsurance);
+        Optional<CreditCardEntity> creditCard = creditCardRepository.findById(idCreditCard);
+
+        InsurancePayTransactionResponse response = new InsurancePayTransactionResponse();
 
         log.debug("Received Insurance Entity request: {}", insurance);
         log.debug("Received Credit Card Entity request: {}", creditCard);
-        log.debug("Received Insurance Pay Response Optional request: {}", insurancePayResponseOptional);
+        log.debug("Received Insurance Pay Response Transaction  request: {}", response);
 
         if (insurance.isPresent() && creditCard.isPresent()) {
-            InsuranceEntity insuranceEntity = insurance.get();
-            CreditCardEntity creditCardEntity = creditCard.get();
-            PayForInsurance payForInsurance = new PayForInsurance();
-
-            log.debug("Received Insurance Entity request: {}", insuranceEntity);
-            log.debug("Received Credit Card Entity request: {}", creditCard);
-
-            AddTransactionRequest addTransactionRequest = payForInsurance.payInsurance(insuranceEntity,
-                    creditCardEntity);
-
-            addTransactionService.transaction(addTransactionRequest);
-            insuranceRepository.save(insuranceEntity);
-            creditCardRepository.save(creditCardEntity);
-
-            insurancePayResponseOptional = convert(insuranceEntity);
-
-            log.debug("Changed Insurance Entity request: {}", insuranceEntity);
-            log.debug("Changed Credit Card Entity request: {}", creditCardEntity);
-            log.debug("Changed Insurance Pay Response Optional request: {}", insurancePayResponseOptional);
-            log.debug("Changed Add Transaction request: {}", addTransactionRequest);
-
+            response = convertResponse(insurance.get(), creditCard.get());
         }
-        return insurancePayResponseOptional;
+        return response;
     }
 
-    private Optional<InsurancePayResponse> convert(InsuranceEntity entity) {
-        return Optional.of(new InsurancePayResponse(entity.getSumInsured(), entity.getInsurancePaid(),
-                entity.getIdInsurance(), entity.getIdUser()));
+    private InsurancePayTransactionResponse convert(AddTransactionRequest request) {
+        return new InsurancePayTransactionResponse(request.getAmount(),
+                request.getTransactionType(), request.getWithWhomTheDeal()
+                , request.getTransactionSuccess(), request.getIdUser());
+    }
+
+
+    private InsurancePayTransactionResponse convertResponse(InsuranceEntity insurance
+            , CreditCardEntity creditCard) {
+
+        AddTransactionRequest addTransactionRequest = payForInsurance.payInsurance(insurance,
+                creditCard);
+
+        addTransactionService.save(addTransactionRequest);
+        insuranceRepository.save(insurance);
+        creditCardRepository.save(creditCard);
+
+        InsurancePayTransactionResponse response = convert(addTransactionRequest);
+
+        log.debug("Changed Insurance Entity request: {}", insurance);
+        log.debug("Changed Credit Card Entity request: {}", creditCard);
+        log.debug("Changed Insurance Pay Response request: {}", response);
+        log.debug("Changed Add Transaction request: {}", addTransactionRequest);
+
+        return response;
     }
 }

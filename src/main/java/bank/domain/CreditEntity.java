@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity(name = "credits")
-//для того, чтобы потом использовать в коде это будет как ссылка на этот класс, когда будем работать с бд
 @Table(name = "credit")
 @Data
 @AllArgsConstructor
@@ -20,25 +19,24 @@ public class CreditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_credit")
-    private int idCredit;
+    private Integer idCredit;
     @Column(name = "how_much_to_pay")
-    private BigDecimal howMuchToPay; //надо выплатить ещё
+    private BigDecimal howMuchToPay;
     @Column(name = "percent_rate")
-    private BigDecimal percentRate; // процентная ставка
+    private BigDecimal percentRate;
     @Column(name = "paid")
-    private BigDecimal paid;//выплачено
+    private BigDecimal paid;
     @Column(name = "the_total_amount_you_pay")
-    private BigDecimal theTotalAmountYouPay;//сколько в общем надо выплатить
+    private BigDecimal theTotalAmountYouPay;
     @Column(name = "count_months_to_pay")
-    private BigDecimal countMonthsToPay; //количество месяцев ещё платить
+    private BigDecimal countMonthsToPay;
     @Column(name = "bank_profit")
-    private BigDecimal bankProfit; //прибыль банка
+    private BigDecimal bankProfit;
     @Column(name = "how_much_is_the_loan")
-    private BigDecimal howMuchIsTheLoan;// сколько берёт кредита человек
+    private BigDecimal howMuchIsTheLoan;
     @Column(name = "payment_per_month")
-    private BigDecimal paymentPerMonth;//сколько в месяц платить  нельзя создавая такие колонки, они должны быть ещё созданы и в бд
+    private BigDecimal paymentPerMonth;
     @Column(name = "id_user")
     private Integer idUser;
-//    @Column(name = "id_bank_account")
-//    private int idBankAccount;
+
 }

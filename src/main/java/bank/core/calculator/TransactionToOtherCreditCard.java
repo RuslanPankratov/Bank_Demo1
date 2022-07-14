@@ -1,8 +1,8 @@
 package bank.core.calculator;
 
 import bank.domain.CreditCardEntity;
-import bank.dto.transaction.AddTransactionRequest;
-import bank.enum_class.BetweenWhomTheTransaction;
+import bank.dto.transaction.add.AddTransactionRequest;
+import bank.enum_class.WithWhomTheDeal;
 import bank.enum_class.TransactionSuccess;
 import bank.enum_class.TransactionType;
 import lombok.extern.slf4j.Slf4j;
@@ -28,15 +28,8 @@ public class TransactionToOtherCreditCard {
                 creditCardRecipientEntity, departureAmount);
 
         if (creditCardSenderEntity.getInvoiceAmount().compareTo(departureAmount) > 0) {
-            creditCardSenderEntity.setInvoiceAmount(creditCardSenderEntity.getInvoiceAmount().
-                    subtract(departureAmount));
-            creditCardRecipientEntity.setInvoiceAmount(creditCardRecipientEntity.getInvoiceAmount().
-                    add(departureAmount));
-            addTransactionRequests.get(0).setTransactionSuccess(TransactionSuccess.SUCCESSFUL);
-            addTransactionRequests.get(1).setTransactionSuccess(TransactionSuccess.SUCCESSFUL);
-
-            log.debug("Changed Credit Card Entity Sender request: {}", creditCardSenderEntity);
-            log.debug("Changed Credit Card Entity Recipient request: {}", creditCardRecipientEntity);
+            convertSenderAndRecipient(creditCardSenderEntity, creditCardRecipientEntity, departureAmount
+                    , addTransactionRequests);
         }
         log.debug("Return Add Transaction Request: {}", addTransactionRequests);
 
@@ -50,17 +43,37 @@ public class TransactionToOtherCreditCard {
         List<AddTransactionRequest> transactionRequests = new ArrayList<>();
 
         AddTransactionRequest transactionSender = new AddTransactionRequest(departureAmount, TransactionType.SENDING,
-                BetweenWhomTheTransaction.OTHER_PEOPLE, TransactionSuccess.NOT_ENOUGH_MONEY,
+                WithWhomTheDeal.OTHER_PEOPLE, TransactionSuccess.NOT_ENOUGH_MONEY,
                 creditCardSenderEntity.getIdUser());
 
         AddTransactionRequest transactionRecipient = new AddTransactionRequest(departureAmount,
-                TransactionType.RECEIVING, BetweenWhomTheTransaction.OTHER_PEOPLE, TransactionSuccess.NOT_ENOUGH_MONEY,
+                TransactionType.RECEIVING, WithWhomTheDeal.OTHER_PEOPLE, TransactionSuccess.NOT_ENOUGH_MONEY,
                 creditCardRecipientEntity.getIdUser());
 
         transactionRequests.add(transactionSender);
         transactionRequests.add(transactionRecipient);
 
         return transactionRequests;
+    }
+
+    private void convertSenderAndRecipient(CreditCardEntity creditCardSenderEntity,
+                                           CreditCardEntity creditCardRecipientEntity, BigDecimal departureAmount
+            , List<AddTransactionRequest> addTransactionRequests) {
+
+        if (creditCardSenderEntity.getWithdrawalLimit().compareTo(departureAmount) > 0) {
+            creditCardSenderEntity.setInvoiceAmount(creditCardSenderEntity.getInvoiceAmount().
+                    subtract(departureAmount));
+            creditCardRecipientEntity.setInvoiceAmount(creditCardRecipientEntity.getInvoiceAmount().
+                    add(departureAmount));
+            addTransactionRequests.get(0).setTransactionSuccess(TransactionSuccess.SUCCESSFUL);
+            addTransactionRequests.get(1).setTransactionSuccess(TransactionSuccess.SUCCESSFUL);
+
+            log.debug("Changed Credit Card Entity Sender request: {}", creditCardSenderEntity);
+            log.debug("Changed Credit Card Entity Recipient request: {}", creditCardRecipientEntity);
+        } else {
+            addTransactionRequests.get(0).setTransactionSuccess(TransactionSuccess.TRANSACTION_LIMIT_EXCEEDED);
+            addTransactionRequests.get(1).setTransactionSuccess(TransactionSuccess.TRANSACTION_LIMIT_EXCEEDED);
+        }
     }
 
 }

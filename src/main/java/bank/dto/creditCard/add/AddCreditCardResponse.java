@@ -1,14 +1,14 @@
 package bank.dto.creditCard.add;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Range;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class AddCreditCardResponse {
 
-    @Range(min = 1)
     private Integer createdCreditCardId;
 }

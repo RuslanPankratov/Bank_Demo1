@@ -5,9 +5,8 @@ import bank.core.calculator.InsuranceCalculator;
 import bank.core.service.transaction.AddTransactionService;
 import bank.domain.InsuranceEntity;
 import bank.dto.insurance.calculator.InsuranceCalculatorRequest;
-import bank.dto.insurance.calculator.InsuranceCalculatorResponse;
-import bank.dto.transaction.AddTransactionRequest;
-import bank.enum_class.TypeInsurance;
+import bank.dto.insurance.calculator.InsuranceCalculatorTransactionResponse;
+import bank.dto.transaction.add.AddTransactionRequest;
 import bank.repository.InsuranceRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,44 +22,50 @@ public class InsuranceCalculatorService {
 
     private final InsuranceRepository repository;
     private final AddTransactionService addTransactionService;
+    private final InsuranceCalculator insuranceCalculator;
 
     @Transactional
-    public Optional<InsuranceCalculatorResponse> calculate(InsuranceCalculatorRequest request) {
+    public InsuranceCalculatorTransactionResponse calculate(InsuranceCalculatorRequest request
+            , Integer idInsurance) {
 
         log.debug("Received Insurance Calculator request: {}", request);
 
-        Optional<InsuranceEntity> entity = repository.findByIdUser(request.getIdUser());
-        InsuranceCalculatorResponse insuranceCalculatorResponse = new InsuranceCalculatorResponse();
-        Optional<InsuranceCalculatorResponse> insuranceCalculatorResponseOptional =
-                Optional.of(insuranceCalculatorResponse);
+        Optional<InsuranceEntity> entity = repository.findById(idInsurance);
+        InsuranceCalculatorTransactionResponse response = new InsuranceCalculatorTransactionResponse();
 
         log.debug("Received Insurance Entity request: {}", entity);
-        log.debug("Received InsuranceCalculatorResponse request: {}", insuranceCalculatorResponseOptional);
+        log.debug("Received Insurance Calculator Transaction Response request: {}", response);
 
         if (entity.isPresent()) {
-            InsuranceCalculator insuranceCalculator = new InsuranceCalculator();
-            InsuranceEntity insuranceEntity = entity.get();
-
-            log.debug("Received Insurance Entity request: {}", insuranceEntity);
-
-            AddTransactionRequest addTransactionRequest = insuranceCalculator.insurance(insuranceEntity,
-                    request.getSum(), request.getTypeInsurance());
-
-            addTransactionService.transaction(addTransactionRequest);
-            repository.save(insuranceEntity);
-
-            insuranceCalculatorResponseOptional = convert(insuranceEntity, request.getTypeInsurance());
-
-            log.debug("Changed Insurance Entity request: {}", insuranceEntity);
-            log.debug("Changed Add Transaction request: {}", addTransactionRequest);
-            log.debug("Changed Insurance Calculator Response request: {}", insuranceCalculatorResponseOptional);
-
+            response = convertResponse(entity.get(), request);
         }
-        return insuranceCalculatorResponseOptional;
+
+        return response;
     }
 
-    private Optional<InsuranceCalculatorResponse> convert(InsuranceEntity insurance, TypeInsurance typeInsurance) {
-        return Optional.of(new InsuranceCalculatorResponse(insurance.getSumInsured(), insurance.getInsurancePaid(),
-                insurance.getIdInsurance(), insurance.getIdUser(), typeInsurance));
+    private InsuranceCalculatorTransactionResponse convert(AddTransactionRequest request) {
+           return new InsuranceCalculatorTransactionResponse(request.getAmount(),
+                        request.getTransactionType(), request.getWithWhomTheDeal()
+                        , request.getTransactionSuccess(), request.getIdUser());
+    }
+
+
+    private InsuranceCalculatorTransactionResponse convertResponse(InsuranceEntity entity
+            , InsuranceCalculatorRequest request) {
+
+
+        AddTransactionRequest addTransactionRequest = insuranceCalculator.insuranceCalculate(entity,
+                request.getSum(), request.getTypeInsurance());
+
+        addTransactionService.save(addTransactionRequest);
+        repository.save(entity);
+
+        InsuranceCalculatorTransactionResponse response = convert(addTransactionRequest);
+
+        log.debug("Changed Insurance Entity request: {}", entity);
+        log.debug("Changed Add Transaction request: {}", addTransactionRequest);
+        log.debug("Changed Insurance Calculator Transaction Response request: {}", response);
+
+        return response;
     }
 }

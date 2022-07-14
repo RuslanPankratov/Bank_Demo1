@@ -4,8 +4,9 @@ import bank.core.calculator.TransactionToOtherCreditCard;
 import bank.core.service.transaction.AddTransactionService;
 import bank.domain.CreditCardEntity;
 import bank.dto.creditCard.CreditCardToOtherRequest;
-import bank.dto.transaction.AddTransactionRequest;
-import bank.dto.transaction.AddTransactionResponse;
+import bank.dto.transaction.add.AddTransactionRequest;
+import bank.dto.transaction.add.AddTransactionResponse;
+import bank.dto.transaction.add.ListAddTransactionResponse;
 import bank.repository.CreditCardRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,58 +24,64 @@ public class TransactionToOtherCreditCardService {
 
     private final CreditCardRepository creditCardRepository;
     private final AddTransactionService addTransactionService;
+    private final TransactionToOtherCreditCard transactionToOtherCreditCard;
 
-    public List<AddTransactionResponse> transaction(CreditCardToOtherRequest request) {
+    public ListAddTransactionResponse transaction(CreditCardToOtherRequest request, Integer idSender
+            , Integer idRecipient) {
 
         log.debug("Received Credit Card To Other request: {}", request);
 
-
-        Optional<CreditCardEntity> creditCardSender = creditCardRepository.findByIdUser(request.getSenderUserId());
-        Optional<CreditCardEntity> creditCardRecipient = creditCardRepository.findByIdUser(request.getRecipientUserId());
+        Optional<CreditCardEntity> creditCardSender = creditCardRepository.findById(idSender);
+        Optional<CreditCardEntity> creditCardRecipient = creditCardRepository.findById(idRecipient);
         List<AddTransactionResponse> addTransactionResponses = new ArrayList<>();
+        ListAddTransactionResponse listAddTransactionResponse = new ListAddTransactionResponse(addTransactionResponses);
 
         log.debug("Received Credit Card Sender request: {}", creditCardSender);
         log.debug("Received Credit Card Recipient request: {}", creditCardRecipient);
+        log.debug("Optional List Add Transaction Response: {}", listAddTransactionResponse);
 
         if (creditCardSender.isPresent() && creditCardRecipient.isPresent()) {
-            CreditCardEntity creditCardSenderEntity = creditCardSender.get();
-            CreditCardEntity creditCardRecipientEntity = creditCardRecipient.get();
-
-            log.debug("Received Credit Card Sender Entity request: {}", creditCardSenderEntity);
-            log.debug("Received Credit Card Recipient Entity request: {}", creditCardRecipientEntity);
-
-            TransactionToOtherCreditCard transactionToOtherCreditCard = new TransactionToOtherCreditCard();
-            List<AddTransactionRequest> addTransactionRequest = transactionToOtherCreditCard.transaction(creditCardSenderEntity,
-                    creditCardRecipientEntity, request.getDepartureAmount());
-
-            creditCardRepository.save(creditCardSenderEntity);
-            creditCardRepository.save(creditCardRecipientEntity);
-            addTransactionService.transaction(addTransactionRequest.get(0));
-            addTransactionService.transaction(addTransactionRequest.get(1));
-
-            addTransactionResponses = convertList(addTransactionRequest);
-
-            log.debug("Changed Credit Card Sender Entity request: {}", creditCardSenderEntity);
-            log.debug("Changed Credit Card Recipient Entity request: {}", creditCardRecipientEntity);
-            log.debug("Changed Add Transaction Request request: {}", addTransactionRequest);
-            log.debug("Changed Add Transaction Response request: {}", addTransactionResponses);
-
+            listAddTransactionResponse = convertResponse(creditCardSender.get(), creditCardRecipient.get(), request);
         }
-        return addTransactionResponses;
+        return listAddTransactionResponse;
     }
 
-    private List<AddTransactionResponse> convertList(List<AddTransactionRequest> request) {
+    private ListAddTransactionResponse convertList(List<AddTransactionRequest> request) {
         List<AddTransactionResponse> addTransactionResponses = new ArrayList<>();
 
         addTransactionResponses.add(convert(request.get(0)));
         addTransactionResponses.add(convert(request.get(1)));
 
-        return addTransactionResponses;
+        return new ListAddTransactionResponse(addTransactionResponses);
     }
 
     private AddTransactionResponse convert(AddTransactionRequest request) {
         return new AddTransactionResponse(request.getAmount(),
-                request.getTransactionType(), request.getBetweenWhomTheTransaction(), request.getTransactionSuccess(),
+                request.getTransactionType(), request.getWithWhomTheDeal(), request.getTransactionSuccess(),
                 request.getIdUser());
+    }
+
+
+    private ListAddTransactionResponse convertResponse(
+            CreditCardEntity creditCardSender, CreditCardEntity creditCardRecipient
+            , CreditCardToOtherRequest request) {
+
+        List<AddTransactionRequest> addTransactionRequest =
+                transactionToOtherCreditCard.transaction(creditCardSender, creditCardRecipient
+                        , request.getDepartureAmount());
+
+        creditCardRepository.save(creditCardSender);
+        creditCardRepository.save(creditCardRecipient);
+        addTransactionService.save(addTransactionRequest.get(0));
+        addTransactionService.save(addTransactionRequest.get(1));
+
+        ListAddTransactionResponse transactionsOptional = convertList(addTransactionRequest);
+
+        log.debug("Changed Credit Card Sender Entity request: {}", creditCardSender);
+        log.debug("Changed Credit Card Recipient Entity request: {}", creditCardRecipient);
+        log.debug("Changed Add Transaction Request request: {}", addTransactionRequest);
+        log.debug("Changed Add Transaction Response request: {}", transactionsOptional);
+
+        return transactionsOptional;
     }
 }

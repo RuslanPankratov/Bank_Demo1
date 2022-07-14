@@ -1,0 +1,60 @@
+<dataset reset_sequences="transaction_sequence">
+
+    <users  id_user="3"
+            first_name="test name"
+            last_name="test name"
+            age="200"
+            type_of_benefits="DISABILITY_ONE_TWO"
+    />
+
+    <users  id_user="4"
+            first_name="test name"
+            last_name="test name"
+            age="200"
+            type_of_benefits="DISABILITY_ONE_TWO"
+    />
+
+    <credit_card
+            id_credit_card="3"
+            login="login test 3"
+            password="password test"
+            invoice_amount="40000"
+            withdrawal_limit="2000"
+            id_user="3"
+    />
+
+    <credit_card
+            id_credit_card="4"
+            login="login test 3"
+            password="password test"
+            invoice_amount="40000"
+            withdrawal_limit="2000"
+            id_user="4"
+    />
+
+
+    <credit
+            id_credit="3"
+            how_much_to_pay="11790.95"
+            percent_rate="2.15"
+            paid="0.0"
+            the_total_amount_you_pay="11790.95"
+            count_months_to_pay="100"
+            how_much_is_the_loan="10000.0"
+            payment_per_month="117.91"
+            bank_profit="1170.0"
+            id_user="3"
+    />
+    <credit
+            id_credit="4"
+            how_much_to_pay="11790.95"
+            percent_rate="2.15"
+            paid="0.0"
+            the_total_amount_you_pay="11790.95"
+            how_much_is_the_loan="10000.0"
+            count_months_to_pay="100"
+            payment_per_month="117.91"
+            bank_profit="1170.0"
+            id_user="4"
+    />
+</dataset>

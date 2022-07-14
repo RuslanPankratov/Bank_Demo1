@@ -3,20 +3,21 @@ package bank.core.service.creditCard;
 
 import bank.domain.CreditCardEntity;
 import bank.dto.creditCard.CreditCardDTO;
-import bank.dto.creditCard.GetByIdCreditCardResponse;
+import bank.dto.creditCard.find.GetByIdCreditCardResponse;
 import bank.repository.CreditCardRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Slf4j
-@Component
+@Service
 @AllArgsConstructor
 public class GetCreditCardByIdService {
 
     private final CreditCardRepository creditCardEntity;
 
     public GetByIdCreditCardResponse getCreditCardById(Integer id){
+
         GetByIdCreditCardResponse getByIdCreditCardResponse = creditCardEntity.findById(id)
                 .map(this::convert)
                 .map(GetByIdCreditCardResponse::new)
@@ -25,7 +26,6 @@ public class GetCreditCardByIdService {
         log.debug("Return Get By Id Credit Card Response: {}", getByIdCreditCardResponse);
 
         return getByIdCreditCardResponse;
-
     }
 
     private CreditCardDTO convert(CreditCardEntity entity){

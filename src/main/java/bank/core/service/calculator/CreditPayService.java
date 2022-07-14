@@ -4,9 +4,8 @@ import bank.core.calculator.LoanPaymentCalculator;
 import bank.core.service.transaction.AddTransactionService;
 import bank.domain.CreditCardEntity;
 import bank.domain.CreditEntity;
-import bank.dto.credit.creditPay.CreditPayRequest;
-import bank.dto.credit.creditPay.CreditPayResponse;
-import bank.dto.transaction.AddTransactionRequest;
+import bank.dto.credit.creditPay.CreditPayTransactionResponse;
+import bank.dto.transaction.add.AddTransactionRequest;
 import bank.repository.CreditCardRepository;
 import bank.repository.CreditRepository;
 import lombok.AllArgsConstructor;
@@ -22,53 +21,56 @@ public class CreditPayService {
 
     private final CreditCardRepository creditCardRepository;
     private final CreditRepository creditRepository;
-
     private final AddTransactionService addTransactionService;
+    private final LoanPaymentCalculator loanPaymentCalculator;
 
-    public Optional<CreditPayResponse> pay(CreditPayRequest request) {
+    public CreditPayTransactionResponse pay(Integer idCredit, Integer idCreditCard) {
 
-        log.debug("Received Credit Pay request: {}", request);
+        log.debug("Received Id Credit: {}", idCredit);
+        log.debug("Received Credit Card: {}", idCreditCard);
 
-        Optional<CreditEntity> credit = creditRepository.findByIdUser(request.getIdUser());
-        Optional<CreditCardEntity> creditCard = creditCardRepository.findByIdUser(request.getIdUser());
-        CreditPayResponse creditPayResponse = new CreditPayResponse();
-        Optional<CreditPayResponse> creditPayResponseOptional = Optional.of(creditPayResponse);
+        Optional<CreditEntity> credit = creditRepository.findById(idCredit);
+        Optional<CreditCardEntity> creditCard = creditCardRepository.findById(idCreditCard);
+        CreditPayTransactionResponse creditPayTransactionResponse = new CreditPayTransactionResponse();
 
         log.debug("Received Credit Entity request: {}", credit);
         log.debug("Received Credit Card Entity request: {}", creditCard);
-        log.debug("Received Credit Pay Response request: {}", creditPayResponseOptional);
-
 
         if (credit.isPresent() && creditCard.isPresent()) {
-            CreditEntity creditEntity = credit.get();
-            CreditCardEntity creditCardEntity = creditCard.get();
-            LoanPaymentCalculator loanPaymentCalculator = new LoanPaymentCalculator();
-
-            log.debug("Changed Credit Entity request: {}", creditEntity);
-            log.debug("Changed Credit Card Entity request: {}", creditCardEntity);
-            AddTransactionRequest addTransactionRequest = loanPaymentCalculator.methodPay(creditEntity,
-                    creditCardEntity);
-
-            addTransactionService.transaction(addTransactionRequest);
-            creditCardRepository.save(creditCardEntity);
-            creditRepository.save(creditEntity);
-
-            creditPayResponseOptional = convert(creditEntity);
-
-            log.debug("Changed Add Transaction request: {}", addTransactionRequest);
-            log.debug("Changed Credit Entity request: {}", creditEntity);
-            log.debug("Changed Credit Card Entity request: {}", creditCardEntity);
-            log.debug("Changed Credit Pay Response request: {}", creditPayResponseOptional);
+            AddTransactionRequest addTransactionRequest = new AddTransactionRequest();
+            creditPayTransactionResponse = response(credit.get(), creditCard.get());
+            save(credit.get(), creditCard.get(), creditPayTransactionResponse, addTransactionRequest);
         }
-
-        return creditPayResponseOptional;
+        return creditPayTransactionResponse;
     }
 
 
-    private Optional<CreditPayResponse> convert(CreditEntity entity) {
-        return Optional.of(new CreditPayResponse(entity.getIdCredit(), entity.getHowMuchToPay(),
-                entity.getPercentRate(), entity.getPaid(), entity.getTheTotalAmountYouPay(),
-                entity.getCountMonthsToPay(),
-                entity.getBankProfit(), entity.getHowMuchIsTheLoan(), entity.getPaymentPerMonth(), entity.getIdUser()));
+    private CreditPayTransactionResponse creditPayConvert(AddTransactionRequest request) {
+        return new CreditPayTransactionResponse(request.getAmount(), request.getTransactionType()
+                , request.getWithWhomTheDeal(), request.getTransactionSuccess(), request.getIdUser());
+    }
+
+    private void save(CreditEntity credit, CreditCardEntity creditCard
+            , CreditPayTransactionResponse creditPayTransactionResponseOptional
+            , AddTransactionRequest addTransactionRequest) {
+
+        addTransactionService.save(addTransactionRequest);
+        creditCardRepository.save(creditCard);
+        creditRepository.save(credit);
+
+        log.debug("Changed Add Transaction request: {}", addTransactionRequest);
+        log.debug("Changed Credit Entity request: {}", credit);
+        log.debug("Changed Credit Card Entity request: {}", creditCard);
+        log.debug("Return Credit Pay Transaction Response: {}", creditPayTransactionResponseOptional);
+    }
+
+    private CreditPayTransactionResponse response(CreditEntity credit
+            , CreditCardEntity creditCard) {
+        log.debug("Changed Credit Entity request: {}", credit);
+        log.debug("Changed Credit Card Entity request: {}", creditCard);
+
+        AddTransactionRequest addTransactionRequest = loanPaymentCalculator.methodPay(credit, creditCard);
+
+        return creditPayConvert(addTransactionRequest);
     }
 }

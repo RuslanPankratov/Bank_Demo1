@@ -1,0 +1,9 @@
+<dataset reset_sequences="users_sequence" >
+
+    <users  id_user="10"
+            first_name="test name"
+            last_name="test name"
+            age="200"
+            type_of_benefits="DISABILITY_ONE_TWO"
+    />
+</dataset>

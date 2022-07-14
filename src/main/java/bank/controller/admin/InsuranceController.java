@@ -4,9 +4,12 @@ import bank.core.service.insurance.AddInsuranceService;
 import bank.core.service.insurance.FindAllInsuranceService;
 import bank.core.service.insurance.GetInsuranceByIdService;
 import bank.core.service.insurance.UpdateInsuranceService;
-import bank.dto.insurance.*;
 import bank.dto.insurance.add.AddInsuranceRequest;
 import bank.dto.insurance.add.AddInsuranceResponse;
+import bank.dto.insurance.find.FindAllInsuranceResponse;
+import bank.dto.insurance.find.GetByIdInsuranceResponse;
+import bank.dto.insurance.update.UpdateInsuranceRequest;
+import bank.dto.insurance.update.UpdateInsuranceResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +19,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @RestController
+@RequestMapping("/insurances")
 @AllArgsConstructor
 public class InsuranceController {
 
@@ -25,28 +29,28 @@ public class InsuranceController {
     private AddInsuranceService addInsuranceService;
     private UpdateInsuranceService updateInsuranceService;
 
-    @GetMapping("/insurance")
+    @GetMapping()
     public FindAllInsuranceResponse findAllUsers() {
         log.debug("Find all credit card received");
         return findAllInsuranceService.findAll();
     }
 
-    @GetMapping("/insurance/{id}")
+    @GetMapping("/{id}")
     public GetByIdInsuranceResponse findById(@PathVariable("id") Integer id) {
         log.debug("Find by id request received, id: {}", id);
         return getInsuranceByIdService.getInsuranceById(id);
     }
 
-    @PostMapping("/insurance")
+    @PostMapping()
     public AddInsuranceResponse create(@RequestBody @Valid AddInsuranceRequest request) {
         log.debug("Add Insurance Request request: {}", request);
         return addInsuranceService.add(request);
     }
 
-    @PutMapping("/insurance")
-    public void update(@RequestBody @Valid UpdateInsuranceRequest request) {
+    @PutMapping()
+    public UpdateInsuranceResponse update(@RequestBody @Valid UpdateInsuranceRequest request) {
         log.debug("Received update Insurance request: {}", request);
-        updateInsuranceService.update(request);
+        return updateInsuranceService.update(request);
     }
 
 }

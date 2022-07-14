@@ -1,0 +1,39 @@
+<dataset reset_sequences="insurance_sequence">
+    <users  id_user="4"
+            first_name="test name"
+            last_name="test name"
+            age="200"
+            type_of_benefits="DISABILITY_ONE_TWO"
+    />
+
+    <users  id_user="3"
+            first_name="test name"
+            last_name="test name"
+            age="200"
+            type_of_benefits="DISABILITY_ONE_TWO"
+    />
+    <insurance
+            id_insurance="3"
+            sum_insured="0"
+            insurance_paid="0"
+            id_user="3"
+    />
+
+    <insurance
+            id_insurance="4"
+            sum_insured="50000"
+            insurance_paid="900"
+            id_user="4"
+    />
+
+    <credit_card
+            id_credit_card="4"
+            login="login test 3"
+            password="password test"
+            invoice_amount="40000"
+            withdrawal_limit="2000"
+            id_user="4"
+    />
+
+
+</dataset>
